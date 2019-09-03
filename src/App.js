@@ -1,16 +1,17 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
+import CustomButton from './components/common/button'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Here we Go Boiiis
-        </p>
-      </header>
-    </div>
-  );
+class App extends Component {
+    render() {
+        return (
+            <div className="App">
+              <header className="App-header">
+                  <CustomButton/>
+              </header>
+            </div>
+        );
+    }
 }
 
 export default App;
