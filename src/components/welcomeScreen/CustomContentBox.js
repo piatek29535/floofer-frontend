@@ -9,9 +9,10 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import CardActions from "@material-ui/core/CardActions";
 import Grid from "@material-ui/core/Grid";
+import CustomCarousel from "./CustomCarousel";
 
 const CustomContentBox = (props) => {
-    const styles = {
+    const styles = { // Consider moving styles to another file
         container:{
             margin:0,
             padding:0
@@ -25,16 +26,22 @@ const CustomContentBox = (props) => {
             display:'flex',
             alignItems:'center',
             justifyContent:'center',
+            flexDirection:'column',
+            opacity:'0.9',
+        },
+        headerTypographyTitle:{
+          paddingBottom:'50px'
         },
         contentBox:{
+            backgroundColor:'red',
             minHeight:'90vh',
-            background:'url(https://cdn.pixabay.com/photo/2018/02/03/08/00/background-3127102_960_720.jpg)',
             backgroundRepeat:'no-repeat',
             backgroundSize:'cover',
             backgroundPosition:'center',
             display:'flex',
             alignItems:'center',
-            justifyContent:'center'
+            justifyContent:'center',
+            flexDirection:'column',
         }
 
     };
@@ -44,21 +51,21 @@ const CustomContentBox = (props) => {
     return (
         <Container maxWidth={"xl"}>
             <Box id="aboutPage" style={styles.headerBox} maxWidth="sm" my={2}>
-                <Typography>Witaj w aplikacji Fluffer {"\n"}</Typography>
-                <Typography>Container 1</Typography>
-                <Typography>Container 1</Typography>
+                <Typography style={styles.headerTypographyTitle} variant={"h1"}>Witaj w aplikacji Fluffer</Typography>
+                <Typography variant={"h5"}>Twój wygodny i przejżysty komunikator na wyciągnięcie ręki</Typography>
             </Box>
             <Box id="benefits" style={styles.contentBox} my={2}>
-                {"Container 2"}
+                <CustomCarousel/>
             </Box>
-            <Box id="recommendations" style={styles.contentBox} my={2}>
-                <Container maxWidth="md">
-                    <Grid container spacing={9}>
+            <Box id="recommendations" style={styles.contentBox}>
+                <Typography style={{paddingBottom:'100px', textShadow:'2px 2px 4px #000000'}} variant="h1">A oto co mówią o nas użytkownicy!</Typography>
+                <Container maxWidth="lg">
+                    <Grid container spacing={10}>
                         {cards.map(card => (
                             <Grid item key={card} xs={12} sm={6} md={4}>
                                 <Card>
                                     <CardMedia
-                                        image="https://source.unsplash.com/random"
+                                        image="url(https://source.unsplash.com/random)"
                                         title="Image title"
                                     />
                                     <CardContent>
@@ -82,6 +89,9 @@ const CustomContentBox = (props) => {
                         ))}
                     </Grid>
                 </Container>
+            </Box>
+            <Box id="benefits" style={styles.contentBox} my={2}>
+                <Typography>Footer</Typography>
             </Box>
         </Container>
     )
