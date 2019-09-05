@@ -38,11 +38,11 @@ const CustomNavbar = (props) => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link>O stronie</Nav.Link>
-                    <Nav.Link>Korzyści</Nav.Link>
+                    <Nav.Link href="#aboutPage">O stronie</Nav.Link>
+                    <Nav.Link href="#benefits">Korzyści</Nav.Link>
+                    <Nav.Link href="#recommendations">Co mówią o nas</Nav.Link>
                 </Nav>
                 <Nav>
-                    <Nav.Link onClick={() => {}} style={styles.registerLink}>Zarejestruj się</Nav.Link>
                     <Nav.Link style={styles.loginLink}>Zaloguj się</Nav.Link>
                 </Nav>
             </Navbar.Collapse>

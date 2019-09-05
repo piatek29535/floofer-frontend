@@ -4,6 +4,7 @@ import CustomNavbar from "./components/welcomeScreen/CustomNavbar";
 import CustomContentBox from "./components/welcomeScreen/CustomContentBox";
 
 class WelcomeScreen extends Component {
+
     render() {
         const randomNum = Math.floor(Math.random() * (12 - 7 + 1)) + 7;
 
@@ -12,7 +13,7 @@ class WelcomeScreen extends Component {
                 <CustomNavbar random={randomNum}/>
                 <header className="App-header">
                   <CustomContentBox/>
-              </header>
+                </header>
             </div>
         );
     }
