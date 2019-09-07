@@ -3,7 +3,7 @@ import Carousel from "react-bootstrap/Carousel";
 
 
 
-export default function CustomCarousel() { // Change to a different carousel
+export default function CustomCarousel() {
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(null);
 
@@ -13,7 +13,7 @@ export default function CustomCarousel() { // Change to a different carousel
     };
 
     return (
-        <Carousel style={{display:'flex',flex:'1',}} activeIndex={index} direction={direction} onSelect={handleSelect}>
+        <Carousel activeIndex={index} direction={direction} onSelect={handleSelect}>
             <Carousel.Item>
                 <img
                     className="d-block w-100"
