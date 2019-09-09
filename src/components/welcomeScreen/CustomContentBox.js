@@ -33,16 +33,34 @@ const CustomContentBox = (props) => {
             opacity:'0.9',
         },
         headerTypographyTitle:{
-          paddingBottom:'50px'
+          paddingBottom:'50px',
+          textShadow:'0 0 0.5em #000000, 0 0 0.5em #000000, 0 0 0.5em #000000'
         },
         contentBox:{
             minHeight:'90vh',
-            backgroundRepeat:'no-repeat',
-            backgroundSize:'cover',
-            backgroundPosition:'center',
             display:'flex',
             alignItems:'center',
             justifyContent:'center',
+            flexDirection:'column',
+        },
+        cardContent:{
+            display:'flex',
+            flexDirection:'row',
+            justifyContent:'center',
+            alignItems:'center',
+            boxShadow:'10px 10px 10px 10px rgba(0, 0, 0, 0.5)'
+        },
+        cardContainers:{
+            display:'flex',
+            justifyContent:'center',
+            alignItems:'center',
+        },
+        footerBox:{
+            minHeight:'90vh',
+            display:'flex',
+            alignItems:'center',
+            justifyContent:'center',
+            alignContent:'stretch',
             flexDirection:'column',
         }
 
@@ -51,7 +69,7 @@ const CustomContentBox = (props) => {
     const opinions = props.opinions !== undefined ? props.opinions.filter((user) => user.id % 2 === 0) : [];
 
     return (
-        <Container style={styles.container} maxWidth={"xl"}>
+        <Container style={styles.container} maxWidth='xl'>
             <Box id="aboutPage" style={styles.headerBox} maxWidth="sm" my={2}>
                 <Typography style={styles.headerTypographyTitle} variant={"h1"}>Witaj w aplikacji Fluffer</Typography>
                 <Typography variant={"h5"}>Twój wygodny i przejżysty komunikator na wyciągnięcie ręki</Typography>
@@ -64,20 +82,24 @@ const CustomContentBox = (props) => {
                     <Grid container spacing={10}>
                         {opinions !== undefined ? opinions.map(user => (
                             <Grid item key={user} xs={12} sm={6} md={4}>
-                                <Card>
-                                    <Avatar
-                                        src={user.avatarUrl}
-                                        title="Image title"
-                                    />
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h5" component="h2">
+                                <Card style={styles.cardContent}>
+                                    <Container style={styles.cardContainers}>
+                                        <Avatar
+                                            src={user.avatarUrl}
+                                            title="Image title"
+                                        />
+                                        <Typography variant="h5" component="h2">
                                             {user.name}
                                         </Typography>
-                                        <Typography>
-                                            {user.comment}
-                                        </Typography>
-                                        <Rating value={Number(user.rating)} readOnly />
-                                    </CardContent>
+                                    </Container>
+                                    <Container style={styles.cardContainers}>
+                                        <CardContent>
+                                            <Typography>
+                                                {"``"+user.comment+"``"}
+                                            </Typography>
+                                            <Rating value={Number(user.rating)} readOnly />
+                                        </CardContent>
+                                    </Container>
                                 </Card>
                             </Grid>
                         ))
@@ -85,8 +107,11 @@ const CustomContentBox = (props) => {
                     </Grid>
                 </Container>
             </Box>
-            <Box id="benefits" style={styles.contentBox} my={2}>
-                <Typography>Footer</Typography>
+            <Box id="benefits" style={styles.footerBox} my={2}>
+                <Container style={{flex:20}}>
+                    <Typography>Footer</Typography>
+                </Container>
+                <Container style={{flex:1,backgroundColor:'#28313B'}} maxWidth='xl'>xD</Container>
             </Box>
         </Container>
     )
