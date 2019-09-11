@@ -6,4 +6,4 @@ export const fetchData = (state = {}, action) => {
         default:
             return state;
     }
-}
+};

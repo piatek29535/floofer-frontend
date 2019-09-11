@@ -5,8 +5,6 @@ import {Typography} from "@material-ui/core";
 import BackgroundImage1 from '../../images/welcomeScreen/welcomePic1.jpg';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import CardActions from "@material-ui/core/CardActions";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Rating from '@material-ui/lab/Rating';
@@ -14,10 +12,10 @@ import Rating from '@material-ui/lab/Rating';
 
 const CustomContentBox = (props) => {
 
+
     const styles = { // Consider moving styles to another file
         container:{
-            margin:0,
-            padding:0
+
         },
         headerBox:{
             marginTop:'0',
@@ -37,6 +35,7 @@ const CustomContentBox = (props) => {
           textShadow:'0 0 0.5em #000000, 0 0 0.5em #000000, 0 0 0.5em #000000'
         },
         contentBox:{
+            border:'1px solid red',
             minHeight:'90vh',
             display:'flex',
             alignItems:'center',
@@ -70,18 +69,21 @@ const CustomContentBox = (props) => {
 
     return (
         <Container style={styles.container} maxWidth='xl'>
-            <Box id="aboutPage" style={styles.headerBox} maxWidth="sm" my={2}>
+            <Box style={styles.headerBox} maxWidth="sm" my={2} ref={props.refs[0]}>
                 <Typography style={styles.headerTypographyTitle} variant={"h1"}>Witaj w aplikacji Fluffer</Typography>
                 <Typography variant={"h5"}>Twój wygodny i przejżysty komunikator na wyciągnięcie ręki</Typography>
             </Box>
-            <Box id="benefits" style={styles.contentBox} my={2}>
+            <Box style={styles.contentBox} my={2} ref={props.refs[1]}>
+                <Container>
+                    <Typography>Cos tu się wymyśli</Typography>
+                </Container>
             </Box>
-            <Box id="recommendations" style={styles.contentBox}>
+            <Box style={styles.contentBox} ref={props.refs[2]}>
                 <Typography style={{paddingBottom:'100px', textShadow:'2px 2px 4px #000000'}} variant="h1">A oto co mówią o nas użytkownicy!</Typography>
                 <Container maxWidth="lg">
                     <Grid container spacing={10}>
-                        {opinions !== undefined ? opinions.map(user => (
-                            <Grid item key={user} xs={12} sm={6} md={4}>
+                        {opinions !== undefined ? opinions.map((user, index) => (
+                            <Grid item key={index} xs={12} sm={6} md={4}>
                                 <Card style={styles.cardContent}>
                                     <Container style={styles.cardContainers}>
                                         <Avatar
@@ -107,7 +109,7 @@ const CustomContentBox = (props) => {
                     </Grid>
                 </Container>
             </Box>
-            <Box id="benefits" style={styles.footerBox} my={2}>
+            <Box id="benefits" style={styles.footerBox} my={2} ref={props.refs[3]}>
                 <Container style={{flex:20}}>
                     <Typography>Footer</Typography>
                 </Container>

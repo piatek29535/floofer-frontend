@@ -38,9 +38,10 @@ const CustomNavbar = (props) => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="#aboutPage">O stronie</Nav.Link>
-                    <Nav.Link href="#benefits">Korzyści</Nav.Link>
-                    <Nav.Link href="#recommendations">Co mówią o nas</Nav.Link>
+                    <Nav.Link onClick={props.scrollToRef}>O stronie</Nav.Link>
+                    <Nav.Link>Korzyści</Nav.Link>
+                    <Nav.Link>Co mówią o nas</Nav.Link>
+                    <Nav.Link>Footer</Nav.Link>
                 </Nav>
                 <Nav>
                     <Nav.Link style={styles.loginLink}>Zaloguj się</Nav.Link>

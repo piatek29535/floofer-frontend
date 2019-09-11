@@ -1,7 +1,7 @@
 export function fetchOpinionsFromServer(){
-    return function action(dispatch){
+    return dispatch => {
         return fetch('http://localhost:9001/opinions')
-            .then((response) => response.json())
+            .then((response) => {return response.json()})
             .then((json) => {
                 return dispatch({type:"OPINIONS_FETCHED", payload:json})
             })
