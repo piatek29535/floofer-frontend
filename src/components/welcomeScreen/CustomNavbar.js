@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import '../../WelcomeScreen.css';
+import NavLink from "react-bootstrap/NavLink";
 
 const styles = {
     loginLink: {
@@ -38,10 +39,14 @@ const CustomNavbar = (props) => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link onClick={props.scrollToRef}>O stronie</Nav.Link>
-                    <Nav.Link>Korzyści</Nav.Link>
-                    <Nav.Link>Co mówią o nas</Nav.Link>
-                    <Nav.Link>Footer</Nav.Link>
+                    {
+                        props.refs !== null ? props.refs.map((ref, key) => {
+                            return (<NavLink key={key}
+                                onClick={() => props.scrollToRef(ref)}> {ref.name}
+                            </NavLink>)
+                        })
+                        : null
+                    }
                 </Nav>
                 <Nav>
                     <Nav.Link style={styles.loginLink}>Zaloguj się</Nav.Link>

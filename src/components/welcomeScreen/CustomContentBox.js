@@ -8,6 +8,9 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Rating from '@material-ui/lab/Rating';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
 
 
 const CustomContentBox = (props) => {
@@ -54,6 +57,13 @@ const CustomContentBox = (props) => {
             justifyContent:'center',
             alignItems:'center',
         },
+        errorCardContainer:{
+            display:'flex',
+            justifyContent:'center',
+            alignItems:'center',
+            height:'100px',
+            width:'90vh'
+        },
         footerBox:{
             minHeight:'90vh',
             display:'flex',
@@ -80,34 +90,48 @@ const CustomContentBox = (props) => {
             </Box>
             <Box style={styles.contentBox} ref={props.refs[2]}>
                 <Typography style={{paddingBottom:'100px', textShadow:'2px 2px 4px #000000'}} variant="h1">A oto co mówią o nas użytkownicy!</Typography>
-                <Container maxWidth="lg">
-                    <Grid container spacing={10}>
-                        {opinions !== undefined ? opinions.map((user, index) => (
-                            <Grid item key={index} xs={12} sm={6} md={4}>
-                                <Card style={styles.cardContent}>
-                                    <Container style={styles.cardContainers}>
-                                        <Avatar
-                                            src={user.avatarUrl}
-                                            title="Image title"
-                                        />
-                                        <Typography variant="h5" component="h2">
-                                            {user.name}
-                                        </Typography>
-                                    </Container>
-                                    <Container style={styles.cardContainers}>
-                                        <CardContent>
-                                            <Typography>
-                                                {"``"+user.comment+"``"}
-                                            </Typography>
-                                            <Rating value={Number(user.rating)} readOnly />
-                                        </CardContent>
-                                    </Container>
-                                </Card>
-                            </Grid>
-                        ))
-                        : null}
-                    </Grid>
-                </Container>
+                {props.opinionsFetching ?
+                    <CircularProgress/>
+                    : (props.opinionsError ?
+                            <Card style={styles.cardContent}>
+                                <Container style={styles.errorCardContainer}>
+                                    <Typography variant="h5" component="h2">
+                                        Whopsie! Coś poszło nie tak. Naciśnij przycisk obok aby spróbować jeszcze raz!
+                                    </Typography>
+                                </Container>
+                                <CardActions>
+                                    <Button variant="contained" size="medium" color="primary" onClick={() => window.location.reload()}>Odśwież</Button>
+                                </CardActions>
+                            </Card>
+                            :<Container maxWidth="lg">
+                                    <Grid container spacing={10}>
+                                        {opinions !== undefined ? opinions.map((user, index) => (
+                                                <Grid item key={index} xs={12} sm={6} md={4}>
+                                                    <Card style={styles.cardContent}>
+                                                        <Container style={styles.cardContainers}>
+                                                            <Avatar
+                                                                src={user.avatarUrl}
+                                                                title="Image title"
+                                                            />
+                                                            <Typography variant="h5" component="h2">
+                                                                {user.name}
+                                                            </Typography>
+                                                        </Container>
+                                                        <Container style={styles.cardContainers}>
+                                                            <CardContent>
+                                                                <Typography>
+                                                                    {"``"+user.comment+"``"}
+                                                                </Typography>
+                                                                <Rating value={Number(user.rating)} readOnly />
+                                                            </CardContent>
+                                                        </Container>
+                                                    </Card>
+                                                </Grid>
+                                            ))
+                                            : null}
+                                    </Grid>
+                                </Container>)
+            }
             </Box>
             <Box id="benefits" style={styles.footerBox} my={2} ref={props.refs[3]}>
                 <Container style={{flex:20}}>
