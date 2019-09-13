@@ -1,53 +1,29 @@
-import React, {useState} from "react";
+import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 
-
-
 export default function CustomCarousel() {
-    const [index, setIndex] = useState(0);
-    const [direction, setDirection] = useState(null);
-
-    const handleSelect = (selectedIndex, e) => {
-        setIndex(selectedIndex);
-        setDirection(e.direction);
-    };
-
     return (
-        <Carousel activeIndex={index} direction={direction} onSelect={handleSelect}>
+        <Carousel style={{width:'100%', height:'90vh'}}>
             <Carousel.Item>
                 <img
-                    className="d-block w-100"
-                    src="https://i.stack.imgur.com/Vkq2a.png"
+                    className='mw-100 mh-100'
+                    src="https://cdn.pixabay.com/photo/2013/10/09/02/26/landscape-192987_960_720.jpg"
                     alt="First slide"
                 />
-                <Carousel.Caption>
-                    <h3>First slide label</h3>
-                    <p>TODO</p>
-                </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
                 <img
-                    className="d-block w-100"
-                    src="https://i.stack.imgur.com/Vkq2a.png"
+                    className='mw-100 mh-100'
+                    src="https://cdn.pixabay.com/photo/2014/11/21/03/24/landscape-540115_960_720.jpg"
                     alt="Second slide"
                 />
-
-                <Carousel.Caption>
-                    <h3>Second slide label</h3>
-                    <p>TODO</p>
-                </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
                 <img
-                    className="d-block w-100"
-                    src="https://i.stack.imgur.com/Vkq2a.png"
+                    className='mw-100 mh-100'
+                    src="https://cdn.pixabay.com/photo/2014/11/21/03/26/scotland-540119_960_720.jpg"
                     alt="Third slide"
                 />
-
-                <Carousel.Caption>
-                    <h3>Third slide label</h3>
-                    <p>TODO</p>
-                </Carousel.Caption>
             </Carousel.Item>
         </Carousel>
     );

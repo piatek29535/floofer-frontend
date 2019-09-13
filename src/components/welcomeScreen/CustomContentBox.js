@@ -11,6 +11,7 @@ import Rating from '@material-ui/lab/Rating';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
+import CustomCarousel from "./CustomCarousel";
 
 
 const CustomContentBox = (props) => {
@@ -18,7 +19,8 @@ const CustomContentBox = (props) => {
 
     const styles = { // Consider moving styles to another file
         container:{
-
+            minWidth:'100%',
+            padding:0
         },
         headerBox:{
             marginTop:'0',
@@ -69,7 +71,6 @@ const CustomContentBox = (props) => {
             display:'flex',
             alignItems:'center',
             justifyContent:'center',
-            alignContent:'stretch',
             flexDirection:'column',
         }
 
@@ -78,15 +79,13 @@ const CustomContentBox = (props) => {
     const opinions = props.opinions !== undefined ? props.opinions.filter((user) => user.id % 2 === 0) : [];
 
     return (
-        <Container style={styles.container} maxWidth='xl'>
+        <Container style={styles.container}>
             <Box style={styles.headerBox} maxWidth="sm" my={2} ref={props.refs[0]}>
                 <Typography style={styles.headerTypographyTitle} variant={"h1"}>Witaj w aplikacji Fluffer</Typography>
                 <Typography variant={"h5"}>Twój wygodny i przejżysty komunikator na wyciągnięcie ręki</Typography>
             </Box>
             <Box style={styles.contentBox} my={2} ref={props.refs[1]}>
-                <Container>
-                    <Typography>Cos tu się wymyśli</Typography>
-                </Container>
+                <CustomCarousel/>
             </Box>
             <Box style={styles.contentBox} ref={props.refs[2]}>
                 <Typography style={{paddingBottom:'100px', textShadow:'2px 2px 4px #000000'}} variant="h1">A oto co mówią o nas użytkownicy!</Typography>
@@ -137,7 +136,7 @@ const CustomContentBox = (props) => {
                 <Container style={{flex:20}}>
                     <Typography>Footer</Typography>
                 </Container>
-                <Container style={{flex:1,backgroundColor:'#28313B'}} maxWidth='xl'>xD</Container>
+                <Container style={{flex:1,backgroundColor:'#28313B',maxWidth:'100%'}} maxWidth='xl'>xD</Container>
             </Box>
         </Container>
     )

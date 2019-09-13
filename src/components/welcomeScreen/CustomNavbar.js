@@ -3,29 +3,14 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import '../../WelcomeScreen.css';
 import NavLink from "react-bootstrap/NavLink";
-
-const styles = {
-    loginLink: {
-        background: '#3fc1c9',
-        border: "1px solid white",
-        borderRadius: 3,
-        color: 'white',
-        fontWeight:"bold",
-    },
-    registerLink:{
-        color: 'white',
-        fontWeight:"bold",
-        marginRight:"2px"
-    }
-
-};
+import {Button} from "react-bootstrap";
 
 const CustomNavbar = (props) => {
 
     const link = "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/".concat(props.random, "_avatar-256.png");
 
     return (
-        <Navbar collapseOnSelect fixed="top" expand="lg" bg="dark" variant="dark">
+        <Navbar fixed="top" expand="lg" bg="dark" variant="dark">
             <Navbar.Brand>
                 <img
                     alt=""
@@ -36,8 +21,8 @@ const CustomNavbar = (props) => {
                 />
                 <span> Fluffer</span>
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
+            <Navbar.Toggle/>
+            <Navbar.Collapse>
                 <Nav className="mr-auto">
                     {
                         props.refs !== null ? props.refs.map((ref, key) => {
@@ -49,7 +34,8 @@ const CustomNavbar = (props) => {
                     }
                 </Nav>
                 <Nav>
-                    <Nav.Link style={styles.loginLink}>Zaloguj się</Nav.Link>
+                    {/*<Nav.Link style={styles.loginLink}>Zaloguj się</Nav.Link>*/}
+                    <Button variant="outline-light">Zaloguj się</Button>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
