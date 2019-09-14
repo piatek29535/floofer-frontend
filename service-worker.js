@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/floofer-frontend/precache-manifest.9b514fcac5f661be1b3cb7ede48a7c84.js"
+  "/floofer-frontend/precache-manifest.06953a70ea67a44acfcb0edf649bd90b.js"
 );
 
 self.addEventListener('message', (event) => {

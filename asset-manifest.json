@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/floofer-frontend/static/css/main.2cce8147.chunk.css",
-    "main.js": "/floofer-frontend/static/js/main.4d253038.chunk.js",
-    "main.js.map": "/floofer-frontend/static/js/main.4d253038.chunk.js.map",
+    "main.css": "/floofer-frontend/static/css/main.17d80da8.chunk.css",
+    "main.js": "/floofer-frontend/static/js/main.fe41d1e6.chunk.js",
+    "main.js.map": "/floofer-frontend/static/js/main.fe41d1e6.chunk.js.map",
     "runtime~main.js": "/floofer-frontend/static/js/runtime~main.e4552e17.js",
     "runtime~main.js.map": "/floofer-frontend/static/js/runtime~main.e4552e17.js.map",
-    "static/js/2.24b27997.chunk.js": "/floofer-frontend/static/js/2.24b27997.chunk.js",
-    "static/js/2.24b27997.chunk.js.map": "/floofer-frontend/static/js/2.24b27997.chunk.js.map",
+    "static/js/2.9dc7443e.chunk.js": "/floofer-frontend/static/js/2.9dc7443e.chunk.js",
+    "static/js/2.9dc7443e.chunk.js.map": "/floofer-frontend/static/js/2.9dc7443e.chunk.js.map",
     "index.html": "/floofer-frontend/index.html",
-    "precache-manifest.9b514fcac5f661be1b3cb7ede48a7c84.js": "/floofer-frontend/precache-manifest.9b514fcac5f661be1b3cb7ede48a7c84.js",
+    "precache-manifest.06953a70ea67a44acfcb0edf649bd90b.js": "/floofer-frontend/precache-manifest.06953a70ea67a44acfcb0edf649bd90b.js",
     "service-worker.js": "/floofer-frontend/service-worker.js",
-    "static/css/main.2cce8147.chunk.css.map": "/floofer-frontend/static/css/main.2cce8147.chunk.css.map"
+    "static/css/main.17d80da8.chunk.css.map": "/floofer-frontend/static/css/main.17d80da8.chunk.css.map",
+    "static/media/welcomePic1.jpg": "/floofer-frontend/static/media/welcomePic1.6cf16aac.jpg"
   }
 }
