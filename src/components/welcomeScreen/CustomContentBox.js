@@ -11,7 +11,6 @@ import Rating from '@material-ui/lab/Rating';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import CustomCarousel from "./CustomCarousel";
 import Chip from "@material-ui/core/Chip";
 import Fab from "@material-ui/core/Fab";
 import ThumbUpAlt from "@material-ui/icons/ThumbUpAlt";

@@ -3,7 +3,6 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import '../../WelcomeScreen.css';
 import NavLink from "react-bootstrap/NavLink";
-import {Button} from "react-bootstrap";
 
 const CustomNavbar = (props) => {
 
@@ -35,7 +34,6 @@ const CustomNavbar = (props) => {
                 </Nav>
                 <Nav>
                     {/*<Nav.Link style={styles.loginLink}>Zaloguj się</Nav.Link>*/}
-                    <Button variant="outline-light">Zaloguj się</Button>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
