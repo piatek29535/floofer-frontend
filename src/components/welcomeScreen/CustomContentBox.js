@@ -12,7 +12,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import CustomCarousel from "./CustomCarousel";
-
+import Chip from "@material-ui/core/Chip";
+import Fab from "@material-ui/core/Fab";
+import ThumbUpAlt from "@material-ui/icons/ThumbUpAlt";
 
 const CustomContentBox = (props) => {
 
@@ -24,7 +26,7 @@ const CustomContentBox = (props) => {
         },
         headerBox:{
             marginTop:'0',
-            minHeight:'90vh',
+            minHeight:'100vh',
             background :`url(${BackgroundImage1})`,
             backgroundRepeat:'no-repeat',
             backgroundSize:'cover',
@@ -36,12 +38,11 @@ const CustomContentBox = (props) => {
             opacity:'0.9',
         },
         headerTypographyTitle:{
-          paddingBottom:'50px',
-          textShadow:'0 0 0.5em #000000, 0 0 0.5em #000000, 0 0 0.5em #000000'
+            paddingBottom:'50px',
+            textShadow:'0 0 0.5em #000000, 0 0 0.5em #000000, 0 0 0.5em #000000'
         },
         contentBox:{
-            border:'1px solid red',
-            minHeight:'90vh',
+            minHeight:'100vh',
             display:'flex',
             alignItems:'center',
             justifyContent:'center',
@@ -49,15 +50,16 @@ const CustomContentBox = (props) => {
         },
         cardContent:{
             display:'flex',
-            flexDirection:'row',
-            justifyContent:'center',
+            flexDirection:'column',
             alignItems:'center',
-            boxShadow:'10px 10px 10px 10px rgba(0, 0, 0, 0.5)'
+            boxShadow: '0 0 10px'
         },
         cardContainers:{
+            padding:'15px',
             display:'flex',
             justifyContent:'center',
             alignItems:'center',
+            flexDirection:'column'
         },
         errorCardContainer:{
             display:'flex',
@@ -67,11 +69,28 @@ const CustomContentBox = (props) => {
             width:'90vh'
         },
         footerBox:{
-            minHeight:'90vh',
+            margin:0,
+            minHeight:'100vh',
             display:'flex',
-            alignItems:'center',
-            justifyContent:'center',
             flexDirection:'column',
+        },
+        footerContent:{
+            flex:20,
+            opacity:0.5,
+            backgroundColor:'#28313B',
+            maxWidth:'100%',
+            display:'flex',
+            justifyContent:'center',
+            alignItems:'center',
+            flexDirection:'column'
+        },
+        footerBottomBar:{
+            flex:1,
+            backgroundColor:'#28313B',
+            maxWidth:'100%',
+            display:'flex',
+            justifyContent:'center',
+            alignItems:'center'
         }
 
     };
@@ -88,55 +107,82 @@ const CustomContentBox = (props) => {
                 <CustomCarousel/>
             </Box>
             <Box style={styles.contentBox} ref={props.refs[2]}>
-                <Typography style={{paddingBottom:'100px', textShadow:'2px 2px 4px #000000'}} variant="h1">A oto co mówią o nas użytkownicy!</Typography>
+                <Typography style={{paddingBottom:'100px', textShadow:'2px 2px 4px #000000'}} variant="h2">A oto co mówią o nas użytkownicy!</Typography>
                 {props.opinionsFetching ?
-                    <CircularProgress/>
+                    <CircularProgress color="secondary"/>
                     : (props.opinionsError ?
-                            <Card style={styles.cardContent}>
-                                <Container style={styles.errorCardContainer}>
-                                    <Typography variant="h5" component="h2">
-                                        Whopsie! Coś poszło nie tak. Naciśnij przycisk obok aby spróbować jeszcze raz!
-                                    </Typography>
-                                </Container>
-                                <CardActions>
-                                    <Button variant="contained" size="medium" color="primary" onClick={() => window.location.reload()}>Odśwież</Button>
-                                </CardActions>
-                            </Card>
-                            :<Container maxWidth="lg">
-                                    <Grid container spacing={10}>
-                                        {opinions !== undefined ? opinions.map((user, index) => (
-                                                <Grid item key={index} xs={12} sm={6} md={4}>
-                                                    <Card style={styles.cardContent}>
-                                                        <Container style={styles.cardContainers}>
-                                                            <Avatar
-                                                                src={user.avatarUrl}
-                                                                title="Image title"
-                                                            />
-                                                            <Typography variant="h5" component="h2">
-                                                                {user.name}
-                                                            </Typography>
-                                                        </Container>
-                                                        <Container style={styles.cardContainers}>
-                                                            <CardContent>
-                                                                <Typography>
-                                                                    {"``"+user.comment+"``"}
-                                                                </Typography>
-                                                                <Rating value={Number(user.rating)} readOnly />
-                                                            </CardContent>
-                                                        </Container>
-                                                    </Card>
-                                                </Grid>
-                                            ))
-                                            : null}
-                                    </Grid>
-                                </Container>)
-            }
+                        <Card style={styles.cardContent}>
+                            <Container style={styles.errorCardContainer}>
+                                <Typography variant="h5" component="h2">
+                                    Whopsie! Coś poszło nie tak. Spróbuj odświeżyć stronę klikając w przycisk "Odśwież"
+                                </Typography>
+                            </Container>
+                            <CardActions>
+                                <Button style={{display:'flex', alignSelf:'center'}}variant="contained" size="medium" color="primary" onClick={() => window.location.reload()}>Odśwież</Button>
+                            </CardActions>
+                        </Card>
+                        :<Container maxWidth="lg">
+                            <Grid container spacing={10} style={{alignItems:'center'}}>
+                                {opinions !== undefined ? opinions.map((user, index) => (
+                                        <Grid item key={index} xs={12} sm={6} md={4}>
+                                            <Card style={styles.cardContent}>
+                                                <Container style={styles.cardContainers}>
+                                                    <Avatar
+                                                        src={user.avatarUrl}
+                                                        title="Image title"
+                                                    />
+                                                    <Typography variant="h5" component="h2">
+                                                        {user.name}
+                                                    </Typography>
+                                                </Container>
+                                                <Container style={styles.cardContainers}>
+                                                    <CardContent>
+                                                        <Typography>
+                                                            {"``"+user.comment+"``"}
+                                                        </Typography>
+                                                        <Rating value={Number(user.rating)} readOnly />
+                                                    </CardContent>
+                                                </Container>
+                                            </Card>
+                                        </Grid>
+                                    ))
+                                    : null}
+                            </Grid>
+                        </Container>)
+                }
             </Box>
             <Box id="benefits" style={styles.footerBox} my={2} ref={props.refs[3]}>
-                <Container style={{flex:20}}>
-                    <Typography>Footer</Typography>
+                <Container style={styles.footerContent}>
+                    <div style={{marginBottom:'100px'}}>
+                        <Typography variant={"h1"}>...a to tylko początek!</Typography>
+                        <Typography variant={"h2"}>Zarejestruj konto i przekonaj się sam</Typography>
+                    </div>
+                    <Fab
+                        style={{backgroundColor:'blue', border:'2px solid white', minWidth:'20%', color:'white', justifyContent:'space-around'}}
+                        variant="extended"
+                        size="medium"
+                    >
+                        <ThumbUpAlt />
+                        Zacznij już dziś
+                    </Fab>
                 </Container>
-                <Container style={{flex:1,backgroundColor:'#28313B',maxWidth:'100%'}} maxWidth='xl'>xD</Container>
+                <Container style={styles.footerBottomBar} maxWidth='xl'>
+                    <div style={{width:'40%'}}>
+                        <Typography style={{color:'grey', borderBottom:'1px white solid'}}>Autorzy</Typography>
+                        <div style={{padding:'5px 0 0 0',display:'flex',justifyContent:'space-around'}}>
+                            <Chip
+                                label="Nikodem Zawirski"
+                                onClick={()=>window.open('https://github.com/nzawirski')}
+                                avatar={<Avatar alt="Natacha" src="https://avatars2.githubusercontent.com/u/43851876?s=460&v=4" />}
+                            />
+                            <Chip
+                                label="Adam Piątek"
+                                onClick={()=>window.open('https://github.com/piatek29535')}
+                                avatar={<Avatar alt="Natacha" src="https://avatars3.githubusercontent.com/u/43843885?s=460&v=4" />}
+                            />
+                        </div>
+                    </div>
+                </Container>
             </Box>
         </Container>
     )

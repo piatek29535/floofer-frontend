@@ -16,7 +16,7 @@ class WelcomeScreen extends Component {
     render() {
         const randomNum = Math.floor(Math.random() * (12 - 7 + 1)) + 7;
 
-        const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop-70);
+        const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 
         return (
             <div className="App">
