@@ -22,7 +22,8 @@ const CustomContentBox = (props) => {
     const styles = { // Consider moving styles to another file
         container:{
             minWidth:'100%',
-            padding:0
+            padding:0,
+            margin:0
         },
         headerBox:{
             marginTop:'0',
@@ -66,7 +67,7 @@ const CustomContentBox = (props) => {
             justifyContent:'center',
             alignItems:'center',
             height:'100px',
-            width:'90vh'
+            margin:20
         },
         footerBox:{
             margin:0,
@@ -104,7 +105,9 @@ const CustomContentBox = (props) => {
                 <Typography variant={"h5"}>Twój wygodny i przejżysty komunikator na wyciągnięcie ręki</Typography>
             </Box>
             <Box style={styles.contentBox} my={2} ref={props.refs[1]}>
-                <CustomCarousel/>
+                <Typography>
+                    Add something here: Carousel or sth else
+                </Typography>
             </Box>
             <Box style={styles.contentBox} ref={props.refs[2]}>
                 <Typography style={{paddingBottom:'100px', textShadow:'2px 2px 4px #000000'}} variant="h2">A oto co mówią o nas użytkownicy!</Typography>
