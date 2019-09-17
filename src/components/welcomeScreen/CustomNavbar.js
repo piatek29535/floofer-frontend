@@ -3,6 +3,8 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import '../../WelcomeScreen.css';
 import NavLink from "react-bootstrap/NavLink";
+import Button from "react-bootstrap/Button";
+import {Forward} from "@material-ui/icons";
 
 const CustomNavbar = (props) => {
 
@@ -33,7 +35,10 @@ const CustomNavbar = (props) => {
                     }
                 </Nav>
                 <Nav>
-                    {/*<Nav.Link style={styles.loginLink}>Zaloguj się</Nav.Link>*/}
+                    {/*<Nav.Link href={"/signUp"}>Zaloguj się</Nav.Link>*/}
+                    <Button href="/signUp" variant="primary" style={{border:'1px solid white', fontWeight:'600', paddingRight:'7px'}}>
+                       Zaloguj się <Forward/>
+                    </Button>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
