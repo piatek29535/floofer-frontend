@@ -5,6 +5,11 @@ import Tab from "@material-ui/core/Tab";
 import signUpBackground from '../../images/signInUp/signUpBackground.jpg';
 import Fade from "@material-ui/core/Fade";
 import Button from "react-bootstrap/Button";
+import SignInContainer from "./SignInContainer";
+import SignUpContainer from "./SignUpContainer";
+import {connect} from "react-redux";
+import {signInClicked, signUpClicked} from "../../actions/signInUpActions";
+import RegisteredScreen from "./RegisteredScreen";
 
 const styles = {
     mainContainer:{
@@ -19,7 +24,6 @@ const styles = {
         flexDirection: 'column'
     },
     loginContainer:{
-        height:'auto',
         width:'auto',
         display:'flex',
         justifyContent:'center',
@@ -37,44 +41,53 @@ const styles = {
         borderBottom:'1px solid black'
     },
     contentBox:{
+        padding:'20px',
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
+        flexDirection:'column',
         flex:9
     }
 };
 
 class SignInUp extends Component {
     render() {
+        console.log(this.props);
+
         return (
             <div style={styles.mainContainer}>
                 <Fade in timeout={500}>
                     <Container style={styles.loginContainer}>
                         <Tabs
-                            value={0}
-                            // onChange={handleChange}
+                            value={this.props.value}
+                            onChange={(e,v) => v === 1 ? this.props.dispatch(signUpClicked()) : this.props.dispatch(signInClicked())}
                             indicatorColor="primary"
                             textColor="primary"
                             centered
                             style={styles.tabs}
                         >
-                            <Tab style={styles.tab} label="Sign In" />
-                            <Tab style={styles.tab} label="Sign Up" />
+                            {console.log(this.props.value)}
+                            <Tab style={styles.tab} label="Zaloguj się" />
+                            <Tab style={styles.tab} label="Zarejestruj się" />
                         </Tabs>
-                        {/*<ContentBox>*/}
-                        {/*    */}
-                        {/*</ContentBox>*/}
-                        <Container style={styles.contentBox}>
-                            <span>Tutaj content</span>
-                        </Container>
+                        {this.props.value === 0 ?
+                            <SignInContainer style={styles.contentBox}/>
+                            :
+                            <SignUpContainer style={styles.contentBox}/>
+                        }
                     </Container>
                 </Fade>
                 <Button href="/" variant="dark" style={{marginTop:10}}>
                     Powrót do strony głownej
                 </Button>
+                <RegisteredScreen/>
             </div>
         );
     }
 }
 
-export default SignInUp;
+const mapStateToProps = (state) => ({
+    value:state.signInUpReducers.value
+});
+
+export default connect(mapStateToProps)(SignInUp);

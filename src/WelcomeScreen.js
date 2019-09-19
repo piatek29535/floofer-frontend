@@ -9,7 +9,7 @@ import {initializeRefs} from "./actions/welcomeScreenRefs";
 class WelcomeScreen extends Component {
 
     componentDidMount() {
-        this.props.dispatch(fetchOpinionsFromServer())
+        this.props.dispatch(fetchOpinionsFromServer());
         this.props.dispatch(initializeRefs())
     }
 
