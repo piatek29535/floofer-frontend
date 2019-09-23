@@ -10,3 +10,20 @@ export const signInUpReducers = (state = {
           return state;
   }
 };
+
+export const signInUpButtonReducers = (state = {
+    signUpButtonLoading: false,
+    signUpButtonData: [],
+    signUpButtonError:' '
+}, action) => {
+  switch (action.type) {
+      case 'SIGN_UP_BUTTON_FETCHING':
+          return {...state, signUpButtonLoading: action.payload };
+      case 'SIGN_UP_BUTTON_FETCHED':
+          return {...state, signUpButtonLoading: false, signUpButtonData: action.payload};
+      case 'SIGN_UP_BUTTON_FETCHING_ERROR':
+          return {...state, signUpButtonLoading: false, signUpButtonError: action.payload};
+      default:
+          return state;
+  }
+};

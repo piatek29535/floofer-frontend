@@ -1,12 +1,13 @@
 import {combineReducers} from "redux";
 import {fetchData} from "./opinions";
 import {initializeRefs} from "./navigationRefs";
-import {signInUpReducers} from "./singInUpReducers";
+import {signInUpReducers, signInUpButtonReducers} from "./singInUpReducers";
 
 const reducers = combineReducers({
     fetchData,
     initializeRefs,
-    signInUpReducers
+    signInUpReducers,
+    signInUpButtonReducers
 });
 
 export default reducers;

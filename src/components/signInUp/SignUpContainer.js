@@ -2,7 +2,8 @@ import React from 'react';
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "react-bootstrap/Button";
-import RegisteredScreen from "./RegisteredScreen";
+import {signUpButtonClicked} from "../../actions/signInUpActions";
+import {CircularProgress} from "@material-ui/core";
 
 function SignUpContainer(props) {
     return (
@@ -40,11 +41,11 @@ function SignUpContainer(props) {
                 type="date"
                 defaultValue="2019-10-14"
             />
-            <Button onClick={() => alert("Here open the modal with acknowledgements")}
+            <Button onClick={() => props.signUpData.dispatch(signUpButtonClicked(100))}
                     style={{marginTop:'20px'}}
                     variant="outline-success"
             >
-                Zarejestruj
+                {props.signUpData.signUpData.signUpButtonLoading ? <CircularProgress/> : 'Zarejestruj'}
             </Button>
         </form>
     );

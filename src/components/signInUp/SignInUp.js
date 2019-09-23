@@ -9,7 +9,6 @@ import SignInContainer from "./SignInContainer";
 import SignUpContainer from "./SignUpContainer";
 import {connect} from "react-redux";
 import {signInClicked, signUpClicked} from "../../actions/signInUpActions";
-import RegisteredScreen from "./RegisteredScreen";
 
 const styles = {
     mainContainer:{
@@ -52,8 +51,6 @@ const styles = {
 
 class SignInUp extends Component {
     render() {
-        console.log(this.props);
-
         return (
             <div style={styles.mainContainer}>
                 <Fade in timeout={500}>
@@ -66,28 +63,27 @@ class SignInUp extends Component {
                             centered
                             style={styles.tabs}
                         >
-                            {console.log(this.props.value)}
                             <Tab style={styles.tab} label="Zaloguj się" />
                             <Tab style={styles.tab} label="Zarejestruj się" />
                         </Tabs>
                         {this.props.value === 0 ?
                             <SignInContainer style={styles.contentBox}/>
                             :
-                            <SignUpContainer style={styles.contentBox}/>
+                            <SignUpContainer style={styles.contentBox} signUpData={this.props}/>
                         }
                     </Container>
                 </Fade>
                 <Button href="/" variant="dark" style={{marginTop:10}}>
                     Powrót do strony głownej
                 </Button>
-                <RegisteredScreen/>
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => ({
-    value:state.signInUpReducers.value
+    value:state.signInUpReducers.value,
+    signUpData: state.signInUpButtonReducers
 });
 
 export default connect(mapStateToProps)(SignInUp);
