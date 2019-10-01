@@ -1,7 +1,7 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
-import {Typography} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 import BackgroundImage1 from '../../images/welcomeScreen/welcomePic1.jpg';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -11,7 +11,6 @@ import Rating from '@material-ui/lab/Rating';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import CustomCarousel from "./CustomCarousel";
 import Chip from "@material-ui/core/Chip";
 import Fab from "@material-ui/core/Fab";
 import ThumbUpAlt from "@material-ui/icons/ThumbUpAlt";

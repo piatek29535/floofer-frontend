@@ -3,7 +3,7 @@ export const fetchData = (state =
                                   opinionsError:false,
                                   opinionsFetching:true
                               }
-                              , action) => {
+    , action) => {
     switch(action.type){
         case "OPINIONS_FETCHED":{
             return {...state, json:action.payload, opinionsFetching: false}
