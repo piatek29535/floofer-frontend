@@ -6,7 +6,7 @@ import WelcomeScreen from "./WelcomeScreen";
 class App extends Component {
     render() {
         return (
-            <BrowserRouter basename={process.env.PUBLIC_URL}>
+            <BrowserRouter >
                 <div>
                     <Route exact path={process.env.PUBLIC_URL + "/"} component={WelcomeScreen} />
                     <Route path={process.env.PUBLIC_URL + "/signUp"} component={SignInUp} />
