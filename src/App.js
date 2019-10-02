@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter, Route} from "react-router-dom";
 import SignInUp from "./components/signInUp/SignInUp";
 import WelcomeScreen from "./WelcomeScreen";
 
 class App extends Component {
     render() {
         return (
-            <Router>
+            <BrowserRouter basename={process.env.PUBLIC_URL}>
                 <div>
                     <Route exact path="/" component={WelcomeScreen} />
                     <Route path="/signUp" component={SignInUp} />
                 </div>
-            </Router>
+            </BrowserRouter>
         );
     }
 }
