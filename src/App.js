@@ -9,7 +9,7 @@ class App extends Component {
             <BrowserRouter basename={process.env.PUBLIC_URL}>
                 <div>
                     <Route exact path={process.env.PUBLIC_URL + "/"} component={WelcomeScreen} />
-                    <Route path={process.env.PUBLIC_URL + "signUp"} component={SignInUp} />
+                    <Route path={process.env.PUBLIC_URL + "/signUp"} component={SignInUp} />
                 </div>
             </BrowserRouter>
         );
