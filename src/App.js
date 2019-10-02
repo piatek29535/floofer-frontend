@@ -8,8 +8,8 @@ class App extends Component {
         return (
             <BrowserRouter basename={process.env.PUBLIC_URL}>
                 <div>
-                    <Route exact path="/" component={WelcomeScreen} />
-                    <Route path="/signUp" component={SignInUp} />
+                    <Route exact path={process.env.PUBLIC_URL + "/"} component={WelcomeScreen} />
+                    <Route path={process.env.PUBLIC_URL + "signUp"} component={SignInUp} />
                 </div>
             </BrowserRouter>
         );
