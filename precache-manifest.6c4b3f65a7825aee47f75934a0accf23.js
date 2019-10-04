@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3cfd9303d864508a89d9823a56573ac6",
+    "revision": "4782ff3b67f364360a73e2dce75a2a0b",
     "url": "/floofer-frontend/index.html"
   },
   {
-    "revision": "8f1cdbfe82a89099b2de",
+    "revision": "dfcb03843364ebb9d4c2",
     "url": "/floofer-frontend/static/css/main.17d80da8.chunk.css"
   },
   {
-    "revision": "7dfec18ff9a864cfe8f8",
-    "url": "/floofer-frontend/static/js/2.2a0c966a.chunk.js"
+    "revision": "9e4db0e8212d687f3f3c",
+    "url": "/floofer-frontend/static/js/2.3d441ad2.chunk.js"
   },
   {
-    "revision": "8f1cdbfe82a89099b2de",
-    "url": "/floofer-frontend/static/js/main.0202aa91.chunk.js"
+    "revision": "dfcb03843364ebb9d4c2",
+    "url": "/floofer-frontend/static/js/main.e6de2d80.chunk.js"
   },
   {
     "revision": "3cab8ed62cab68322e04",
