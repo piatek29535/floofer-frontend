@@ -1,47 +1,51 @@
 import React, {Component} from 'react';
-import Drawer from "@material-ui/core/Drawer";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import Avatar from "@material-ui/core/Avatar";
+import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import Container from "@material-ui/core/Container";
+import Image from "react-bootstrap/Image";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 
 const styles = {
     mainContainer:{
-        height:'100vh',
-        backgroundColor:'white',
         display:'flex',
+        flexDirection:'row',
+        height:'100vh',
     },
-    drawer:{
-        backgroundColor:'#189ad3', // sth wrong with bg color
-        color:'white',
-        height:'100vh'
+
+
+    //Right menu
+    menuPanel:{
+        backgroundColor:'#004E92',
+        flex:2,
+        color:'#FFFFFF'
     },
-    drawerPanel:{
-        flex:1
-    },
-    drawerAvatarContainer:{
-        display:"flex",
-        flexDirection:'column',
-        justifyContent:'center',
+    avatarAndName:{
+        display:'flex',
         alignItems:'center',
-        marginBottom:'20px',
+        justifyContent:'center',
+        flexDirection: 'column',
+        borderBottom:'1px solid #6699CC',
+        paddingBottom:'20px'
     },
-    drawerAvatar:{
-        width: 60,
-        height: 60,
-        alignSelf:'center',
-        backgroundColor:'#8A2BE2'
+    avatar:{
+        margin:'20px 20px 10px 20px',
+        width:180,
+        height:171,
+        objectFit:'cover'
     },
+    listContainer:{
+        color:'#FFFFFF'
+    },
+    listRouter:{
+        color:'#FFFFFF'
+    },
+
+    //Content
     contentPanel:{
-        flex:5,
-        border:'1px solid red'
+        padding:'1%',
+        flex:9,
+        backgroundColor: '#FFFFFF'
     }
 };
 
@@ -49,31 +53,56 @@ class MainContainer extends Component {
     render() {
         return (
             <div style={styles.mainContainer}>
-                <Drawer
-                    style={styles.drawerPanel}
-                    variant="permanent"
-                    open={false}
-                >
-                    <List style={styles.drawer}>
-                        <div style={styles.drawerAvatarContainer}>
-                            <IconButton>
-                                <Avatar button style={styles.drawerAvatar}>AP</Avatar>
-                            </IconButton>
-                            <Typography>Imię Nazwisko</Typography>
-                        </div>
-                        <Divider/>
+                <div style={styles.menuPanel}>
 
-                        {['Aktualności', 'Znajomi', 'Wyloguj'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon style={{color:'white'}}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                </Drawer>
-                <Container style={styles.contentPanel}>
-                    <h1>Tutaj content</h1>
-                </Container>
+                    <div style={styles.avatarAndName}>
+                        <Image
+                            style={styles.avatar}
+                            src="https://cdn.pixabay.com/photo/2018/09/03/10/10/cape-gannet-3650803_960_720.jpg"
+                            roundedCircle />
+                        <Typography variant="h6">Imię Nazwisko</Typography>
+                    </div>
+
+                    <div style={styles.listContainer}>
+                        <List>
+                                {/*<Router>*/}
+                                {/*    <Switch>*/}
+                                {/*        <Route exact path="/aktualności">*/}
+                                {/*        </Route>*/}
+                                {/*        <Route path="/znajomi">*/}
+                                {/*        </Route>*/}
+                                {/*        <Route path="/ustawienia">*/}
+                                {/*        </Route>*/}
+                                {/*        <Route path="wyloguj">*/}
+                                {/*        </Route>*/}
+                                {/*    </Switch>*/}
+                                {/*</Router>*/}
+                            {
+                                [{name:"Aktualności", link:'/news'},
+                                    {name:"Znajomi", link:'/znajomi'},
+                                    {name:"Ustawienia", link:'/ustawienia'},
+                                    {name:"Wyloguj", link:'/wyloguj'},
+                                    ].map((item, i) => (
+
+                                        <ListItem button key={i}>
+                                            <Link to={item.link}>{item.name}</Link>
+                                        </ListItem>
+                                ))
+                            }
+                        </List>
+                    </div>
+                </div>
+
+                <div style={styles.contentPanel}>
+                    <Paper>
+                        <Typography variant="h5" component="h3">
+                            This is a sheet of paper.
+                        </Typography>
+                        <Typography component="p">
+                            Paper can be used to build surface or other elements for your application.
+                        </Typography>
+                    </Paper>
+                </div>
             </div>
         );
     }
