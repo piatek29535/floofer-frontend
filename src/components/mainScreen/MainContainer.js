@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Image from "react-bootstrap/Image";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
+import {Link, Route, Switch} from "react-router-dom";
+import News from "./mainScreenComponents/News";
+import Friends from "./mainScreenComponents/Friends";
+import Settings from "./mainScreenComponents/Settings";
+import Paper from "@material-ui/core/Paper";
 
 const styles = {
     mainContainer:{
@@ -43,9 +46,16 @@ const styles = {
 
     //Content
     contentPanel:{
-        padding:'1%',
+        padding:'1% 1% 0 1%',
         flex:9,
         backgroundColor: '#FFFFFF'
+    },
+    contentPaper:{
+        height:'100%',
+        padding:'1%',
+        boxShadow:'0 0 10px',
+        borderBottomLeftRadius:'0',
+        borderBottomRightRadius:'0',
     }
 };
 
@@ -65,28 +75,15 @@ class MainContainer extends Component {
 
                     <div style={styles.listContainer}>
                         <List>
-                                {/*<Router>*/}
-                                {/*    <Switch>*/}
-                                {/*        <Route exact path="/aktualności">*/}
-                                {/*        </Route>*/}
-                                {/*        <Route path="/znajomi">*/}
-                                {/*        </Route>*/}
-                                {/*        <Route path="/ustawienia">*/}
-                                {/*        </Route>*/}
-                                {/*        <Route path="wyloguj">*/}
-                                {/*        </Route>*/}
-                                {/*    </Switch>*/}
-                                {/*</Router>*/}
                             {
-                                [{name:"Aktualności", link:'/news'},
-                                    {name:"Znajomi", link:'/znajomi'},
-                                    {name:"Ustawienia", link:'/ustawienia'},
-                                    {name:"Wyloguj", link:'/wyloguj'},
-                                    ].map((item, i) => (
-
-                                        <ListItem button key={i}>
-                                            <Link to={item.link}>{item.name}</Link>
-                                        </ListItem>
+                                [{name:"Aktualności", link:'/main/aktualnosci'},
+                                    {name:"Znajomi", link:'/main/znajomi'},
+                                    {name:"Ustawienia", link:'/main/ustawienia'},
+                                    {name:"Wyloguj", link:'/'},
+                                ].map((item, i) => (
+                                    <ListItem button key={i}>
+                                        <Link style={{color:'white', width:'100%'}} to={item.link}>{item.name}</Link>
+                                    </ListItem>
                                 ))
                             }
                         </List>
@@ -94,13 +91,22 @@ class MainContainer extends Component {
                 </div>
 
                 <div style={styles.contentPanel}>
-                    <Paper>
-                        <Typography variant="h5" component="h3">
-                            This is a sheet of paper.
-                        </Typography>
-                        <Typography component="p">
-                            Paper can be used to build surface or other elements for your application.
-                        </Typography>
+                    <Paper style={styles.contentPaper}>
+                        <Switch>
+                            <Route
+                                exact
+                                path="/main/aktualnosci"
+                                children={<News/>}
+                            />
+                            <Route
+                                path="/main/znajomi"
+                                children={<Friends/>}
+                            />
+                            <Route
+                                path="/main/ustawienia"
+                                children={<Settings/>}
+                            />
+                        </Switch>
                     </Paper>
                 </div>
             </div>
