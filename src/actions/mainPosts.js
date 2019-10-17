@@ -8,3 +8,17 @@ export function fetchPosts(){ // probably there i will have to take the collecti
     }
 
 }
+
+export function toggleOnDialog() {
+    return {
+        type:'TOGGLE_ON',
+        payload:true
+    }
+}
+
+export function toggleOffDialog() {
+    return {
+        type:'TOGGLE_OFF',
+        payload:false
+    }
+}

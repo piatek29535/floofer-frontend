@@ -17,3 +17,16 @@ export const fetchPosts = (state ={
             return state;
     }
 };
+
+export const toggleDialog = (state = {
+    isDialogOpened:false
+}, action) => {
+  switch (action.type) {
+      case 'TOGGLE_ON':
+          return {isDialogOpened: action.payload};
+      case 'TOGGLE_OFF':
+          return {isDialogOpened: action.payload};
+      default:
+          return state;
+  }
+};

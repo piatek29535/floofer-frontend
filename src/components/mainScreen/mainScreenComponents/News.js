@@ -7,7 +7,10 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItem from "@material-ui/core/ListItem";
 import Container from "@material-ui/core/Container";
 import {connect} from "react-redux";
-import {fetchPosts} from "../../../actions/mainPosts";
+import {fetchPosts, toggleOnDialog} from "../../../actions/mainPosts";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from '@material-ui/icons/Add';
+import DialogComponent from "./DialogComponent";
 
 const styles={
     mainContainer:{
@@ -30,8 +33,13 @@ const styles={
         padding:'5px',
         margin:'1%',
         boxShadow:'0 0 10px',
-        maxWidth:'97%'
+        maxWidth:'97%',
     },
+    fab:{
+        position: 'fixed',
+        bottom: 50,
+        right: 50,
+    }
 };
 
 class News extends Component {
@@ -67,14 +75,19 @@ class News extends Component {
                             </ListItem>
                         ))
                     }
+                    <Fab onClick={() => {this.props.dispatch(toggleOnDialog())}} color="primary" style={styles.fab}>
+                        <AddIcon />
+                    </Fab>
                 </List>
+                <DialogComponent isDialogOpened={this.props}/>
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => ({
-    posts:state.fetchPosts
+    posts:state.fetchPosts,
+    dialogToggle:state.toggleDialog
 });
 
 export default connect(mapStateToProps)(News);
