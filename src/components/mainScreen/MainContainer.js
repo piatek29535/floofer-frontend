@@ -8,6 +8,7 @@ import News from "./mainScreenComponents/News";
 import Friends from "./mainScreenComponents/Friends";
 import Settings from "./mainScreenComponents/Settings";
 import Paper from "@material-ui/core/Paper";
+import Messages from "./mainScreenComponents/Messages";
 
 const styles = {
     mainContainer:{
@@ -78,6 +79,7 @@ class MainContainer extends Component {
                             {
                                 [{name:"Aktualności", link:'/main/aktualnosci'},
                                     {name:"Znajomi", link:'/main/znajomi'},
+                                    {name:"Wiadomości", link:'/main/wiadomosci'},
                                     {name:"Ustawienia", link:'/main/ustawienia'},
                                     {name:"Wyloguj", link:'/'},
                                 ].map((item, i) => (
@@ -101,6 +103,10 @@ class MainContainer extends Component {
                             <Route
                                 path="/main/znajomi"
                                 children={<Friends/>}
+                            />
+                            <Route
+                                path="/main/wiadomosci"
+                                children={<Messages/>}
                             />
                             <Route
                                 path="/main/ustawienia"

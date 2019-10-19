@@ -11,6 +11,9 @@ import {fetchPosts, toggleOnDialog} from "../../../actions/mainPosts";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from '@material-ui/icons/Add';
 import DialogComponent from "./DialogComponent";
+import ThumbUp from "@material-ui/icons/ThumbUp";
+import IconButton from "@material-ui/core/IconButton";
+import Comment from "@material-ui/icons/Comment";
 
 const styles={
     mainContainer:{
@@ -34,6 +37,7 @@ const styles={
         margin:'1%',
         boxShadow:'0 0 10px',
         maxWidth:'97%',
+        flexDirection:'column'
     },
     fab:{
         position: 'fixed',
@@ -63,15 +67,23 @@ class News extends Component {
                 <List style={styles.list}>
                     {
                         posts.postsFetched.map((item) => (
-                            <ListItem key={item.id} style={styles.listItem} alignItems="flex-start">
-                                <ListItemAvatar>
-                                    <Avatar alt=" " src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary={item.title}
-                                    secondary={item.body}
-                                    //this should contain the real fetched data from server
-                                />
+                            <ListItem button key={item.id} style={styles.listItem} alignItems="flex-start">
+                                <div style={{display:'flex', flexDirection:'row'}}>
+                                    <ListItemAvatar>
+                                        <Avatar alt=" " src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary={item.title.charAt(0).toLocaleUpperCase()+item.title.substr(1)}
+                                        secondary={item.body.charAt(0).toLocaleUpperCase()+item.body.substr(1)}
+                                        //this should contain the real fetched data from server
+                                    />
+                                </div>
+
+                                {/*I think it could be better, if a use would see a post first and then decide to comment/like or not*/}
+                                <div style={{marginLeft:'45px'}}>
+                                    <IconButton disabled color="primary"><ThumbUp fontSize='small'/></IconButton>
+                                    <IconButton disabled color="primary"><Comment/></IconButton>
+                                </div>
                             </ListItem>
                         ))
                     }
