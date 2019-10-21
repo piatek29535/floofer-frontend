@@ -3,6 +3,7 @@ import {fetchData} from "./opinions";
 import {initializeRefs} from "./navigationRefs";
 import {signInUpReducers, signInUpButtonReducers} from "./singInUpReducers";
 import {fetchPosts, toggleDialog} from "./mainPostsReducers";
+import {newsDialogData} from "./newsDialogReducers";
 
 const reducers = combineReducers({
     fetchData,
@@ -10,7 +11,8 @@ const reducers = combineReducers({
     signInUpReducers,
     signInUpButtonReducers,
     fetchPosts,
-    toggleDialog
+    toggleDialog,
+    newsDialogData
 });
 
 export default reducers;

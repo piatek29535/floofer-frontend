@@ -14,6 +14,8 @@ import DialogComponent from "./DialogComponent";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import IconButton from "@material-ui/core/IconButton";
 import Comment from "@material-ui/icons/Comment";
+import NewsDialog from "./NewsDialog";
+import {newsDialogPostOpen} from "../../../actions/newsDialogActions";
 
 const styles={
     mainContainer:{
@@ -67,7 +69,7 @@ class News extends Component {
                 <List style={styles.list}>
                     {
                         posts.postsFetched.map((item) => (
-                            <ListItem button key={item.id} style={styles.listItem} alignItems="flex-start">
+                            <ListItem button onClick={() => this.props.dispatch(newsDialogPostOpen(item))} key={item.id} style={styles.listItem} alignItems="flex-start">
                                 <div style={{display:'flex', flexDirection:'row'}}>
                                     <ListItemAvatar>
                                         <Avatar alt=" " src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
@@ -75,7 +77,6 @@ class News extends Component {
                                     <ListItemText
                                         primary={item.title.charAt(0).toLocaleUpperCase()+item.title.substr(1)}
                                         secondary={item.body.charAt(0).toLocaleUpperCase()+item.body.substr(1)}
-                                        //this should contain the real fetched data from server
                                     />
                                 </div>
 
@@ -91,6 +92,7 @@ class News extends Component {
                         <AddIcon />
                     </Fab>
                 </List>
+                <NewsDialog dispatch={this.props.dispatch} newsDialogData={this.props.newsDialogData}/>
                 <DialogComponent isDialogOpened={this.props}/>
             </div>
         );
@@ -99,7 +101,8 @@ class News extends Component {
 
 const mapStateToProps = (state) => ({
     posts:state.fetchPosts,
-    dialogToggle:state.toggleDialog
+    dialogToggle:state.toggleDialog,
+    newsDialogData:state.newsDialogData
 });
 
 export default connect(mapStateToProps)(News);
