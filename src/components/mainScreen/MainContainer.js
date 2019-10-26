@@ -77,14 +77,14 @@ class MainContainer extends Component {
                     <div style={styles.listContainer}>
                         <List>
                             {
-                                [{name:"Aktualności", link:'/main/aktualnosci'},
+                                [{name:"Aktualności", link:'/main'},
                                     {name:"Znajomi", link:'/main/znajomi'},
                                     {name:"Wiadomości", link:'/main/wiadomosci'},
                                     {name:"Ustawienia", link:'/main/ustawienia'},
-                                    {name:"Wyloguj", link:'/'},
+                                    {name:"Wyloguj", link:'/signUp'},
                                 ].map((item, i) => (
                                     <ListItem button key={i}>
-                                        <Link style={{color:'white', width:'100%'}} to={item.link}>{item.name}</Link>
+                                        <Link style={{color:'white', width:'100%', textDecoration:'none'}} to={item.link}>{item.name}</Link>
                                     </ListItem>
                                 ))
                             }
@@ -97,7 +97,7 @@ class MainContainer extends Component {
                         <Switch>
                             <Route
                                 exact
-                                path="/main/aktualnosci"
+                                path="/main"
                                 children={<News/>}
                             />
                             <Route

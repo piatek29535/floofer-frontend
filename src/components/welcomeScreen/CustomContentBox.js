@@ -120,7 +120,7 @@ const CustomContentBox = (props) => {
                                 </Typography>
                             </Container>
                             <CardActions>
-                                <Button style={{display:'flex', alignSelf:'center'}}variant="contained" size="medium" color="primary" onClick={() => window.location.reload()}>Odśwież</Button>
+                                <Button style={{display:'flex', alignSelf:'center'}} variant="contained" size="medium" color="primary" onClick={() => window.location.reload()}>Odśwież</Button>
                             </CardActions>
                         </Card>
                         :<Container maxWidth="lg">
