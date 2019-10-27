@@ -50,6 +50,11 @@ const styles = {
 };
 
 class SignInUp extends Component {
+
+    componentDidMount() {
+        localStorage.setItem("token",null)
+    }
+
     render() {
         return (
             <div style={styles.mainContainer}>
@@ -76,6 +81,7 @@ class SignInUp extends Component {
                 <Button href="/" variant="dark" style={{marginTop:10}}>
                     Powrót do strony głownej
                 </Button>
+                {/*<CustomSnackbar />*/}
             </div>
         );
     }
