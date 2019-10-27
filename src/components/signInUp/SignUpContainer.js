@@ -41,7 +41,8 @@ function SignUpContainer(props) {
                 type="date"
                 defaultValue="2019-10-14"
             />
-            <Button onClick={() => props.signUpData.dispatch(signUpButtonClicked(100))}
+            <Button href="/news"
+                    onClick={() => props.signUpData.dispatch(signUpButtonClicked(100))}
                     style={{marginTop:'20px'}}
                     variant="outline-success"
             >
