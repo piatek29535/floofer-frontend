@@ -6,13 +6,15 @@ import CloseIcon from '@material-ui/icons/Close';
 class CustomSnackbar extends Component {
 
     state = {
-        open:true,
+        open:false,
     };
 
     handleClose = () => {
-        this.setState({
-            open:!this.state.open
-        })
+        if(this.props.isError){
+            this.setState({
+                open:false
+            })
+        }
     };
 
     render() {
@@ -23,13 +25,13 @@ class CustomSnackbar extends Component {
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}
-                open={this.state.open}
-                autoHideDuration={6000}
+                open={this.props.isError ? this.state.open : null}
+                autoHideDuration={1000}
                 onClose={this.handleClose}
                 ContentProps={{
                     'aria-describedby': 'message-id',
                 }}
-                message={<span id="message-id">Message</span>}
+                message={<span id="message-id">{this.props.errorMessage}</span>}
                 action={(
                     <IconButton
                         aria-label="close"
