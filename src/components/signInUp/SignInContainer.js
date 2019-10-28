@@ -5,6 +5,7 @@ import {login} from "../../actions/loginActions";
 import {connect} from "react-redux";
 import {CircularProgress} from "@material-ui/core";
 import CustomSnackbar from "./CustomSnackbar";
+import {Redirect} from "react-router-dom";
 
 class SignInContainer extends Component{
 
@@ -14,6 +15,7 @@ class SignInContainer extends Component{
             password:''
         },
         errorMessage:null,
+        isError:false
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -30,6 +32,7 @@ class SignInContainer extends Component{
                         ...this.state.credentials,
                         email: e.target.value
                     },
+                    isError:false
                 });
                 break;
             }
@@ -39,6 +42,7 @@ class SignInContainer extends Component{
                         ...this.state.credentials,
                         password: e.target.value
                     },
+                    isError:false
                 });
                 break;
             }
@@ -47,12 +51,19 @@ class SignInContainer extends Component{
         }
     };
 
+    handleClose = () => {
+        this.setState({
+            isError:!this.state.isError
+        })
+    };
+
     renderSwitch = (code, message) => {
         switch(code){
             case 404:
                 this.setState({
                         ...this.state,
                         errorMessage:message,
+                        isError:true
                     }
                 );
                 break;
@@ -60,6 +71,7 @@ class SignInContainer extends Component{
                 this.setState({
                         ...this.state,
                         errorMessage:message.message,
+                        isError:true
                     }
                 );
                 break;
@@ -72,7 +84,7 @@ class SignInContainer extends Component{
         return (
             <form style={this.props.style}>
 
-                <CustomSnackbar isError={this.props.data.isLoginError} errorMessage={this.state.errorMessage}/>
+                <CustomSnackbar handleClose={this.handleClose} isError={this.state.isError} errorMessage={this.state.errorMessage}/>
 
                 {/*{this.renderSwitch(this.props.data.loginErrorStatus,this.props.data.loginErrorData)}*/}
 
@@ -97,11 +109,12 @@ class SignInContainer extends Component{
                     onClick={() => {
                         this.props.dispatch(login(this.state.credentials))
                         // console.log(this.props.data)
-                        }}
+                    }}
                     variant="outline-success"
                 >
                     {this.props.data.isAuthenticating ? <CircularProgress/> : "Zaloguj"}
                 </Button>
+                {this.props.data.token ? <Redirect to='/main' /> : null}; TODO: Figure out how to make this better
             </form>
         );
     }

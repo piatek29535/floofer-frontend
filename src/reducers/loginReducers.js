@@ -11,9 +11,12 @@ export const loginReducer = (state = {
     switch(action.type){
         case 'IS_AUTHENTICATING':
             return {
-                ...state,
                 isAuthenticating: action.payload,
-                isLoginError: false
+                isLogged:false,
+                isLoginError: false,
+                token:'',
+                loginErrorData: '',
+                loginErrorStatus: null
             };
         case 'LOGIN_SUCCESS':
             localStorage.setItem('token',action.payload);
