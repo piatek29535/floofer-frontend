@@ -20,7 +20,7 @@ const CustomNavbar = (props) => {
                     height="30"
                     className="d-inline-block align-top"
                 />
-                <span> Fluffer</span>
+                <span> Floofer</span>
             </Navbar.Brand>
             <Navbar.Toggle/>
             <Navbar.Collapse>

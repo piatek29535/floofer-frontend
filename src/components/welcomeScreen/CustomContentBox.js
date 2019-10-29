@@ -100,7 +100,7 @@ const CustomContentBox = (props) => {
     return (
         <Container style={styles.container}>
             <Box style={styles.headerBox} maxWidth="sm" my={2} ref={props.refs[0]}>
-                <Typography style={styles.headerTypographyTitle} variant={"h1"}>Witaj w aplikacji Fluffer</Typography>
+                <Typography style={styles.headerTypographyTitle} variant={"h1"}>Witaj w aplikacji Floofer</Typography>
                 <Typography variant={"h5"}>Twój wygodny i przejżysty komunikator na wyciągnięcie ręki</Typography>
             </Box>
             <Box style={styles.contentBox} my={2} ref={props.refs[1]}>
