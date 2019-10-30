@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Snackbar from "@material-ui/core/Snackbar";
 
-class CustomSnackbar extends Component {
+class CustomSnackbarLogin extends Component {
 
     render() {
         return (
@@ -22,4 +22,4 @@ class CustomSnackbar extends Component {
     }
 }
 
-export default CustomSnackbar;
+export default CustomSnackbarLogin;

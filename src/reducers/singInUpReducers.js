@@ -13,16 +13,16 @@ export const signInUpReducers = (state = {
 
 export const signInUpButtonReducers = (state = {
     signUpButtonLoading: false,
-    signUpButtonData: {},
-    signUpButtonError:{},
+    registerStatus:null,
+    registerErrorMessage:''
 }, action) => {
   switch (action.type) {
       case 'SIGN_UP_BUTTON_FETCHING':
-          return {...state, signUpButtonLoading: action.payload };
+          return {signUpButtonLoading: action.payload, registerStatus: null };
       case 'SIGN_UP_BUTTON_FETCHED':
-          return {signUpButtonLoading: false, signUpButtonData: action.payload, signUpButtonError:{}};
+          return {signUpButtonLoading: false, registerStatus: action.payload.status, registerErrorMessage:''};
       case 'SIGN_UP_BUTTON_FETCHING_ERROR':
-          return {signUpButtonLoading: false, signUpButtonError: action.payload.response, signUpButtonData: {}};
+          return {signUpButtonLoading: false, registerStatus: action.payload.response.status, registerErrorMessage:action.payload.response.data};
       default:
           return state;
   }

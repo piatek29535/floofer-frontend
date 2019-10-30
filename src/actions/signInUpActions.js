@@ -13,9 +13,9 @@ export function signInClicked() {
     })
 }
 
-export function signUpButtonClicked(user){ // it should go with sth different than id like f.e email
+export function signUpButtonClicked(user){
     return dispatch => {
-        dispatch({type:'SIGN_UP_BUTTON_FETCHING', payload:true}); // implement like circular loading in button description or sth
+        dispatch({type:'SIGN_UP_BUTTON_FETCHING', payload:true});
 
         const {email, password} = user;
 

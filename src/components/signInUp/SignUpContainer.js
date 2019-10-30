@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "react-bootstrap/Button";
 import {signUpButtonClicked} from "../../actions/signInUpActions";
 import {CircularProgress} from "@material-ui/core";
+import CustomSnackbarRegister from "./CustomSnackbarRegister";
 
 class SignUpContainer extends Component{
 
@@ -13,6 +14,8 @@ class SignUpContainer extends Component{
         email: "",
         password: "",
         birthDate: "2019-10-10",
+        errorMessage:'',
+        errorCode:null
     };
 
     handleChange = (e, field) => {
@@ -36,6 +39,21 @@ class SignUpContainer extends Component{
                 return;
         }
     };
+
+    handleClose = () => {
+        this.setState({
+            isError:!this.state.isError
+        })
+    };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.signUpData.signUpData.registerStatus !== prevProps.signUpData.signUpData.registerStatus){
+            this.setState({
+                errorMessage:this.props.signUpData.signUpData.registerErrorMessage,
+                errorCode:this.props.signUpData.signUpData.registerStatus
+            })
+        }
+    }
 
     render() {
 
@@ -95,6 +113,7 @@ class SignUpContainer extends Component{
                 >
                     {this.props.signUpData.signUpData.signUpButtonLoading ? <CircularProgress/> : 'Zarejestruj'}
                 </Button>
+                <CustomSnackbarRegister errorMessage={this.state.errorMessage} errorCode={this.state.errorCode} handleClose={this.handleClose}/>
             </form>
         );
     }

@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import {login} from "../../actions/loginActions";
 import {connect} from "react-redux";
 import {CircularProgress} from "@material-ui/core";
-import CustomSnackbar from "./CustomSnackbar";
+import CustomSnackbarLogin from "./CustomSnackbarLogin";
 import {Redirect} from "react-router-dom";
 
 class SignInContainer extends Component{
@@ -84,7 +84,7 @@ class SignInContainer extends Component{
         return (
             <form style={this.props.style}>
 
-                <CustomSnackbar handleClose={this.handleClose} isError={this.state.isError} errorMessage={this.state.errorMessage}/>
+                <CustomSnackbarLogin handleClose={this.handleClose} isError={this.state.isError} errorMessage={this.state.errorMessage}/>
 
                 {/*{this.renderSwitch(this.props.data.loginErrorStatus,this.props.data.loginErrorData)}*/}
 
@@ -114,7 +114,7 @@ class SignInContainer extends Component{
                 >
                     {this.props.data.isAuthenticating ? <CircularProgress/> : "Zaloguj"}
                 </Button>
-                {this.props.data.token ? <Redirect to='/main' /> : null}; TODO: Figure out how to make this better
+                {this.props.data.token ? <Redirect to='/main' /> : null}
             </form>
         );
     }
