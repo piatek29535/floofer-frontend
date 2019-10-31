@@ -15,25 +15,24 @@ class SignUpContainer extends Component{
         password: "",
         birthDate: "2019-10-10",
         errorMessage:'',
-        errorCode:null
     };
 
     handleChange = (e, field) => {
         switch(field){
             case "name":
-                this.setState({...this.state, name:e.target.value});
+                this.setState({...this.state, name:e.target.value, isError:false});
                 break;
             case "surname":
-                this.setState({...this.state, surname:e.target.value});
+                this.setState({...this.state, surname:e.target.value, isError:false});
                 break;
             case "email":
-                this.setState({...this.state, email:e.target.value});
+                this.setState({...this.state, email:e.target.value, isError:false});
                 break;
             case "password":
-                this.setState({...this.state, password:e.target.value});
+                this.setState({...this.state, password:e.target.value, isError:false});
                 break;
             case "date":
-                this.setState({...this.state, birthDate:e.target.value});
+                this.setState({...this.state, birthDate:e.target.value, isError:false});
                 break;
             default:
                 return;
@@ -47,13 +46,30 @@ class SignUpContainer extends Component{
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.signUpData.signUpData.registerStatus !== prevProps.signUpData.signUpData.registerStatus){
-            this.setState({
-                errorMessage:this.props.signUpData.signUpData.registerErrorMessage,
-                errorCode:this.props.signUpData.signUpData.registerStatus
-            })
+        if(this.props.signUpData.signUpData.registerStatus !== prevProps.signUpData.signUpData.registerStatus
+                && this.props.signUpData.signUpData.registerStatus !== 201){
+            this.renderSwitch(this.props.signUpData.signUpData.registerStatus);
         }
     }
+
+    renderSwitch = (code) => {
+        switch(code){
+            case 409:
+                this.setState({
+                    errorMessage:"Użytkownik już istnieje",
+                    isError:true
+                });
+                break;
+            case 400:
+                this.setState({
+                    errorMessage:"Podaj wszystkie dane",
+                    isError:true
+                });
+                break;
+            default:
+                return null
+        }
+    };
 
     render() {
 
@@ -113,7 +129,7 @@ class SignUpContainer extends Component{
                 >
                     {this.props.signUpData.signUpData.signUpButtonLoading ? <CircularProgress/> : 'Zarejestruj'}
                 </Button>
-                <CustomSnackbarRegister errorMessage={this.state.errorMessage} errorCode={this.state.errorCode} handleClose={this.handleClose}/>
+                <CustomSnackbarRegister isError={this.state.isError} errorMessage={this.state.errorMessage} handleClose={this.handleClose}/>
             </form>
         );
     }

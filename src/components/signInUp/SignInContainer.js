@@ -62,7 +62,7 @@ class SignInContainer extends Component{
             case 404:
                 this.setState({
                         ...this.state,
-                        errorMessage:message,
+                        errorMessage:"Podany użytkownik nie istnieje",
                         isError:true
                     }
                 );
@@ -70,7 +70,7 @@ class SignInContainer extends Component{
             case 400:
                 this.setState({
                         ...this.state,
-                        errorMessage:message.message,
+                        errorMessage:"Podaj wszystkie dane",
                         isError:true
                     }
                 );

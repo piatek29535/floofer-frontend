@@ -10,13 +10,13 @@ class CustomSnackbarRegister extends Component {
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}
-                open={true}
+                open={this.props.isError}
                 autoHideDuration={3000}
                 onClose={this.props.handleClose}
                 ContentProps={{
                     'aria-describedby': 'message-id',
                 }}
-                message={<span id="message-id">todo</span>}
+                message={<span id="message-id">{this.props.errorMessage}</span>}
             />
         );
     }

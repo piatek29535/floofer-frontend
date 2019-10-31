@@ -18,7 +18,7 @@ export const signInUpButtonReducers = (state = {
 }, action) => {
   switch (action.type) {
       case 'SIGN_UP_BUTTON_FETCHING':
-          return {signUpButtonLoading: action.payload, registerStatus: null };
+          return {signUpButtonLoading: action.payload, registerStatus: null, registerErrorMessage:'' };
       case 'SIGN_UP_BUTTON_FETCHED':
           return {signUpButtonLoading: false, registerStatus: action.payload.status, registerErrorMessage:''};
       case 'SIGN_UP_BUTTON_FETCHING_ERROR':
