@@ -76,7 +76,13 @@ class SignInContainer extends Component{
                 );
                 break;
             default:
-                return null;
+                this.setState({
+                        ...this.state,
+                        errorMessage:"Whops! Wystąpił błąd. Spróbuj jeszcze raz.",
+                        isError:true
+                    }
+                );
+                break;
         }
     };
 

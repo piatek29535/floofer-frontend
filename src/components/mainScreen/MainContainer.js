@@ -61,8 +61,11 @@ const styles = {
 };
 
 class MainContainer extends Component {
+
+
     render() {
         return (
+
             <div style={styles.mainContainer}>
                 <div style={styles.menuPanel}>
 

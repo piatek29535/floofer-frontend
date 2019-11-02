@@ -47,7 +47,7 @@ class SignUpContainer extends Component{
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.props.signUpData.signUpData.registerStatus !== prevProps.signUpData.signUpData.registerStatus
-                && this.props.signUpData.signUpData.registerStatus !== 201){
+            && this.props.signUpData.signUpData.registerStatus !== 201){
             this.renderSwitch(this.props.signUpData.signUpData.registerStatus);
         }
     }
@@ -67,7 +67,11 @@ class SignUpContainer extends Component{
                 });
                 break;
             default:
-                return null
+                this.setState({
+                    errorMessage:"Whops! Wystąpił błąd. Spróbuj jeszcze raz.",
+                    isError:true
+                });
+                break;
         }
     };
 

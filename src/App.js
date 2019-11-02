@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { BrowserRouter, Route} from "react-router-dom";
+import {BrowserRouter, Route} from "react-router-dom";
 import SignInUp from "./components/signInUp/SignInUp";
 import WelcomeScreen from "./WelcomeScreen";
 import MainContainer from "./components/mainScreen/MainContainer";
