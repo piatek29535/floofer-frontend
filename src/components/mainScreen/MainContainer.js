@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import Image from "react-bootstrap/Image";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import {Link, Route, Switch} from "react-router-dom";
+import {Link, Redirect, Route, Switch} from "react-router-dom";
 import News from "./mainScreenComponents/News";
 import Friends from "./mainScreenComponents/Friends";
 import Settings from "./mainScreenComponents/Settings";
@@ -61,9 +61,11 @@ const styles = {
 };
 
 class MainContainer extends Component {
-
-
     render() {
+
+        if(localStorage.getItem('token')) {
+            return <Redirect to="/" />
+        }
         return (
 
             <div style={styles.mainContainer}>
