@@ -62,10 +62,6 @@ const styles = {
 
 class MainContainer extends Component {
     render() {
-
-        if(localStorage.getItem('token')) {
-            return <Redirect to="/" />
-        }
         return (
 
             <div style={styles.mainContainer}>

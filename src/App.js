@@ -5,7 +5,6 @@ import WelcomeScreen from "./WelcomeScreen";
 import MainContainer from "./components/mainScreen/MainContainer";
 
 class App extends Component {
-
     render() {
         return (
             <BrowserRouter >
