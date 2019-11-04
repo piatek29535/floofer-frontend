@@ -80,10 +80,19 @@ class News extends Component {
                                     />
                                 </div>
 
-                                {/*I think it could be better, if a use would see a post first and then decide to comment/like or not*/}
                                 <div style={{marginLeft:'45px'}}>
-                                    <IconButton disabled color="primary"><ThumbUp fontSize='small'/></IconButton>
-                                    <IconButton disabled color="primary"><Comment/></IconButton>
+                                    <IconButton style={{display:'inline-block',fontSize:'20px'}} disabled color="primary">
+                                        <Typography>
+                                            0
+                                        </Typography>
+                                        <ThumbUp fontSize='small'/>
+                                    </IconButton>
+                                    <IconButton style={{fontSize:'20px'}} disabled color="primary">
+                                        <Comment/>
+                                        <Typography>
+                                            0
+                                        </Typography>
+                                    </IconButton>
                                 </div>
                             </ListItem>
                         ))
