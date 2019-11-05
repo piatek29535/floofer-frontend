@@ -4,7 +4,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Typography from "@material-ui/core/Typography";
 import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
-import {newsDialogPostClose} from "../../../actions/newsDialogActions";
+import {newsDialogPostClose} from "../../../../actions/newsDialogActions";
 import TextField from "@material-ui/core/TextField";
 import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";

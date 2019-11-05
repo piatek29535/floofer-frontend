@@ -4,11 +4,11 @@ import Image from "react-bootstrap/Image";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import {Link, Route, Switch} from "react-router-dom";
-import News from "./mainScreenComponents/News";
-import Friends from "./mainScreenComponents/Friends";
-import Settings from "./mainScreenComponents/Settings";
+import News from "./mainScreenComponents/News/News";
+import Friends from "./mainScreenComponents/Friends/Friends";
+import Settings from "./mainScreenComponents/Settings/Settings";
 import Paper from "@material-ui/core/Paper";
-import Messages from "./mainScreenComponents/Messages";
+import Messages from "./mainScreenComponents/Messages/Messages";
 
 const styles = {
     mainContainer:{
@@ -39,7 +39,7 @@ const styles = {
         objectFit:'cover'
     },
     listContainer:{
-        color:'#FFFFFF'
+        color:'#FFFFFF',
     },
     listRouter:{
         color:'#FFFFFF'

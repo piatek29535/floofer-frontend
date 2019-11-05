@@ -5,7 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
-import {toggleOffDialog} from "../../../actions/mainPosts";
+import {toggleOffDialog} from "../../../../actions/mainPosts";
 
 class DialogComponent extends Component {
     render() {

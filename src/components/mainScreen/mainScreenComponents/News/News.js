@@ -7,7 +7,7 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItem from "@material-ui/core/ListItem";
 import Container from "@material-ui/core/Container";
 import {connect} from "react-redux";
-import {fetchPosts, toggleOnDialog} from "../../../actions/mainPosts";
+import {fetchPosts, toggleOnDialog} from "../../../../actions/mainPosts";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from '@material-ui/icons/Add';
 import DialogComponent from "./DialogComponent";
@@ -15,7 +15,7 @@ import ThumbUp from "@material-ui/icons/ThumbUp";
 import IconButton from "@material-ui/core/IconButton";
 import Comment from "@material-ui/icons/Comment";
 import NewsDialog from "./NewsDialog";
-import {newsDialogPostOpen} from "../../../actions/newsDialogActions";
+import {newsDialogPostOpen} from "../../../../actions/newsDialogActions";
 
 const styles={
     mainContainer:{
