@@ -32,7 +32,7 @@ const styles = {
 class Friends extends Component {
 
     state = {
-        whichTab:0
+        whichTab:2
     };
 
     handleChange = (val) => {
