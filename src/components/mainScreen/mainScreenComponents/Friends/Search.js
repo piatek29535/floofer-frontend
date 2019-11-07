@@ -61,7 +61,12 @@ const styles = {
         flexDirection:'column',
         justifyContent:'center',
         alignItems:'center',
-        whiteSpace:'nowrap', overflow:'hidden',textOverflow:'ellipsis'
+    },
+    individualFriendNameAndSurname:{
+        width:'200px',
+        whiteSpace:'nowrap',
+        overflow:'hidden',
+        textOverflow:'ellipsis'
     }
 };
 
@@ -109,9 +114,7 @@ class Search extends Component {
                                                 style={styles.individualFriendAvatar}
                                                 alt=" "
                                                 src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
-                                                <div>
-                                                    <p>Imię Nazwiskossssssssssssssssssssssssssssss</p>
-                                                </div>
+                                                <Typography style={styles.individualFriendNameAndSurname}>Grzegorz Brzęczyszczykiewicz</Typography>
                                         </Container>
                                         <div style={{flex:1}}>
                                             <Divider/>
