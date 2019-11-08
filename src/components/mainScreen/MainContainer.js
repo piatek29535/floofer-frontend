@@ -9,6 +9,7 @@ import Friends from "./mainScreenComponents/Friends/Friends";
 import Settings from "./mainScreenComponents/Settings/Settings";
 import Paper from "@material-ui/core/Paper";
 import Messages from "./mainScreenComponents/Messages/Messages";
+import Groups from "./mainScreenComponents/Groups/Groups";
 
 const styles = {
     mainContainer:{
@@ -80,6 +81,7 @@ class MainContainer extends Component {
                                 [{name:"Aktualności", link:'/main'},
                                     {name:"Znajomi", link:'/main/znajomi'},
                                     {name:"Wiadomości", link:'/main/wiadomosci'},
+                                    {name:"Grupy", link:'/main/grupy'},
                                     {name:"Ustawienia", link:'/main/ustawienia'},
                                     {name:"Wyloguj", link:'/signUp'},
                                 ].map((item, i) => (
@@ -111,6 +113,10 @@ class MainContainer extends Component {
                             <Route
                                 path="/main/ustawienia"
                                 children={<Settings/>}
+                            />
+                            <Route
+                                path="/main/grupy"
+                                children={<Groups/>}
                             />
                         </Switch>
                     </Paper>

@@ -12,10 +12,10 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from '@material-ui/icons/Add';
 import DialogComponent from "./DialogComponent";
 import ThumbUp from "@material-ui/icons/ThumbUp";
-import IconButton from "@material-ui/core/IconButton";
 import Comment from "@material-ui/icons/Comment";
 import NewsDialog from "./NewsDialog";
 import {newsDialogPostOpen} from "../../../../actions/newsDialogActions";
+import Button from "@material-ui/core/Button";
 
 const styles={
     mainContainer:{
@@ -75,24 +75,22 @@ class News extends Component {
                                         <Avatar alt=" " src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary={item.title.charAt(0).toLocaleUpperCase()+item.title.substr(1)}
-                                        secondary={item.body.charAt(0).toLocaleUpperCase()+item.body.substr(1)}
+                                        primary={item.title}
+                                        secondary={item.body}
                                     />
                                 </div>
 
                                 <div style={{marginLeft:'45px'}}>
-                                    <IconButton style={{display:'inline-block',fontSize:'20px'}} disabled color="primary">
-                                        <Typography>
-                                            0
-                                        </Typography>
-                                        <ThumbUp fontSize='small'/>
-                                    </IconButton>
-                                    <IconButton style={{fontSize:'20px'}} disabled color="primary">
-                                        <Comment/>
-                                        <Typography>
-                                            0
-                                        </Typography>
-                                    </IconButton>
+                                    <Button
+                                        disabled
+                                        startIcon={<ThumbUp/>}>
+                                        0
+                                    </Button>
+                                    <Button
+                                        disabled
+                                        startIcon={<Comment/>}>
+                                        0
+                                    </Button>
                                 </div>
                             </ListItem>
                         ))

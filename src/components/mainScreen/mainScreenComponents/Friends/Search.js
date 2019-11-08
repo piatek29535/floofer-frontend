@@ -11,7 +11,9 @@ import Person from '@material-ui/icons/Person';
 import Button from "@material-ui/core/Button";
 import Observe from '@material-ui/icons/RemoveRedEye';
 import Observing from '@material-ui/icons/CheckCircle'
-import {Typography} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import Home from '@material-ui/icons/Home';
+import Public from '@material-ui/icons/Public';
 
 const styles = {
     mainContainer:{
@@ -42,18 +44,20 @@ const styles = {
         display:'flex',
         flexDirection:'column',
         justifyContent:'space-between',
-        width: 250,
-        height:200
+        width: 270,
+        height:300
     },
     individualFriendAvatar:{
         width:50,
         height:50
     },
     individualFriendButtons:{
-        padding:'2px',
+        height:'100%',
+        padding:'5px',
         display:'flex',
         flexDirection:'row',
         justifyContent:'center',
+        alignItems:'center',
     },
     individualFriendContent:{
         flex:3,
@@ -62,12 +66,12 @@ const styles = {
         justifyContent:'center',
         alignItems:'center',
     },
-    individualFriendNameAndSurname:{
+    individualFriendDesc:{
         width:'200px',
         whiteSpace:'nowrap',
         overflow:'hidden',
         textOverflow:'ellipsis'
-    }
+    },
 };
 
 class Search extends Component {
@@ -87,7 +91,7 @@ class Search extends Component {
         this.setState({
             isObserved:!this.state.isObserved
         })
-    }
+    };
 
     render() {
         return (
@@ -108,13 +112,31 @@ class Search extends Component {
                         <Grid container justify="center" spacing={2}>
                             {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(value => (
                                 <Grid key={value} item>
-                                    <Paper elevation={8} style={styles.individualFriend}>
+                                    <Paper elevation={10} style={styles.individualFriend}>
                                         <Container style={styles.individualFriendContent}>
                                             <Avatar
                                                 style={styles.individualFriendAvatar}
                                                 alt=" "
                                                 src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
-                                                <Typography style={styles.individualFriendNameAndSurname}>Grzegorz Brzęczyszczykiewicz</Typography>
+                                            <Typography style={styles.individualFriendDesc}>Grzegorz Brzęczyszczykiewicz</Typography>
+                                            <Button
+                                                style={styles.individualFriendDesc}
+                                                disabled
+                                                color="default"
+                                                startIcon={<Home />}
+                                                size="small"
+                                            >
+                                                <Typography style={styles.individualFriendDesc}>Tarnów</Typography>
+                                            </Button>
+                                            <Button
+                                                style={styles.individualFriendDesc}
+                                                disabled
+                                                color="default"
+                                                startIcon={<Public />}
+                                                size="small"
+                                            >
+                                                <Typography style={styles.individualFriendDesc}>Polska</Typography>
+                                            </Button>
                                         </Container>
                                         <div style={{flex:1}}>
                                             <Divider/>
@@ -133,9 +155,10 @@ class Search extends Component {
                                                     size="small"
                                                     style={{flex:1}}
                                                     color="primary"
+                                                    variant="outlined"
                                                     startIcon={<Person />}
                                                 >
-                                                    Zobacz profil
+                                                    profil
                                                 </Button>
                                             </div>
                                         </div>

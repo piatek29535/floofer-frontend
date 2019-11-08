@@ -76,7 +76,7 @@ class NewsDialog extends Component {
                         <IconButton>
                             <Avatar alt=" " src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
                         </IconButton>
-                        {"Somebody's post:"}
+                        {"Użytkownik XYZ napisał:"}
                     </DialogTitle>
                     <DialogContent>
                         <Typography gutterBottom style={styles.postTypography}>
@@ -85,8 +85,8 @@ class NewsDialog extends Component {
                     </DialogContent>
                     <DialogActions style={styles.dialogActions}>
                         <div style={styles.dialogActionsLikesAndComments}>
-                            <Typography>Polubienia:</Typography>
-                            <Typography>Komentarze:</Typography>
+                            <Typography style={{color:'silver'}}>Polubienia:</Typography>
+                            <Typography style={{color:'silver'}}>Komentarze:</Typography>
                         </div>
                         <div>
                             <IconButton color={this.state.isButtonClicked ? 'secondary' : 'primary'} onClick={() => this.buttonClicked('like')}><ThumbUp fontSize='small'/></IconButton>
@@ -103,7 +103,7 @@ class NewsDialog extends Component {
                             margin="normal"
                             variant="filled"
                         />
-                        <Button color='primary' variant="contained">Comment</Button>
+                        <Button color='primary' variant="contained">Skomentuj</Button>
                     </Box>
                     <DialogContent dividers>
                         {["Komentarz","Komentarz","Komentarz","Komentarz","Komentarz","Komentarz","Komentarz","Komentarz","Komentarz","Komentarz"].map((title,id) =>
