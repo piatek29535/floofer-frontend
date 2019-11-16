@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import Image from "react-bootstrap/Image";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import {Link, Redirect, Route, Switch} from "react-router-dom";
+import {Link, Route, Switch} from "react-router-dom";
 import News from "./mainScreenComponents/News";
 import Friends from "./mainScreenComponents/Friends";
 import Settings from "./mainScreenComponents/Settings";
@@ -82,7 +82,7 @@ class MainContainer extends Component {
                                     {name:"Znajomi", link:'/main/znajomi'},
                                     {name:"Wiadomości", link:'/main/wiadomosci'},
                                     {name:"Ustawienia", link:'/main/ustawienia'},
-                                    {name:"Wyloguj", link:'/signUp'},
+                                    {name:"Wyloguj", link:'/'},
                                 ].map((item, i) => (
                                     <ListItem button key={i}>
                                         <Link style={{color:'white', width:'100%', textDecoration:'none'}} to={item.link}>{item.name}</Link>
