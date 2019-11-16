@@ -69,7 +69,7 @@ class MainContainer extends Component {
 
                     <div style={styles.avatarAndName}>
                         <Image
-                            style={styles.avatar}
+                            style={{...styles.avatar, cursor:'pointer'}}
                             src="https://cdn.pixabay.com/photo/2018/09/03/10/10/cape-gannet-3650803_960_720.jpg"
                             roundedCircle />
                         <Typography variant="h6">Imię Nazwisko</Typography>
