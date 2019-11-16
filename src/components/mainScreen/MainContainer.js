@@ -63,6 +63,7 @@ const styles = {
 class MainContainer extends Component {
     render() {
         return (
+
             <div style={styles.mainContainer}>
                 <div style={styles.menuPanel}>
 
@@ -81,7 +82,7 @@ class MainContainer extends Component {
                                     {name:"Znajomi", link:'/main/znajomi'},
                                     {name:"Wiadomości", link:'/main/wiadomosci'},
                                     {name:"Ustawienia", link:'/main/ustawienia'},
-                                    {name:"Wyloguj", link:'/signUp'},
+                                    {name:"Wyloguj", link:'/'},
                                 ].map((item, i) => (
                                     <ListItem button key={i}>
                                         <Link style={{color:'white', width:'100%', textDecoration:'none'}} to={item.link}>{item.name}</Link>

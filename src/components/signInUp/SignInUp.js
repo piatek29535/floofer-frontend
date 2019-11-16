@@ -9,6 +9,7 @@ import SignInContainer from "./SignInContainer";
 import SignUpContainer from "./SignUpContainer";
 import {connect} from "react-redux";
 import {signInClicked, signUpClicked} from "../../actions/signInUpActions";
+import RegisterSuccessDialog from "./RegisterSuccessDialog";
 
 const styles = {
     mainContainer:{
@@ -50,7 +51,33 @@ const styles = {
 };
 
 class SignInUp extends Component {
+
+    state = {
+        isSuccessDialogOpen:false,
+    }
+
+    componentDidMount() {
+        localStorage.setItem("token",null)
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.signUpData.registerStatus !== prevProps.signUpData.registerStatus){
+            if(this.props.signUpData.registerStatus === 201){
+                this.setState({
+                    isSuccessDialogOpen:true
+                })
+            }
+        }
+    }
+
+    handleSuccessDialogClose = () => {
+        this.setState({
+            isSuccessDialogOpen:!this.state.isSuccessDialogOpen
+        })
+    };
+
     render() {
+
         return (
             <div style={styles.mainContainer}>
                 <Fade in timeout={500}>
@@ -76,6 +103,8 @@ class SignInUp extends Component {
                 <Button href="/" variant="dark" style={{marginTop:10}}>
                     Powrót do strony głownej
                 </Button>
+
+                <RegisterSuccessDialog handleClose={this.handleSuccessDialogClose} status={this.state.isSuccessDialogOpen}/>
             </div>
         );
     }
@@ -83,7 +112,7 @@ class SignInUp extends Component {
 
 const mapStateToProps = (state) => ({
     value:state.signInUpReducers.value,
-    signUpData: state.signInUpButtonReducers
+    signUpData: state.signInUpButtonReducers,
 });
 
 export default connect(mapStateToProps)(SignInUp);

@@ -10,7 +10,8 @@ class WelcomeScreen extends Component {
 
     componentDidMount() {
         this.props.dispatch(fetchOpinionsFromServer());
-        this.props.dispatch(initializeRefs())
+        this.props.dispatch(initializeRefs());
+        localStorage.setItem('token',null);
     }
 
     render() {
