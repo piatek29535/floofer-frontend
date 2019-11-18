@@ -39,8 +39,9 @@ const styles = {
         backgroundPosition:'center',
         filter:'grayscale(60%)',
         height:'100px',
-        color:'white'
-    },
+        color:'white',
+        textShadow:"-2px 0 black, 0 2px black, 2px 0 black, 0 -2px black"
+},
     listItemExpansionPanelDetails:{
         flexDirection: 'column'
     },
@@ -87,15 +88,15 @@ class Groups extends Component {
                                                 style={{...styles.listItemExpansionPanelSummary, backgroundImage:`url(${images[random]})`,}}
                                                 expandIcon={<ExpandMoreIcon />}
                                             >
-                                                <Typography>{item}</Typography>
+                                                <Typography variant="h6">{item}</Typography>
                                             </ExpansionPanelSummary>
                                             <ExpansionPanelDetails style={styles.listItemExpansionPanelDetails}>
                                                 <Typography>
                                                     Lorem ipsum dolor sit amet,
                                                 </Typography>
                                                 <Container style={styles.actionButtons}>
-                                                    <Button style={{flex:1}} variant="contained" color='primary'>Dołącz</Button>
-                                                    <Button style={{flex:1}} variant="outlined" color='primary'>Odwiedź</Button>
+                                                    <Button style={{width:'40%'}} variant="contained" color='primary'>Dołącz</Button>
+                                                    <Button style={{width:'40%'}} variant="outlined" color='primary'>Odwiedź</Button>
                                                 </Container>
                                             </ExpansionPanelDetails>
                                         </ExpansionPanel>
