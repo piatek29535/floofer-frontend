@@ -22,6 +22,9 @@ const styles = {
 
     //Right menu
     menuPanel:{
+        display:'flex',
+        flexDirection:'column',
+        overflow:'auto',
         backgroundColor:'#004E92',
         flex:2,
         color:'#FFFFFF'
