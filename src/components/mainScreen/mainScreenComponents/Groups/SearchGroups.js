@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import List from "@material-ui/core/List";
 import GroupItem from "./GroupItem";
+import Search from "@material-ui/icons/Search";
+import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Container from "@material-ui/core/Container";
+import IconButton from "@material-ui/core/IconButton";
 
 const styles = {
     list:{
@@ -47,9 +52,34 @@ const images = [
 ];
 
 class SearchGroups extends Component {
+
+    state = {
+        searchGroupValue:null
+    };
+
+    handleSearchGroupValue = (value) => {
+        this.setState({
+            searchGroupValue:value
+        })
+    };
+
     render() {
         return (
             <List style={styles.list}>
+                <Container>
+                    <Input
+                        value={this.state.searchGroupValue}
+                        onChange={(e,v) => this.handleSearchGroupValue(v)}
+                        placeholder="Wyszukaj grupy"
+                        endAdornment={
+                            <IconButton>
+                                <InputAdornment position="center">
+                                    <Search />
+                                </InputAdornment>
+                            </IconButton>
+                        }
+                    />
+                </Container>
                 {
                     ['group','group','group','group','group','group','group','group','group','group','group','group']
                         .map((item) => {

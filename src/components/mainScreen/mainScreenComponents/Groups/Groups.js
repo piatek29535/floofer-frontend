@@ -69,8 +69,8 @@ class Groups extends Component {
                         textColor="primary"
                         onChange={(e,v) => this.handleTabChange(v)}
                     >
-                        <Tab label="Twoje grupy" />
                         <Tab label="Szukaj grup" />
+                        <Tab label="Twoje grupy" />
                         <Tab label="Stwórz grupę" />
                     </Tabs>
                 </Container>

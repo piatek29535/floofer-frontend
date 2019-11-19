@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import List from "@material-ui/core/List";
 import GroupItem from "./GroupItem";
+import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Container from "@material-ui/core/Container";
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const styles = {
     list:{
@@ -47,9 +51,31 @@ const images = [
 ];
 
 class UserGroups extends Component {
+    state = {
+        listFilter:null
+    };
+
+    handleListFilterChange = (value) => {
+        this.setState({
+            listFilter:value
+        })
+    };
+
     render() {
         return (
             <List style={styles.list}>
+                <Container>
+                    <Input
+                        placeholder="Filtruj grupy"
+                        value={this.state.listFilter}
+                        onChange={(e,v) => this.handleListFilterChange(v)}
+                        startAdornment={
+                            <InputAdornment position="start">
+                                <ArrowForwardIosIcon color="action" />
+                            </InputAdornment>
+                        }
+                    />
+                </Container>
                 {
                     ['group']
                         .map((item) => {
