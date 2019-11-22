@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import Typography from "@material-ui/core/Typography";
-import Image from "react-bootstrap/Image";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import {Link, Route, Switch} from "react-router-dom";
-import News from "./mainScreenComponents/News";
-import Friends from "./mainScreenComponents/Friends";
-import Settings from "./mainScreenComponents/Settings";
+import News from "./mainScreenComponents/News/News";
+import Friends from "./mainScreenComponents/Friends/Friends";
+import Settings from "./mainScreenComponents/Settings/Settings";
 import Paper from "@material-ui/core/Paper";
-import Messages from "./mainScreenComponents/Messages";
+import Messages from "./mainScreenComponents/Messages/Messages";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
 
 const styles = {
     mainContainer:{
@@ -20,6 +21,9 @@ const styles = {
 
     //Right menu
     menuPanel:{
+        display:'flex',
+        flexDirection:'column',
+        overflow:'auto',
         backgroundColor:'#004E92',
         flex:2,
         color:'#FFFFFF'
@@ -30,16 +34,16 @@ const styles = {
         justifyContent:'center',
         flexDirection: 'column',
         borderBottom:'1px solid #6699CC',
-        paddingBottom:'20px'
+        paddingBottom:'20px',
+        wordBreak:'break-all'
     },
     avatar:{
-        margin:'20px 20px 10px 20px',
         width:180,
         height:171,
         objectFit:'cover'
     },
     listContainer:{
-        color:'#FFFFFF'
+        color:'#FFFFFF',
     },
     listRouter:{
         color:'#FFFFFF'
@@ -68,11 +72,15 @@ class MainContainer extends Component {
                 <div style={styles.menuPanel}>
 
                     <div style={styles.avatarAndName}>
-                        <Image
-                            style={styles.avatar}
-                            src="https://cdn.pixabay.com/photo/2018/09/03/10/10/cape-gannet-3650803_960_720.jpg"
-                            roundedCircle />
-                        <Typography variant="h6">Imię Nazwisko</Typography>
+                        <IconButton>
+                            <Avatar
+                                alt=" "
+                                src="https://cdn.pixabay.com/photo/2018/09/03/10/10/cape-gannet-3650803_960_720.jpg"
+                                style={styles.avatar} />
+
+                        </IconButton>
+                        <Typography variant="h6">Imię</Typography>
+                        <Typography variant="h6">Nazwisko</Typography>
                     </div>
 
                     <div style={styles.listContainer}>

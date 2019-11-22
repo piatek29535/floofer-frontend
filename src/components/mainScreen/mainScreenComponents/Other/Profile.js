@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import Container from "@material-ui/core/Container";
 
 class Profile extends Component {
     render() {
         return (
-            <div>
-                <h1>Profile goes here</h1>
-            </div>
+            <Container>
+                Profile Edit
+            </Container>
         );
     }
 }

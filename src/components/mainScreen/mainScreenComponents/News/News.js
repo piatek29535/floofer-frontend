@@ -7,15 +7,15 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItem from "@material-ui/core/ListItem";
 import Container from "@material-ui/core/Container";
 import {connect} from "react-redux";
-import {fetchPosts, toggleOnDialog} from "../../../actions/mainPosts";
+import {fetchPosts, toggleOnDialog} from "../../../../actions/mainPosts";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from '@material-ui/icons/Add';
 import DialogComponent from "./DialogComponent";
 import ThumbUp from "@material-ui/icons/ThumbUp";
-import IconButton from "@material-ui/core/IconButton";
 import Comment from "@material-ui/icons/Comment";
 import NewsDialog from "./NewsDialog";
-import {newsDialogPostOpen} from "../../../actions/newsDialogActions";
+import {newsDialogPostOpen} from "../../../../actions/newsDialogActions";
+import Button from "@material-ui/core/Button";
 
 const styles={
     mainContainer:{
@@ -75,15 +75,22 @@ class News extends Component {
                                         <Avatar alt=" " src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary={item.title.charAt(0).toLocaleUpperCase()+item.title.substr(1)}
-                                        secondary={item.body.charAt(0).toLocaleUpperCase()+item.body.substr(1)}
+                                        primary={item.title}
+                                        secondary={item.body}
                                     />
                                 </div>
 
-                                {/*I think it could be better, if a use would see a post first and then decide to comment/like or not*/}
                                 <div style={{marginLeft:'45px'}}>
-                                    <IconButton disabled color="primary"><ThumbUp fontSize='small'/></IconButton>
-                                    <IconButton disabled color="primary"><Comment/></IconButton>
+                                    <Button
+                                        disabled
+                                        startIcon={<ThumbUp/>}>
+                                        0
+                                    </Button>
+                                    <Button
+                                        disabled
+                                        startIcon={<Comment/>}>
+                                        0
+                                    </Button>
                                 </div>
                             </ListItem>
                         ))
