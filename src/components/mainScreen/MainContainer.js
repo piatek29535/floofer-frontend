@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import Messages from "./mainScreenComponents/Messages/Messages";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
+import Profile from "./mainScreenComponents/Other/Profile";
 
 const styles = {
     mainContainer:{
@@ -72,13 +73,16 @@ class MainContainer extends Component {
                 <div style={styles.menuPanel}>
 
                     <div style={styles.avatarAndName}>
-                        <IconButton>
-                            <Avatar
-                                alt=" "
-                                src="https://cdn.pixabay.com/photo/2018/09/03/10/10/cape-gannet-3650803_960_720.jpg"
-                                style={styles.avatar} />
+                        <Link to="/main/profil">
+                            <IconButton>
+                                <Avatar
+                                    alt=" "
+                                    src="https://cdn.pixabay.com/photo/2018/09/03/10/10/cape-gannet-3650803_960_720.jpg"
+                                    style={styles.avatar} >
 
-                        </IconButton>
+                                </Avatar>
+                            </IconButton>
+                        </Link>
                         <Typography variant="h6">Imię</Typography>
                         <Typography variant="h6">Nazwisko</Typography>
                     </div>
@@ -120,6 +124,10 @@ class MainContainer extends Component {
                             <Route
                                 path="/main/ustawienia"
                                 children={<Settings/>}
+                            />
+                            <Route
+                                path="/main/profil"
+                                children={<Profile/>}
                             />
                         </Switch>
                     </Paper>
