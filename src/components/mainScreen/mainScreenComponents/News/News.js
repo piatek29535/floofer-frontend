@@ -57,6 +57,7 @@ class News extends Component {
 
     render() {
 
+        console.log(this.props.posts)
         const posts = this.props.posts;
 
         return (
@@ -69,14 +70,19 @@ class News extends Component {
                 <List style={styles.list}>
                     {
                         posts.postsFetched.map((item) => (
-                            <ListItem button onClick={() => this.props.dispatch(newsDialogPostOpen(item))} key={item.id} style={styles.listItem} alignItems="flex-start">
+                            <ListItem button onClick={() => this.props.dispatch(newsDialogPostOpen(item))} key={item._id} style={styles.listItem} alignItems="flex-start">
                                 <div style={{display:'flex', flexDirection:'row'}}>
                                     <ListItemAvatar>
-                                        <Avatar alt=" " src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
+                                        <Avatar
+                                            alt=" "
+                                            // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
+                                        >
+                                            {item.author.charAt(0)}
+                                        </Avatar>
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary={item.title}
-                                        secondary={item.body}
+                                        primary={"TODO"}
+                                        secondary={item.content}
                                     />
                                 </div>
 
@@ -84,12 +90,12 @@ class News extends Component {
                                     <Button
                                         disabled
                                         startIcon={<ThumbUp/>}>
-                                        0
+                                        {item.likesAmount}
                                     </Button>
                                     <Button
                                         disabled
                                         startIcon={<Comment/>}>
-                                        0
+                                        {item.commentsAmount}
                                     </Button>
                                 </div>
                             </ListItem>
