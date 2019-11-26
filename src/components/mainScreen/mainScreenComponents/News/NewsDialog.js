@@ -15,6 +15,8 @@ import ThumbUp from "@material-ui/icons/ThumbUp";
 import Comment from "@material-ui/icons/Comment";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import {connect} from "react-redux";
+import {likeAction} from "../../../../actions/likeAction";
 
 const styles={
     postTypography:{
@@ -45,10 +47,10 @@ class NewsDialog extends Component {
         isCommentFieldShown: false
     };
 
-    buttonClicked = (type) => {
+    buttonClicked = (type, id) => {
         switch(type){
             case 'like':{
-
+                this.props.dispatch(likeAction(id));
                 this.setState({
                     ...this.state,
                     isButtonClicked:!this.state.isButtonClicked
@@ -73,6 +75,8 @@ class NewsDialog extends Component {
         if(Object.entries(post).length === 0){
             return null;
         }else{
+            let cond = this.props.newsDialogData.post.post.likes.filter(e => e._id === this.props.myId).length > 0;
+
             return (
                 <Dialog fullWidth onClose={() => this.props.dispatch(newsDialogPostClose())} open={this.props.newsDialogData.isOpened}>
                     <List>
@@ -98,7 +102,7 @@ class NewsDialog extends Component {
                                 <Typography style={{color:'silver'}}>Komentarze: {post.post.commentsAmount}</Typography>
                             </div>
                             <div>
-                                <IconButton color={this.state.isButtonClicked ? 'secondary' : 'primary'} onClick={() => this.buttonClicked('like')}><ThumbUp fontSize='small'/></IconButton>
+                                <IconButton color={cond ? 'secondary' : 'primary'} onClick={() => this.buttonClicked('like', post.post._id)}><ThumbUp fontSize='small'/></IconButton>
                                 <IconButton color={this.state.isCommentFieldShown ? 'secondary' : 'primary'} onClick={() => this.buttonClicked('comment')}><Comment/></IconButton>
                             </div>
                         </DialogActions>
@@ -118,10 +122,10 @@ class NewsDialog extends Component {
                             {post.post.commentsAmount === 0
                                 ? <Typography>Ten post nie ma jeszcze komentarzy. Bądź pierwszym który go napisze!</Typography>
                                 : post.post.comments.map((title,id) =>
-                                <ListItem key={id}>
-                                    <ListItemText primary={title} />
-                                </ListItem>
-                            )}
+                                    <ListItem key={id}>
+                                        <ListItemText primary={title} />
+                                    </ListItem>
+                                )}
                         </DialogContent>
                     </List>
                 </Dialog>
@@ -132,4 +136,8 @@ class NewsDialog extends Component {
     }
 }
 
-export default NewsDialog;
+const mapStateToProps = (state) => ({
+  likedPost:state.likeReducers
+});
+
+export default connect(mapStateToProps)(NewsDialog);

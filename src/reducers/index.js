@@ -6,6 +6,7 @@ import {fetchPosts, toggleDialog} from "./mainPostsReducers";
 import {newsDialogData} from "./newsDialogReducers";
 import {loginReducer} from "./loginReducers";
 import {mainUser} from "./mainUserReducers";
+import {likeReducers} from "./likeReducers";
 
 const reducers = combineReducers({
     fetchData,
@@ -16,7 +17,8 @@ const reducers = combineReducers({
     toggleDialog,
     newsDialogData,
     loginReducer,
-    mainUser
+    mainUser,
+    likeReducers
 });
 
 export default reducers;
