@@ -48,6 +48,7 @@ class NewsDialog extends Component {
     buttonClicked = (type) => {
         switch(type){
             case 'like':{
+
                 this.setState({
                     ...this.state,
                     isButtonClicked:!this.state.isButtonClicked
@@ -69,52 +70,65 @@ class NewsDialog extends Component {
     render() {
         let post = this.props.newsDialogData.post;
 
-        return (
-            <Dialog onClose={() => this.props.dispatch(newsDialogPostClose())} open={this.props.newsDialogData.isOpened}>
-                <List>
-                    <DialogTitle>
-                        <IconButton>
-                            <Avatar alt=" " src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
-                        </IconButton>
-                        {"Użytkownik XYZ napisał:"}
-                    </DialogTitle>
-                    <DialogContent>
-                        <Typography gutterBottom style={styles.postTypography}>
-                            {post.body}
-                        </Typography>
-                    </DialogContent>
-                    <DialogActions style={styles.dialogActions}>
-                        <div style={styles.dialogActionsLikesAndComments}>
-                            <Typography style={{color:'silver'}}>Polubienia:</Typography>
-                            <Typography style={{color:'silver'}}>Komentarze:</Typography>
-                        </div>
-                        <div>
-                            <IconButton color={this.state.isButtonClicked ? 'secondary' : 'primary'} onClick={() => this.buttonClicked('like')}><ThumbUp fontSize='small'/></IconButton>
-                            <IconButton color={this.state.isCommentFieldShown ? 'secondary' : 'primary'} onClick={() => this.buttonClicked('comment')}><Comment/></IconButton>
-                        </div>
-                    </DialogActions>
-                    <Box style={ this.state.isCommentFieldShown ? styles.commentBox : {display:'none'}}>
-                        <TextField
-                            style={styles.commentBoxField}
-                            id="outlined-multiline-static"
-                            label="Twój komentarz"
-                            multiline
-                            rows="4"
-                            margin="normal"
-                            variant="filled"
-                        />
-                        <Button color='primary' variant="contained">Skomentuj</Button>
-                    </Box>
-                    <DialogContent dividers>
-                        {["Komentarz","Komentarz","Komentarz","Komentarz","Komentarz","Komentarz","Komentarz","Komentarz","Komentarz","Komentarz"].map((title,id) =>
-                            <ListItem key={id}>
-                                <ListItemText primary={title} />
-                            </ListItem>
-                        )}
-                    </DialogContent>
-                </List>
-            </Dialog>
-        );
+        if(Object.entries(post).length === 0){
+            return null;
+        }else{
+            return (
+                <Dialog fullWidth onClose={() => this.props.dispatch(newsDialogPostClose())} open={this.props.newsDialogData.isOpened}>
+                    <List>
+                        <DialogTitle>
+                            <IconButton>
+                                <Avatar
+                                    alt=" "
+                                    // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
+                                >
+                                    {post.post.author.username.charAt(0).toLocaleUpperCase()}
+                                </Avatar>
+                            </IconButton>
+                            {`Uzytkownik ${post.post.author.username} napisał:`}
+                        </DialogTitle>
+                        <DialogContent>
+                            <Typography gutterBottom style={styles.postTypography}>
+                                {`"${post.post.content}"`}
+                            </Typography>
+                        </DialogContent>
+                        <DialogActions style={styles.dialogActions}>
+                            <div style={styles.dialogActionsLikesAndComments}>
+                                <Typography style={{color:'silver'}}>Polubienia: {post.post.likesAmount}</Typography>
+                                <Typography style={{color:'silver'}}>Komentarze: {post.post.commentsAmount}</Typography>
+                            </div>
+                            <div>
+                                <IconButton color={this.state.isButtonClicked ? 'secondary' : 'primary'} onClick={() => this.buttonClicked('like')}><ThumbUp fontSize='small'/></IconButton>
+                                <IconButton color={this.state.isCommentFieldShown ? 'secondary' : 'primary'} onClick={() => this.buttonClicked('comment')}><Comment/></IconButton>
+                            </div>
+                        </DialogActions>
+                        <Box style={ this.state.isCommentFieldShown ? styles.commentBox : {display:'none'}}>
+                            <TextField
+                                style={styles.commentBoxField}
+                                id="outlined-multiline-static"
+                                label="Twój komentarz"
+                                multiline
+                                rows="4"
+                                margin="normal"
+                                variant="filled"
+                            />
+                            <Button color='primary' variant="contained">Skomentuj</Button>
+                        </Box>
+                        <DialogContent>
+                            {post.post.commentsAmount === 0
+                                ? <Typography>Ten post nie ma jeszcze komentarzy. Bądź pierwszym który go napisze!</Typography>
+                                : post.post.comments.map((title,id) =>
+                                <ListItem key={id}>
+                                    <ListItemText primary={title} />
+                                </ListItem>
+                            )}
+                        </DialogContent>
+                    </List>
+                </Dialog>
+            );
+        }
+
+
     }
 }
 

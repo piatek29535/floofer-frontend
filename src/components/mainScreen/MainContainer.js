@@ -75,7 +75,7 @@ class MainContainer extends Component {
 
     render() {
 
-        const {username} = this.props.user.userData;
+        const {username, _id} = this.props.user.userData;
 
         return (
 
@@ -123,7 +123,7 @@ class MainContainer extends Component {
                             <Route
                                 exact
                                 path="/main"
-                                children={<News/>}
+                                children={<News myId={_id}/>}
                             />
                             <Route
                                 path="/main/znajomi"

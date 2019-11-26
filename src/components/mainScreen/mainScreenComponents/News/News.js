@@ -57,7 +57,6 @@ class News extends Component {
 
     render() {
 
-        console.log(this.props.posts)
         const posts = this.props.posts;
 
         return (
@@ -77,7 +76,7 @@ class News extends Component {
                                             alt=" "
                                             // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
                                         >
-                                            {item.author.charAt(0)}
+                                            {item.author.username.charAt(0).toLocaleUpperCase()}
                                         </Avatar>
                                     </ListItemAvatar>
                                     <ListItemText
@@ -105,7 +104,7 @@ class News extends Component {
                         <AddIcon />
                     </Fab>
                 </List>
-                <NewsDialog dispatch={this.props.dispatch} newsDialogData={this.props.newsDialogData}/>
+                <NewsDialog dispatch={this.props.dispatch} newsDialogData={this.props.newsDialogData} myId={this.props.myId}/>
                 <DialogComponent isDialogOpened={this.props}/>
             </div>
         );

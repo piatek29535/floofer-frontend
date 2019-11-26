@@ -4,9 +4,9 @@ export const newsDialogData = (state ={
 }, action) => {
     switch (action.type) {
         case 'OPEN_POST_DIALOG':
-            return {isOpened: action.payload.isOpened, post: action.payload.post};
+            return {isOpened: action.payload.isOpened, post: action.payload};
         case 'CLOSE_POST_DIALOG':
-            return {...state, isOpened: action.payload};
+            return {isOpened: action.payload, post:{}};
         default:
             return state;
     }
