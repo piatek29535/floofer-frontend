@@ -16,6 +16,7 @@ import Comment from "@material-ui/icons/Comment";
 import NewsDialog from "./NewsDialog";
 import {newsDialogPostOpen} from "../../../../actions/newsDialogActions";
 import Button from "@material-ui/core/Button";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const styles={
     mainContainer:{
@@ -26,8 +27,6 @@ const styles={
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
-        borderBottom:'1px solid grey',
-        marginBottom:'10px'
     },
     list:{
         maxHeight:'90%',
@@ -45,6 +44,9 @@ const styles={
         position: 'fixed',
         bottom: 50,
         right: 50,
+    },
+    avatar:{
+        backgroundColor:'#004E92'
     }
 };
 
@@ -66,14 +68,18 @@ class News extends Component {
                         Aktualności
                     </Typography>
                 </Container>
+                {this.props.newsDialogData.postFetching
+                    ? <LinearProgress color="secondary"/>
+                    : <LinearProgress color="primary" variant="determinate"/>}
                 <List style={styles.list}>
                     {
                         posts.postsFetched.map((item) => (
-                            <ListItem button onClick={() => this.props.dispatch(newsDialogPostOpen(item))} key={item._id} style={styles.listItem} alignItems="flex-start">
+                            <ListItem button onClick={() => this.props.dispatch(newsDialogPostOpen(item._id))} key={item._id} style={styles.listItem} alignItems="flex-start">
                                 <div style={{display:'flex', flexDirection:'row'}}>
                                     <ListItemAvatar>
                                         <Avatar
                                             alt=" "
+                                            style={styles.avatar}
                                             // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
                                         >
                                             {item.author.username.charAt(0).toLocaleUpperCase()}

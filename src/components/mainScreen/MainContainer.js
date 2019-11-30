@@ -43,7 +43,7 @@ const styles = {
     avatar:{
         width:180,
         height:171,
-        objectFit:'cover'
+        objectFit:'cover',
     },
     listContainer:{
         color:'#FFFFFF',
