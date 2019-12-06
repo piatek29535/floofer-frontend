@@ -95,8 +95,8 @@ class MainContainer extends Component {
                                 </Avatar>
                             </IconButton>
                         </Link>
-                        <Typography variant="h6">Imię</Typography>
-                        <Typography variant="h6">Nazwisko</Typography>
+                        <Typography variant="h6">{username}</Typography>
+                        <Typography variant="h6"></Typography>
                     </div>
 
                     <div style={styles.listContainer}>

@@ -7,9 +7,7 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItem from "@material-ui/core/ListItem";
 import Container from "@material-ui/core/Container";
 import {connect} from "react-redux";
-import {fetchPosts, toggleOnDialog} from "../../../../actions/mainPosts";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from '@material-ui/icons/Add';
+import {fetchPosts} from "../../../../actions/mainPosts";
 import DialogComponent from "./DialogComponent";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import Comment from "@material-ui/icons/Comment";
@@ -69,8 +67,8 @@ class News extends Component {
                     </Typography>
                 </Container>
                 {this.props.newsDialogData.postFetching
-                    ? <LinearProgress color="secondary"/>
-                    : <LinearProgress color="primary" variant="determinate"/>}
+                    ? <LinearProgress color="primary"/>
+                    : <LinearProgress color="primary" variant="determinate" value={100}/>}
                 <List style={styles.list}>
                     {
                         posts.postsFetched.map((item) => (
@@ -86,7 +84,7 @@ class News extends Component {
                                         </Avatar>
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary={"TODO"}
+                                        primary={item.author.username}
                                         secondary={item.content}
                                     />
                                 </div>
@@ -106,11 +104,12 @@ class News extends Component {
                             </ListItem>
                         ))
                     }
-                    <Fab onClick={() => {this.props.dispatch(toggleOnDialog())}} color="primary" style={styles.fab}>
-                        <AddIcon />
-                    </Fab>
                 </List>
-                <NewsDialog dispatch={this.props.dispatch} newsDialogData={this.props.newsDialogData} myId={this.props.myId}/>
+                <NewsDialog
+                    dispatch={this.props.dispatch}
+                    fetchNewsFeed={fetchPosts}
+                    newsDialogData={this.props.newsDialogData}
+                    myId={this.props.myId}/>
                 <DialogComponent isDialogOpened={this.props}/>
             </div>
         );

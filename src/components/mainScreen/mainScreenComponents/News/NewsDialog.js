@@ -17,6 +17,9 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import {connect} from "react-redux";
 import {likeAction} from "../../../../actions/likeAction";
+import {commentAction} from "../../../../actions/commentAction";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Divider from "@material-ui/core/Divider";
 
 const styles={
     postTypography:{
@@ -37,24 +40,24 @@ const styles={
     },
     commentBoxField:{
         width:'70%'
+    },
+    avatar:{
+        backgroundColor:'#004E92'
     }
 };
 
 class NewsDialog extends Component {
 
     state = {
-        isButtonClicked:false, // tutaj z propsów ustawiać jc
-        isCommentFieldShown: false
+        isCommentFieldShown: false,
+        commentFieldValue:"",
+        commentFieldError:false
     };
 
     buttonClicked = (type, id) => {
         switch(type){
             case 'like':{
                 this.props.dispatch(likeAction(id));
-                this.setState({
-                    ...this.state,
-                    isButtonClicked:!this.state.isButtonClicked
-                });
                 break;
             }
             case 'comment':{
@@ -69,20 +72,39 @@ class NewsDialog extends Component {
         }
     };
 
+    commentTextFieldChange = (value) => {
+        this.setState({
+            ...this.state,
+            commentFieldValue:value,
+            commentFieldError:false,
+        })
+    };
+
+    postComment = (post) => {
+        this.setState({commentFieldValue:"", isCommentFieldShown:false})
+        this.props.dispatch(commentAction(post._id,this.state.commentFieldValue))
+    };
+
     render() {
         let {isOpened, post} = this.props.newsDialogData;
-
-        console.log(post)
 
         if(Object.entries(post).length === 0){
             return null
         }else{
+            console.log(post)
+
+            const likeCondition = post.likes.filter(e => e._id === this.props.myId).length > 0;
+
             return (
-                <Dialog fullWidth onClose={() => this.props.dispatch(newsDialogPostClose())} open={isOpened}>
+                <Dialog fullWidth onClose={() => {
+                    this.props.dispatch(this.props.fetchNewsFeed());
+                    this.props.dispatch(newsDialogPostClose())
+                }} open={isOpened}>
                     <List>
                         <DialogTitle>
                             <IconButton>
                                 <Avatar
+                                    style={styles.avatar}
                                     alt=" "
                                     // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
                                 >
@@ -102,28 +124,47 @@ class NewsDialog extends Component {
                                 <Typography style={{color:'silver'}}>Komentarze: {post.commentsAmount}</Typography>
                             </div>
                             <div>
-                                <IconButton color={'primary'} onClick={() => this.buttonClicked('like', post._id)}><ThumbUp fontSize='small'/></IconButton>
+                                <IconButton color={likeCondition ? 'secondary' : 'primary'} onClick={() => this.buttonClicked('like', post._id)}><ThumbUp fontSize='small'/></IconButton>
                                 <IconButton color={this.state.isCommentFieldShown ? 'secondary' : 'primary'} onClick={() => this.buttonClicked('comment')}><Comment/></IconButton>
                             </div>
                         </DialogActions>
                         <Box style={ this.state.isCommentFieldShown ? styles.commentBox : {display:'none'}}>
                             <TextField
                                 style={styles.commentBoxField}
+                                error={this.state.commentFieldError}
                                 id="outlined-multiline-static"
-                                label="Twój komentarz"
+                                label={this.state.commentFieldError ? "Podaj zawartość!" : "Twój komentarz"}
                                 multiline
                                 rows="4"
                                 margin="normal"
                                 variant="filled"
+                                value={this.state.commentFieldValue}
+                                onChange={(e) => this.commentTextFieldChange(e.target.value)}
                             />
-                            <Button color='primary' variant="contained">Skomentuj</Button>
+                            <Button onClick={() => this.state.commentFieldValue.length !== 0
+                                ? this.postComment(post)
+                                : this.setState({commentFieldError:true})}
+                                    color='primary'
+                                    variant="contained">Skomentuj</Button>
                         </Box>
+                        <Divider/>
                         <DialogContent>
                             {post.commentsAmount === 0
                                 ? <Typography>Ten post nie ma jeszcze komentarzy. Bądź pierwszym który go napisze!</Typography>
-                                : post.comments.map((title,id) =>
-                                    <ListItem key={id}>
-                                        <ListItemText primary={title} />
+                                : post.comments.map((item) =>
+                                    <ListItem button key={item._id}>
+                                        <ListItemAvatar>
+                                            <Avatar
+                                                alt=" "
+                                                style={styles.avatar}
+                                                // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
+                                            >
+                                                {item.author.username.charAt(0).toLocaleUpperCase()}
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary={item.author.username}
+                                            secondary={item.content}/>
                                     </ListItem>
                                 )}
                         </DialogContent>
@@ -137,7 +178,8 @@ class NewsDialog extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    likedPost:state.likeReducers
+    likedPost:state.likeReducers,
+    commentedPost:state.commentReducers
 });
 
 export default connect(mapStateToProps)(NewsDialog);

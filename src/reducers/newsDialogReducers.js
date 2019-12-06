@@ -8,9 +8,9 @@ export const newsDialogData = (state ={
         case 'FETCHING_POST':
             return {
                 postFetching:action.payload,
-                isOpened: false,
                 post: {},
-                postError: null
+                postError: null,
+                ...state,
             };
         case 'FETCHING_POST_SUCCESS':
             return {
@@ -28,7 +28,7 @@ export const newsDialogData = (state ={
             };
         case 'CLOSE_POST_DIALOG':
             return {
-                postFetching:action.payload,
+                postFetching:false,
                 isOpened:false,
                 post:{},
                 postError:null

@@ -5,7 +5,7 @@ export const fetchPosts = (state = {
 }, action) => {
     switch(action.type){
         case 'POSTS_FETCHING':{
-            return {postsFetching:action.payload, postsFetched: [], postsError: null}
+            return {postsFetching:action.payload, postsError: null, ...state}
         }
         case 'POSTS_FETCHED':{
             return {postsFetching: false, postsFetched: action.payload, postsError: null}

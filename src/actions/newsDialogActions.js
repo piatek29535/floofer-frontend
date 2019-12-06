@@ -1,6 +1,17 @@
-import {instance} from "../URL";
+import axios from "axios";
 
 export function newsDialogPostOpen(id){
+
+    const headers = {
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    };
+
+    const instance = axios.create({
+        baseURL:'https://nz-social-media-api.herokuapp.com',
+        timeout:3000,
+        headers:headers
+    });
 
     return dispatch => {
         dispatch({type:'FETCHING_POST',payload:true});
@@ -13,6 +24,7 @@ export function newsDialogPostOpen(id){
 }
 
 export function newsDialogPostClose(){
+
     return ({
         type:'CLOSE_POST_DIALOG',
         payload:false

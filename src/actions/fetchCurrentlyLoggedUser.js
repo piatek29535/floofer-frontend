@@ -1,6 +1,18 @@
-import {instance} from '../URL';
+import axios from "axios";
 
 export function fetchCurrentlyLoggedUser() {
+
+    const headers = {
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    };
+
+    const instance = axios.create({
+        baseURL:'https://nz-social-media-api.herokuapp.com',
+        timeout:3000,
+        headers:headers
+    });
+
     return dispatch => {
 
         dispatch({type:'CURRENTLY_LOGGED_USER_FETCHING', payload:true});
