@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Badge from "@material-ui/core/Badge/Badge";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
@@ -12,37 +11,49 @@ import Message from '@material-ui/icons/Comment';
 import RemoveFriend from '@material-ui/icons/Clear';
 import Tooltip from "@material-ui/core/Tooltip";
 
+const styles = {
+    listItem:{
+        color:'white',
+        backgroundColor:'#004E92',
+        margin:10
+    }
+};
+
 class Following extends Component {
     render() {
+
+        const followee = this.props.followee;
+        const followersFetching = this.props.followersFetching;
+
         return (
-            <List >
-                {[1,2,3,4,5,6,76,7,8,9,0,0,0,0,0,0,0,0,0,0,0,0].map((item, id) =>
-                    ( <ListItem button key={id}>
-                        <ListItemAvatar>
-                            <Badge overlap="circle" color="primary" variant="dot">
+            <List>
+                {!followersFetching
+                    ? followee.map((item) =>
+                        ( <ListItem style={styles.listItem} button key={item._id}>
+                            <ListItemAvatar>
                                 <Avatar alt=" " src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
-                            </Badge>
-                        </ListItemAvatar>
-                        <ListItemText primary={"Imię nazwisko"} />
-                        <ListItemSecondaryAction>
-                            <Tooltip title="Wyślij wiadomość" placement="top">
-                                <IconButton edge="end">
-                                    <Message />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Odwiedź profil" placement="top">
-                                <IconButton edge="end">
-                                    <Profile />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Przestań obserwować" placement="top">
-                                <IconButton edge="end">
-                                    <RemoveFriend />
-                                </IconButton>
-                            </Tooltip>
-                        </ListItemSecondaryAction>
-                    </ListItem>)
-                )}
+                            </ListItemAvatar>
+                            <ListItemText primary={item.username} />
+                            <ListItemSecondaryAction>
+                                <Tooltip title="Wyślij wiadomość" placement="top">
+                                    <IconButton style={{color:'white'}} edge="end">
+                                        <Message />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Odwiedź profil" placement="top">
+                                    <IconButton style={{color:'white'}} edge="end">
+                                        <Profile />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Przestań obserwować" placement="top">
+                                    <IconButton style={{color:'white'}} edge="end">
+                                        <RemoveFriend />
+                                    </IconButton>
+                                </Tooltip>
+                            </ListItemSecondaryAction>
+                        </ListItem>)
+                    )
+                    : null}
             </List>
         );
     }

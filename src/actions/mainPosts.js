@@ -1,10 +1,24 @@
-export function fetchPosts(){ // probably there i will have to take the collection of followers or sth
+import axios from "axios";
+
+export function fetchPosts(){
+    const headers = {
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    };
+
+    const instance = axios.create({
+        baseURL:'https://nz-social-media-api.herokuapp.com',
+        timeout:3000,
+        headers:headers
+    });
+
     return dispatch => {
         dispatch({type:'POSTS_FETCHING', payload:true});
-        return fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(response => {return response.json()})
-            .then(json => {return dispatch({type:'POSTS_FETCHED',payload:json})})
-            .catch(err => {return dispatch({type:'POSTS_FETCH_ERROR', payload:err})})
+
+        instance.get('/api/me/feed')
+            .then(response => response.data)
+            .then(json => dispatch({type:'POSTS_FETCHED',payload:json}))
+            .catch(err => dispatch({type:'POSTS_FETCH_ERROR', payload:err}))
     }
 
 }

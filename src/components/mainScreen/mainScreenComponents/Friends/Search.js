@@ -14,6 +14,8 @@ import Observing from '@material-ui/icons/CheckCircle'
 import Typography from "@material-ui/core/Typography";
 import Home from '@material-ui/icons/Home';
 import Public from '@material-ui/icons/Public';
+import {connect} from "react-redux";
+import {searchUsersAction} from "../../../../actions/searchUsersAction";
 
 const styles = {
     mainContainer:{
@@ -67,6 +69,7 @@ const styles = {
         alignItems:'center',
     },
     individualFriendDesc:{
+        textAlign:'center',
         width:'200px',
         whiteSpace:'nowrap',
         overflow:'hidden',
@@ -94,6 +97,9 @@ class Search extends Component {
     };
 
     render() {
+
+        const users = this.props.users.users;
+
         return (
             <div style={styles.mainContainer}>
                 <Paper elevation={4} style={styles.paper}>
@@ -103,22 +109,22 @@ class Search extends Component {
                         style={styles.inputBase}
                         placeholder="Wyszukaj znajomych"
                     />
-                    <IconButton onClick={() => console.log(this.state.inputBaseValue)} style={styles.iconButton} aria-label="search">
+                    <IconButton onClick={() => this.props.dispatch(searchUsersAction())} style={styles.iconButton} aria-label="search">
                         <SearchIcon />
                     </IconButton>
                 </Paper>
                 <Container style={styles.friendsContainer}>
                     <Grid item xs={12}>
                         <Grid container justify="center" spacing={2}>
-                            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(value => (
-                                <Grid key={value} item>
+                            {users.map(item => (
+                                <Grid key={item._id} item>
                                     <Paper elevation={10} style={styles.individualFriend}>
                                         <Container style={styles.individualFriendContent}>
                                             <Avatar
                                                 style={styles.individualFriendAvatar}
                                                 alt=" "
                                                 src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
-                                            <Typography style={styles.individualFriendDesc}>Grzegorz Brzęczyszczykiewicz</Typography>
+                                            <Typography style={styles.individualFriendDesc}>{item.username}</Typography>
                                             <Button
                                                 style={styles.individualFriendDesc}
                                                 disabled
@@ -126,7 +132,7 @@ class Search extends Component {
                                                 startIcon={<Home />}
                                                 size="small"
                                             >
-                                                <Typography style={styles.individualFriendDesc}>Tarnów</Typography>
+                                                <Typography style={styles.individualFriendDesc}>TODO miasto</Typography>
                                             </Button>
                                             <Button
                                                 style={styles.individualFriendDesc}
@@ -135,7 +141,7 @@ class Search extends Component {
                                                 startIcon={<Public />}
                                                 size="small"
                                             >
-                                                <Typography style={styles.individualFriendDesc}>Polska</Typography>
+                                                <Typography style={styles.individualFriendDesc}>TODO Kraj</Typography>
                                             </Button>
                                         </Container>
                                         <div style={{flex:1}}>
@@ -173,4 +179,8 @@ class Search extends Component {
     }
 }
 
-export default Search;
+const mapStateToProps = (state) => ({
+    users:state.searchUsersReducers
+})
+
+export default connect(mapStateToProps)(Search);

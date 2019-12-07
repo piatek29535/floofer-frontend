@@ -10,6 +10,9 @@ import Paper from "@material-ui/core/Paper";
 import Messages from "./mainScreenComponents/Messages/Messages";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
+import Profile from "./mainScreenComponents/Other/Profile";
+import {fetchCurrentlyLoggedUser} from "../../actions/fetchCurrentlyLoggedUser";
+import {connect} from "react-redux";
 
 const styles = {
     mainContainer:{
@@ -40,7 +43,7 @@ const styles = {
     avatar:{
         width:180,
         height:171,
-        objectFit:'cover'
+        objectFit:'cover',
     },
     listContainer:{
         color:'#FFFFFF',
@@ -65,22 +68,35 @@ const styles = {
 };
 
 class MainContainer extends Component {
+
+    componentDidMount() {
+        this.props.dispatch(fetchCurrentlyLoggedUser())
+    }
+
     render() {
+
+        const {username, _id} = this.props.user.userData;
+
         return (
 
             <div style={styles.mainContainer}>
                 <div style={styles.menuPanel}>
 
                     <div style={styles.avatarAndName}>
-                        <IconButton>
-                            <Avatar
-                                alt=" "
-                                src="https://cdn.pixabay.com/photo/2018/09/03/10/10/cape-gannet-3650803_960_720.jpg"
-                                style={styles.avatar} />
-
-                        </IconButton>
-                        <Typography variant="h6">Imię</Typography>
-                        <Typography variant="h6">Nazwisko</Typography>
+                        <Link to="/main/profil" style={{textDecoration:'none'}}>
+                            <IconButton>
+                                <Avatar
+                                    alt=" "
+                                    // src="https://cdn.pixabay.com/photo/2018/09/03/10/10/cape-gannet-3650803_960_720.jpg"
+                                    style={styles.avatar} >
+                                    {username !==  undefined // also add here if url is not present
+                                        ? username.charAt(0).toLocaleUpperCase()
+                                        : null}
+                                </Avatar>
+                            </IconButton>
+                        </Link>
+                        <Typography variant="h6">{username}</Typography>
+                        <Typography variant="h6"></Typography>
                     </div>
 
                     <div style={styles.listContainer}>
@@ -107,7 +123,7 @@ class MainContainer extends Component {
                             <Route
                                 exact
                                 path="/main"
-                                children={<News/>}
+                                children={<News myId={_id}/>}
                             />
                             <Route
                                 path="/main/znajomi"
@@ -121,6 +137,10 @@ class MainContainer extends Component {
                                 path="/main/ustawienia"
                                 children={<Settings/>}
                             />
+                            <Route
+                                path="/main/profil"
+                                children={<Profile user={this.props.user}/>}
+                            />
                         </Switch>
                     </Paper>
                 </div>
@@ -129,4 +149,8 @@ class MainContainer extends Component {
     }
 }
 
-export default MainContainer;
+const mapStateToProps = (state) => ({
+    user:state.mainUser
+});
+
+export default connect(mapStateToProps)(MainContainer);

@@ -7,15 +7,14 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItem from "@material-ui/core/ListItem";
 import Container from "@material-ui/core/Container";
 import {connect} from "react-redux";
-import {fetchPosts, toggleOnDialog} from "../../../../actions/mainPosts";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from '@material-ui/icons/Add';
+import {fetchPosts} from "../../../../actions/mainPosts";
 import DialogComponent from "./DialogComponent";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import Comment from "@material-ui/icons/Comment";
 import NewsDialog from "./NewsDialog";
 import {newsDialogPostOpen} from "../../../../actions/newsDialogActions";
 import Button from "@material-ui/core/Button";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const styles={
     mainContainer:{
@@ -26,8 +25,6 @@ const styles={
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
-        borderBottom:'1px solid grey',
-        marginBottom:'10px'
     },
     list:{
         maxHeight:'90%',
@@ -45,6 +42,9 @@ const styles={
         position: 'fixed',
         bottom: 50,
         right: 50,
+    },
+    avatar:{
+        backgroundColor:'#004E92'
     }
 };
 
@@ -66,17 +66,26 @@ class News extends Component {
                         Aktualności
                     </Typography>
                 </Container>
+                {this.props.newsDialogData.actionPerformed
+                    ? <LinearProgress color="primary"/>
+                    : <LinearProgress color="primary" variant="determinate" value={100}/>}
                 <List style={styles.list}>
                     {
                         posts.postsFetched.map((item) => (
-                            <ListItem button onClick={() => this.props.dispatch(newsDialogPostOpen(item))} key={item.id} style={styles.listItem} alignItems="flex-start">
+                            <ListItem button onClick={() => this.props.dispatch(newsDialogPostOpen(item._id))} key={item._id} style={styles.listItem} alignItems="flex-start">
                                 <div style={{display:'flex', flexDirection:'row'}}>
                                     <ListItemAvatar>
-                                        <Avatar alt=" " src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
+                                        <Avatar
+                                            alt=" "
+                                            style={styles.avatar}
+                                            // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
+                                        >
+                                            {item.author.username.charAt(0).toLocaleUpperCase()}
+                                        </Avatar>
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary={item.title}
-                                        secondary={item.body}
+                                        primary={item.author.username}
+                                        secondary={item.content}
                                     />
                                 </div>
 
@@ -84,22 +93,23 @@ class News extends Component {
                                     <Button
                                         disabled
                                         startIcon={<ThumbUp/>}>
-                                        0
+                                        {item.likesAmount}
                                     </Button>
                                     <Button
                                         disabled
                                         startIcon={<Comment/>}>
-                                        0
+                                        {item.commentsAmount}
                                     </Button>
                                 </div>
                             </ListItem>
                         ))
                     }
-                    <Fab onClick={() => {this.props.dispatch(toggleOnDialog())}} color="primary" style={styles.fab}>
-                        <AddIcon />
-                    </Fab>
                 </List>
-                <NewsDialog dispatch={this.props.dispatch} newsDialogData={this.props.newsDialogData}/>
+                <NewsDialog
+                    dispatch={this.props.dispatch}
+                    fetchNewsFeed={fetchPosts}
+                    newsDialogData={this.props.newsDialogData}
+                    myId={this.props.myId}/>
                 <DialogComponent isDialogOpened={this.props}/>
             </div>
         );
