@@ -35,7 +35,7 @@ const styles = {
 class Friends extends Component {
 
     state = {
-        whichTab:0
+        whichTab:2
     };
 
     componentDidMount() {
@@ -69,9 +69,6 @@ class Friends extends Component {
     };
 
     render() {
-
-        console.log(this.props.followers)
-
         return (
             <div style={styles.friendsContainer}>
                 <Container style={styles.friendsContainerTypography}>
@@ -79,7 +76,7 @@ class Friends extends Component {
                         Znajomi
                     </Typography>
                 </Container>
-                {this.props.followers.followersFetching
+                {this.props.followers.followersFetching || this.props.fetchingUsers
                     ? <LinearProgress color="primary"/>
                     : <LinearProgress color="primary" variant="determinate" value={100}/>}
                 <div style={styles.topBar}>
@@ -104,6 +101,7 @@ class Friends extends Component {
 
 const mapStateToProps = (state) => ({
     followers:state.followersAndFolloweReducers,
+    fetchingUsers:state.searchUsersReducers.fetchingUsers
 });
 
 export default connect(mapStateToProps)(Friends);

@@ -11,6 +11,14 @@ import Message from '@material-ui/icons/Comment';
 import RemoveFriend from '@material-ui/icons/Clear';
 import Tooltip from "@material-ui/core/Tooltip";
 
+const styles = {
+    listItem:{
+        color:'white',
+        backgroundColor:'#004E92',
+        margin:10
+    }
+};
+
 class Following extends Component {
     render() {
 
@@ -21,24 +29,24 @@ class Following extends Component {
             <List>
                 {!followersFetching
                     ? followee.map((item) =>
-                        ( <ListItem button key={item._id}>
+                        ( <ListItem style={styles.listItem} button key={item._id}>
                             <ListItemAvatar>
                                 <Avatar alt=" " src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
                             </ListItemAvatar>
                             <ListItemText primary={item.username} />
                             <ListItemSecondaryAction>
                                 <Tooltip title="Wyślij wiadomość" placement="top">
-                                    <IconButton edge="end">
+                                    <IconButton style={{color:'white'}} edge="end">
                                         <Message />
                                     </IconButton>
                                 </Tooltip>
                                 <Tooltip title="Odwiedź profil" placement="top">
-                                    <IconButton edge="end">
+                                    <IconButton style={{color:'white'}} edge="end">
                                         <Profile />
                                     </IconButton>
                                 </Tooltip>
                                 <Tooltip title="Przestań obserwować" placement="top">
-                                    <IconButton edge="end">
+                                    <IconButton style={{color:'white'}} edge="end">
                                         <RemoveFriend />
                                     </IconButton>
                                 </Tooltip>

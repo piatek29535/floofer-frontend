@@ -66,7 +66,7 @@ class News extends Component {
                         Aktualności
                     </Typography>
                 </Container>
-                {this.props.newsDialogData.postFetching
+                {this.props.newsDialogData.actionPerformed
                     ? <LinearProgress color="primary"/>
                     : <LinearProgress color="primary" variant="determinate" value={100}/>}
                 <List style={styles.list}>
