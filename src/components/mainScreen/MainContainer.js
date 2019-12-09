@@ -139,7 +139,7 @@ class MainContainer extends Component {
                             />
                             <Route
                                 path="/main/profil"
-                                children={<Profile user={this.props.user}/>}
+                                children={<Profile myId={_id} user={this.props.user}/>}
                             />
                         </Switch>
                     </Paper>
