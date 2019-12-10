@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export function searchUsersAction() {
+export function searchUsersAction(search) {
     return dispatch => {
         dispatch({type:'FETCHING_USERS', payload:true})
 
@@ -15,7 +15,7 @@ export function searchUsersAction() {
             headers:headers
         });
 
-        instance.get('/api/users')
+        instance.get('/api/users/search', {params:{search:search}})
             .then(response => dispatch({type:'USERS_SUCCESS', payload:response.data}))
             .catch(err => dispatch({type:'USERS_ERROR', payload:err}))
     }

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Container from "@material-ui/core/Container";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import signUpBackground from '../../images/signInUp/signUpBackground.jpg';
 import Fade from "@material-ui/core/Fade";
 import Button from "react-bootstrap/Button";
 import SignInContainer from "./SignInContainer";
@@ -13,7 +12,7 @@ import RegisterSuccessDialog from "./RegisterSuccessDialog";
 
 const styles = {
     mainContainer:{
-        backgroundImage:`url(${signUpBackground})`,
+        backgroundImage:`url(https://cdn.pixabay.com/photo/2017/03/25/18/06/color-2174065_960_720.png)`,
         backgroundPosition:'center',
         backgroundRepeat:'no-repeat',
         backgroundSize:'cover',
@@ -25,20 +24,17 @@ const styles = {
     },
     loginContainer:{
         width:'auto',
-        display:'flex',
         justifyContent:'center',
         padding:0,
         borderRadius:'0 0 10px 10px',
         backgroundColor:'white',
         border:'1px solid grey',
         boxShadow: '0 0 10px',
-        flexDirection:'column'
+        flexDirection:'column',
+        overflow:'auto',
     },
     tabs:{
         flex:1,
-    },
-    tab:{
-        borderBottom:'1px solid black'
     },
     contentBox:{
         padding:'20px',
@@ -46,7 +42,6 @@ const styles = {
         justifyContent:'center',
         alignItems:'center',
         flexDirection:'column',
-        flex:9
     }
 };
 
@@ -54,7 +49,7 @@ class SignInUp extends Component {
 
     state = {
         isSuccessDialogOpen:false,
-    }
+    };
 
     componentDidMount() {
         localStorage.setItem("token",null)
@@ -90,8 +85,8 @@ class SignInUp extends Component {
                             centered
                             style={styles.tabs}
                         >
-                            <Tab style={styles.tab} label="Zaloguj się" />
-                            <Tab style={styles.tab} label="Zarejestruj się" />
+                            <Tab label="Zaloguj się" />
+                            <Tab label="Zarejestruj się" />
                         </Tabs>
                         {this.props.value === 0 ?
                             <SignInContainer style={styles.contentBox}/>

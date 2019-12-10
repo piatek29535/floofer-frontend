@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Box} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Divider from "@material-ui/core/Divider";
 import {connect} from "react-redux";
 import {fetchUserPostsAction} from "../../../../actions/fetchUserPostsAction";
 import Button from "@material-ui/core/Button";
@@ -26,7 +25,7 @@ const styles = {
         objectFit:'cover',
     },
     contentContainer:{
-        marginTop:'-60px',
+        marginTop:'-100px',
         width:'90%',
         marginLeft:'5%',
         display:'flex',

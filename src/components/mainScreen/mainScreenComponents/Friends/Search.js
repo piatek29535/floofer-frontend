@@ -109,7 +109,7 @@ class Search extends Component {
                         style={styles.inputBase}
                         placeholder="Wyszukaj znajomych"
                     />
-                    <IconButton onClick={() => this.props.dispatch(searchUsersAction())} style={styles.iconButton} aria-label="search">
+                    <IconButton onClick={() => this.props.dispatch(searchUsersAction(this.state.inputBaseValue))} style={styles.iconButton} aria-label="search">
                         <SearchIcon />
                     </IconButton>
                 </Paper>

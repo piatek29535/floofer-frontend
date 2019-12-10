@@ -5,6 +5,9 @@ import Button from "react-bootstrap/Button";
 import {signUpButtonClicked} from "../../actions/signInUpActions";
 import {CircularProgress} from "@material-ui/core";
 import CustomSnackbarRegister from "./CustomSnackbarRegister";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@material-ui/core/Radio";
 
 class SignUpContainer extends Component{
 
@@ -13,8 +16,13 @@ class SignUpContainer extends Component{
         surname:"",
         email: "",
         password: "",
+        country:'',
+        town:'',
         birthDate: "2019-10-10",
+        maleOrFemale:'female',
         errorMessage:'',
+        emailError:false,
+        passwordError:false,
     };
 
     handleChange = (e, field) => {
@@ -26,13 +34,22 @@ class SignUpContainer extends Component{
                 this.setState({...this.state, surname:e.target.value, isError:false});
                 break;
             case "email":
-                this.setState({...this.state, email:e.target.value, isError:false});
+                this.setState({...this.state, email:e.target.value, isError:false, emailError:false});
                 break;
             case "password":
-                this.setState({...this.state, password:e.target.value, isError:false});
+                this.setState({...this.state, password:e.target.value, isError:false, passwordError:false});
+                break;
+            case "country":
+                this.setState({...this.state, country:e.target.value, isError:false});
+                break;
+            case "town":
+                this.setState({...this.state, town:e.target.value, isError:false});
                 break;
             case "date":
                 this.setState({...this.state, birthDate:e.target.value, isError:false});
+                break;
+            case 'maleOrFemale':
+                this.setState({...this.state, maleOrFemale:e.target.value, isError:false});
                 break;
             default:
                 return;
@@ -52,6 +69,24 @@ class SignUpContainer extends Component{
         }
     }
 
+    emailValidation = (email) => {
+        // source RFC 5322 - emailregex.com
+        // eslint-disable-next-line no-useless-escape
+        const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+        if(emailRegex.test(email) && this.state.password.length >= 8){
+            this.props.signUpData.dispatch(signUpButtonClicked(this.state))
+        }else{
+            if(this.state.password.length === 0 && this.state.email.length === 0){
+                this.setState({...this.state, emailError:true, passwordError: true})
+            }else if(!emailRegex.test(email)){
+                this.setState({...this.state, emailError:true})
+            }else{
+                this.setState({...this.state, passwordError:true})
+            }
+        }
+    };
+
     renderSwitch = (code) => {
         switch(code){
             case 409:
@@ -67,11 +102,7 @@ class SignUpContainer extends Component{
                 });
                 break;
             default:
-                this.setState({
-                    errorMessage:"Whops! Wystąpił błąd. Spróbuj jeszcze raz.",
-                    isError:true
-                });
-                break;
+                return;
         }
     };
 
@@ -100,9 +131,10 @@ class SignUpContainer extends Component{
                 </Grid>
                 <TextField
                     required
-                    label="E-mail"
+                    label={this.state.emailError ? "Niepoprawny E-mail" : "E-mail"}
                     type="email"
                     margin="normal"
+                    error={this.state.emailError}
                     value={this.state.email}
                     onChange={(e) => this.handleChange(e,"email")}
                     fullWidth
@@ -110,11 +142,30 @@ class SignUpContainer extends Component{
                 />
                 <TextField
                     required
-                    label="Hasło"
+                    label={this.state.passwordError ? "Błędne hasło" : "Hasło"}
                     type="password"
                     margin="normal"
+                    error={this.state.passwordError}
                     value={this.state.password}
                     onChange={(e) => this.handleChange(e,"password")}
+                    fullWidth
+                    variant="outlined"
+                />
+                <TextField
+                    required
+                    label="Kraj pochodzenia"
+                    margin="normal"
+                    value={this.state.country}
+                    onChange={(e) => this.handleChange(e,"country")}
+                    fullWidth
+                    variant="outlined"
+                />
+                <TextField
+                    required
+                    label="Miasto"
+                    margin="normal"
+                    value={this.state.town}
+                    onChange={(e) => this.handleChange(e,"town")}
                     fullWidth
                     variant="outlined"
                 />
@@ -126,8 +177,18 @@ class SignUpContainer extends Component{
                     value={this.state.birthDate}
                     onChange={(e) => this.handleChange(e,"date")}
                 />
+                <RadioGroup
+                    required
+                    style={{flexDirection:'row'}}
+                    value={this.state.maleOrFemale}
+                    onChange={e => this.handleChange(e, 'maleOrFemale')}>
+                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                </RadioGroup>
                 <Button
-                    onClick={() => {this.props.signUpData.dispatch(signUpButtonClicked(this.state))}}
+                    onClick={() => {
+                        this.emailValidation(this.state.email)}
+                    }
                     style={{marginTop:'20px'}}
                     variant="outline-success"
                 >
