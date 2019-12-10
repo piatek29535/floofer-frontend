@@ -10,6 +10,9 @@ import Profile from '@material-ui/icons/Person';
 import Message from '@material-ui/icons/Comment';
 import RemoveFriend from '@material-ui/icons/Clear';
 import Tooltip from "@material-ui/core/Tooltip";
+import StopFollowingDialog from "./StopFollowingDialog";
+import {connect} from "react-redux";
+import {followUserAction} from "../../../../actions/followUserAction";
 
 const styles = {
     listItem:{
@@ -20,10 +23,37 @@ const styles = {
 };
 
 class Following extends Component {
+
+    state = {
+        dialogOpen:false,
+        followeeUsername:null,
+        followeeId:null
+    };
+
+    handleDialogClose = (id, action) => {
+        if(action === 'unfollow'){
+            this.props.dispatch(followUserAction(id));
+        }
+        this.setState({
+            dialogOpen:false,
+            followeeUsername:null,
+            followeeId:null
+        })
+    };
+
+    handleDialogOpen = (username, id) => {
+        this.setState({
+            dialogOpen:true,
+            followeeUsername:username,
+            followeeId:id
+        })
+    };
+
     render() {
 
         const followee = this.props.followee;
         const followersFetching = this.props.followersFetching;
+        const followUnfollowUser = this.props.followUnfollowUser
 
         return (
             <List>
@@ -46,7 +76,7 @@ class Following extends Component {
                                     </IconButton>
                                 </Tooltip>
                                 <Tooltip title="Przestań obserwować" placement="top">
-                                    <IconButton style={{color:'white'}} edge="end">
+                                    <IconButton onClick={() => this.handleDialogOpen(item.username, item._id)} style={{color:'white'}} edge="end">
                                         <RemoveFriend />
                                     </IconButton>
                                 </Tooltip>
@@ -54,9 +84,19 @@ class Following extends Component {
                         </ListItem>)
                     )
                     : null}
+                <StopFollowingDialog
+                    handleClose={this.handleDialogClose}
+                    isOpened={this.state.dialogOpen}
+                    followeeUsername={this.state.followeeUsername}
+                    followeeId={this.state.followeeId}
+                />
             </List>
         );
     }
 }
 
-export default Following;
+const mapStateToProps = (state) => ({
+   followUnfollowUser:state.followUserReducers
+});
+
+export default connect(mapStateToProps)(Following);

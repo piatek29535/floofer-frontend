@@ -127,7 +127,7 @@ class MainContainer extends Component {
                             />
                             <Route
                                 path="/main/znajomi"
-                                children={<Friends/>}
+                                children={<Friends myId={_id}/>}
                             />
                             <Route
                                 path="/main/wiadomosci"

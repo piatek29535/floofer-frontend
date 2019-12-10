@@ -35,7 +35,7 @@ const styles = {
 class Friends extends Component {
 
     state = {
-        whichTab:2
+        whichTab:0
     };
 
     componentDidMount() {
@@ -62,7 +62,9 @@ class Friends extends Component {
                     followersFetching={this.props.followers.followersFetching}
                 />);
             case 2:
-                return (<Search/>);
+                return (<Search
+                    myId={this.props.myId}
+                />);
             default:
                 return (<Followers/>);
         }

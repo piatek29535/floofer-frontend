@@ -8,7 +8,6 @@ import Button from "@material-ui/core/Button";
 
 const styles = {
     mainContainer:{
-        border:'1px solid red',
         height:'100%',
         overflow:'auto',
     },

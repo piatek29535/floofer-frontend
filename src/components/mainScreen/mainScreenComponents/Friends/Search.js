@@ -99,6 +99,7 @@ class Search extends Component {
     render() {
 
         const users = this.props.users.users;
+        const myId = this.props.myId;
 
         return (
             <div style={styles.mainContainer}>
@@ -147,16 +148,20 @@ class Search extends Component {
                                         <div style={{flex:1}}>
                                             <Divider/>
                                             <div style={styles.individualFriendButtons}>
-                                                <Button
-                                                    size="small"
-                                                    style={{flex:1}}
-                                                    onClick={() => this.handleIsObserved()}
-                                                    variant={this.state.isObserved ? "contained" : "outlined"}
-                                                    color="primary"
-                                                    startIcon={this.state.isObserved ? <Observing/> :<Observe />}
-                                                >
-                                                    {this.state.isObserved ? "Obserwujesz": "Obserwuj"}
-                                                </Button>
+                                                {item._id !== myId
+                                                    ?
+                                                        <Button
+                                                            size="small"
+                                                            style={{flex:1}}
+                                                            onClick={() => this.handleIsObserved()}
+                                                            variant={this.state.isObserved ? "contained" : "outlined"}
+                                                            color="primary"
+                                                            startIcon={this.state.isObserved ? <Observing/> :<Observe />}
+                                                        >
+                                                            {this.state.isObserved ? "Obserwujesz": "Obserwuj"}
+                                                        </Button>
+                                                    : null
+                                                }
                                                 <Button
                                                     size="small"
                                                     style={{flex:1}}
