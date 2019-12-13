@@ -8,7 +8,6 @@ import ListItem from "@material-ui/core/ListItem";
 import Container from "@material-ui/core/Container";
 import {connect} from "react-redux";
 import {fetchPosts} from "../../../../actions/mainPosts";
-import DialogComponent from "./DialogComponent";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import Comment from "@material-ui/icons/Comment";
 import NewsDialog from "./NewsDialog";
@@ -37,11 +36,6 @@ const styles={
         boxShadow:'0 0 10px',
         maxWidth:'97%',
         flexDirection:'column'
-    },
-    fab:{
-        position: 'fixed',
-        bottom: 50,
-        right: 50,
     },
     avatar:{
         backgroundColor:'#004E92'
@@ -110,7 +104,6 @@ class News extends Component {
                     fetchNewsFeed={fetchPosts}
                     newsDialogData={this.props.newsDialogData}
                     myId={this.props.myId}/>
-                <DialogComponent isDialogOpened={this.props}/>
             </div>
         );
     }

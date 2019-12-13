@@ -12,6 +12,7 @@ import {followersAndFolloweReducers} from "./followersAndFolloweeFetchReducers";
 import {searchUsersReducers} from "./searchUsersReducers";
 import {userPostsReducers} from "./userPostsReducers";
 import {followUserReducers} from "./followUserReducers";
+import {addPostReducers} from "./addPostReducers";
 
 const reducers = combineReducers({
     fetchData,
@@ -29,6 +30,7 @@ const reducers = combineReducers({
     searchUsersReducers,
     userPostsReducers,
     followUserReducers,
+    addPostReducers,
 });
 
 export default reducers;

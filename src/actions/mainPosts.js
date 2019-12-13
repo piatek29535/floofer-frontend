@@ -22,17 +22,3 @@ export function fetchPosts(){
     }
 
 }
-
-export function toggleOnDialog() {
-    return {
-        type:'TOGGLE_ON',
-        payload:true
-    }
-}
-
-export function toggleOffDialog() {
-    return {
-        type:'TOGGLE_OFF',
-        payload:false
-    }
-}

@@ -87,11 +87,8 @@ class MainContainer extends Component {
                             <IconButton>
                                 <Avatar
                                     alt=" "
-                                    // src="https://cdn.pixabay.com/photo/2018/09/03/10/10/cape-gannet-3650803_960_720.jpg"
+                                    src={``}
                                     style={styles.avatar} >
-                                    {username !==  undefined // also add here if url is not present
-                                        ? username.charAt(0).toLocaleUpperCase()
-                                        : null}
                                 </Avatar>
                             </IconButton>
                         </Link>
@@ -108,8 +105,8 @@ class MainContainer extends Component {
                                     {name:"Ustawienia", link:'/main/ustawienia'},
                                     {name:"Wyloguj", link:'/'},
                                 ].map((item, i) => (
-                                    <ListItem button key={i}>
-                                        <Link style={{color:'white', width:'100%', textDecoration:'none'}} to={item.link}>{item.name}</Link>
+                                    <ListItem style={{padding:0}} button key={i}>
+                                        <Link style={{color:'white', width:'100%', padding:"10px 10px 10px 20px", textDecoration:'none'}} to={item.link}>{item.name}</Link>
                                     </ListItem>
                                 ))
                             }
