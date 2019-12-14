@@ -30,7 +30,7 @@ export function signUpButtonClicked(user){
         };
 
 
-        axios.post('http://localhost:3001/api/users', newUser , config)
+        axios.post(process.env.REACT_APP_API_URL + '/api/users', newUser , config)
             .then(response => {
                 dispatch({type:'SIGN_UP_BUTTON_FETCHED', payload:response});
                 dispatch(signInClicked())

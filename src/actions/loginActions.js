@@ -13,7 +13,7 @@ export function login(credentials){
             'Content-type': 'application/json'
         };
 
-        axios.post('http://localhost:3001/api/login', body, headers)
+        axios.post(process.env.REACT_APP_API_URL + '/api/login', body, headers)
             .then(response => dispatch({type:'LOGIN_SUCCESS', payload:response.data.token}))
             .catch(err => dispatch({type:'LOGIN_ERROR', payload:err.response}))
     }

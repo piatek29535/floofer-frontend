@@ -10,7 +10,7 @@ export function addPostAction(content, photos){
         };
 
         const instance = axios.create({
-            baseURL:'http://localhost:3001',
+            baseURL:process.env.REACT_APP_API_URL,
             timeout:3000,
             headers:headers
         });

@@ -79,7 +79,7 @@ class MainContainer extends Component {
     }
 
     connect(){
-        let ENDPOINT = 'http://localhost:3001';
+        let ENDPOINT = process.env.REACT_APP_API_URL;
         let socket = io(ENDPOINT);
         
         socket.emit('testConnection', this.props.user.userData._id)
