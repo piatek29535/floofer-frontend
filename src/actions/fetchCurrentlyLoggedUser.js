@@ -9,7 +9,7 @@ export function fetchCurrentlyLoggedUser() {
     };
 
     const instance = axios.create({
-        baseURL:'https://nz-social-media-api.herokuapp.com',
+        baseURL:'http://localhost:3001',
         timeout:3000,
         headers:headers
     });
@@ -18,7 +18,7 @@ export function fetchCurrentlyLoggedUser() {
 
         dispatch({type:'CURRENTLY_LOGGED_USER_FETCHING', payload:true});
 
-        instance.get('/api/me')
+        return instance.get('/api/me')
             .then(response => response.data)
             .then(json => {
                 dispatch(fetchUserPostsAction(json._id));

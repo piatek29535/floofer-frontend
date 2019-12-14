@@ -70,7 +70,13 @@ const styles = {
 class MainContainer extends Component {
 
     componentDidMount() {
-        this.props.dispatch(fetchCurrentlyLoggedUser())
+        this.props.dispatch(fetchCurrentlyLoggedUser()).then(() => {
+            this.sayHello()
+        })
+    }
+
+    sayHello(){
+        console.log("hello " + this.props.user.userData.username)
     }
 
     render() {
@@ -78,7 +84,6 @@ class MainContainer extends Component {
         const {username, _id} = this.props.user.userData;
 
         return (
-
             <div style={styles.mainContainer}>
                 <div style={styles.menuPanel}>
 
