@@ -3,11 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://piatek29535.github.io/floofer-frontend/",
-  "engines": {
-    "node": "10.16.0",
-    "npm": "6.4.1",
-    "yarn": "1.10.1"
-  },
   "dependencies": {
     "@material-ui/core": "^4.4.0",
     "@material-ui/icons": "^4.2.1",
