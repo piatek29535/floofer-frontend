@@ -79,9 +79,14 @@ class MainContainer extends Component {
     }
 
     connect(){
-        console.log("hello " + this.props.user.userData.username)
         let ENDPOINT = 'http://localhost:3001';
         let socket = io(ENDPOINT);
+        
+        socket.emit('testConnection', this.props.user.userData._id)
+
+        socket.on(this.props.user.userData._id, function(msg){
+            console.log("message just for you: " + msg)
+          });
     }
 
     render() {
