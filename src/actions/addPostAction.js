@@ -1,4 +1,5 @@
 import axios from "axios";
+import {fetchCurrentlyLoggedUser} from "./fetchCurrentlyLoggedUser";
 
 export function addPostAction(content, photos){
     return dispatch => {
@@ -15,8 +16,14 @@ export function addPostAction(content, photos){
             headers:headers
         });
 
-        instance.post('/api/posts/',{params:{content:content}})
-            .then(response => dispatch({type:'ADD_POST_SUCCESS', payload:response.data}))
+        const formData = new FormData();
+        formData.append('content',content);
+
+        instance.post('/api/posts/',formData)
+            .then(response => {
+                dispatch(fetchCurrentlyLoggedUser());
+                dispatch({type:'ADD_POST_SUCCESS', payload:response.data})
+            })
             .catch(err => dispatch({type:'ADD_POST_FAILURE', payload:err}))
     }
 }

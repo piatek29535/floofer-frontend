@@ -13,6 +13,7 @@ import {searchUsersReducers} from "./searchUsersReducers";
 import {userPostsReducers} from "./userPostsReducers";
 import {followUserReducers} from "./followUserReducers";
 import {addPostReducers} from "./addPostReducers";
+import {changeProfilePicReducers} from "./changeProfilePicReducers";
 
 const reducers = combineReducers({
     fetchData,
@@ -31,6 +32,7 @@ const reducers = combineReducers({
     userPostsReducers,
     followUserReducers,
     addPostReducers,
+    changeProfilePicReducers,
 });
 
 export default reducers;

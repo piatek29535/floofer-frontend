@@ -9,6 +9,7 @@ import Add from "@material-ui/icons/Add";
 import Tooltip from "@material-ui/core/Tooltip";
 import DialogComponent from "./DialogComponent";
 import {addPostAction} from "../../../../actions/addPostAction";
+import {changeProfilePicAction} from "../../../../actions/changeProfilePicAction";
 
 const styles = {
     mainContainer:{
@@ -77,11 +78,22 @@ class Profile extends Component {
         this.props.dispatch(addPostAction(content,photos))
     };
 
+    profilePicChange = (image) => {
+      if(image.type.substring(0,5) === "image"){
+        this.props.dispatch(changeProfilePicAction(image))
+      }else{
+          // do sth if not a correct file
+      }
+    };
+
     render() {
         const {isUserFetching, userData, userError} = this.props.user;
         const {userPostsFetching, userPosts, userPostsError} = this.props.userPostsData;
 
-        console.log(this.props.addPostReducers)
+        // console.log(this.props.addPostReducers)
+
+        // console.log(this.props.changeProfilePic)
+        console.log(userData)
 
         return (
             <div style={styles.mainContainer}>
@@ -99,6 +111,8 @@ class Profile extends Component {
                             <input
                                 type="file"
                                 style={{ display: "none" }}
+                                accept="image/*"
+                                onChange={(e) => this.profilePicChange(e.target.files[0])}
                             />
                         </Button>
                         <Typography>{userData.username}</Typography>
@@ -110,7 +124,7 @@ class Profile extends Component {
 
                     <Box>
                         {userPosts.map((item, key) => (
-                            <Typography key>{item.content}</Typography>
+                            <Typography key={key}>{item.content}</Typography>
                         ))}
                     </Box>
                 </Paper>
@@ -133,7 +147,8 @@ class Profile extends Component {
 
 const mapStateToProps = (state) => ({
     userPostsData:state.userPostsReducers,
-    addPostReducers:state.addPostReducers
+    addPostReducers:state.addPostReducers,
+    changeProfilePic:state.changeProfilePicReducers
 });
 
 export default connect(mapStateToProps)(Profile);
