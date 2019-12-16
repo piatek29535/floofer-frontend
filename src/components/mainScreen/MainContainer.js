@@ -91,7 +91,7 @@ class MainContainer extends Component {
 
     render() {
 
-        const {username, _id} = this.props.user.userData;
+        const {username, _id, profilePic} = this.props.user.userData;
 
         return (
             <div style={styles.mainContainer}>
@@ -102,7 +102,7 @@ class MainContainer extends Component {
                             <IconButton>
                                 <Avatar
                                     alt=" "
-                                    src={``}
+                                    src={`${process.env.REACT_APP_API_URL+'/'+profilePic}`}
                                     style={styles.avatar} >
                                 </Avatar>
                             </IconButton>

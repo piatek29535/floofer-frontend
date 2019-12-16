@@ -1,9 +1,10 @@
 import axios from "axios";
 import {fetchCurrentlyLoggedUser} from "./fetchCurrentlyLoggedUser";
 
-export function addPostAction(content, photos){
+export function addPostAction(content, postImage){
+
     return dispatch => {
-        dispatch({type:'ADDING_POST', payload:true})
+        dispatch({type:'ADDING_POST', payload:true});
 
         const headers = {
             'Content-type': 'multipart/form-data',
@@ -18,6 +19,7 @@ export function addPostAction(content, photos){
 
         const formData = new FormData();
         formData.append('content',content);
+        formData.append('postImage',postImage); // dont work
 
         instance.post('/api/posts/',formData)
             .then(response => {

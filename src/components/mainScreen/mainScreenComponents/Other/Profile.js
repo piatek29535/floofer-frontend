@@ -27,6 +27,7 @@ const styles = {
         width:180,
         height:171,
         objectFit:'cover',
+        border:'1px solid lightgrey'
     },
     contentContainer:{
         marginTop:'-100px',
@@ -76,23 +77,23 @@ class Profile extends Component {
 
     addPost = (content, photos) => {
         this.props.dispatch(addPostAction(content,photos))
+        this.setState({
+            dialogOpened:false
+        })
     };
 
     profilePicChange = (image) => {
-      if(image.type.substring(0,5) === "image"){
-        this.props.dispatch(changeProfilePicAction(image))
-      }else{
-          // do sth if not a correct file
-      }
+        if(image.type.substring(0,5) === "image"){
+            this.props.dispatch(changeProfilePicAction(image))
+        }else{
+            // do sth if not a correct file
+        }
     };
 
     render() {
         const {isUserFetching, userData, userError} = this.props.user;
         const {userPostsFetching, userPosts, userPostsError} = this.props.userPostsData;
 
-        // console.log(this.props.addPostReducers)
-
-        // console.log(this.props.changeProfilePic)
         console.log(userData)
 
         return (
@@ -105,7 +106,11 @@ class Profile extends Component {
                         >
                             <img
                                 alt=" "
-                                src="https://cdn.pixabay.com/photo/2018/09/03/10/10/cape-gannet-3650803_960_720.jpg"
+                                src={
+                                    userData.profilePic === undefined
+                                        ? null
+                                        : `${process.env.REACT_APP_API_URL+'/'+userData.profilePic}`
+                                }
                                 style={styles.avatar} >
                             </img>
                             <input
@@ -124,7 +129,17 @@ class Profile extends Component {
 
                     <Box>
                         {userPosts.map((item, key) => (
-                            <Typography key={key}>{item.content}</Typography>
+                            <Paper key={key}>
+                                <Typography>{item.content}</Typography>
+                                {item.photo
+                                ? <img
+                                        alt={''}
+                                        style={{width:200, height:200, objectFit:'cover'}}
+                                        src={process.env.REACT_APP_API_URL+'/'+item.photo.url}
+                                    />
+                                : null}
+
+                            </Paper>
                         ))}
                     </Box>
                 </Paper>

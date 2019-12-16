@@ -20,21 +20,21 @@ const styles = {
         margin:10,
         border:'1px solid black'
     },
-    picturesDiv:{
-        margin:10,
-        height:100,
-        width:100,
-        display:'flex',
-        flexDirection:'column',
-        backgroundSize:'cover'
-    },
     images:{
         display:'flex',
         flexWrap:"wrap",
-        justifyContent:'center'
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    imagePreview:{
+        height:200,
+        width:300,
+        objectFit:'cover'
     },
     removeFab:{
-        alignSelf:"flex-end",
+        alignSelf:"flex-start",
+        marginLeft:-20,
+        marginTop:-10,
         height:35,
         width:35
     }
@@ -45,28 +45,29 @@ class DialogComponent extends Component {
 
     state = {
         content:'',
-        pictures:[{item:"1",url:url},{item:"1",url:url},{item:"1",url:url},{item:"1",url:url},{item:"1",url:url},{item:"1",url:url},{item:"1",url:url},]
+        contentError:false,
+        file:null,
+        imagePreviewUrl: null
     };
 
     pushImages = (image) => {
-        this.setState(state => {
-            const pictures = state.pictures.concat(image);
+        let reader = new FileReader();
+        let file = image;
 
-            return {
-                ...state,
-                pictures
-            };
-        });
+        reader.onloadend = () => {
+            this.setState({
+                file: file,
+                imagePreviewUrl: reader.result
+            });
+        };
+
+        reader.readAsDataURL(file)
     };
 
-    removeImage = (image) => {
-        this.setState(state => {
-            const pictures = state.pictures.filter(element => element !== image);
-
-            return {
-                ...state,
-                pictures
-            };
+    removeImage = () => {
+        this.setState({
+            file: null,
+            imagePreviewUrl:null
         });
     };
 
@@ -92,23 +93,30 @@ class DialogComponent extends Component {
                         margin="normal"
                         variant="outlined"
                         autoFocus
+                        error={this.state.contentError}
                     />
-                    <Typography>Dołącz zdjęcie(a)</Typography>
+                    <Typography>Dołącz zdjęcie</Typography>
                     <Box style={styles.images}>
-                        {this.state.pictures.map(item => (
-                            <Box style={{...styles.picturesDiv,backgroundImage:`url(${item.url})`}}>
-                                <Fab
-                                    onClick={() => this.removeImage(item)}
-                                    style={styles.removeFab}
-                                    color="primary">
-                                    <Remove/>
-                                </Fab>
-                            </Box>
-                        ))}
+                        <img
+                            style={styles.imagePreview}
+                            src={this.state.imagePreviewUrl}>
+                        </img>
+                        <Fab
+                            onClick={() => this.removeImage()}
+                            style={styles.removeFab}
+                            color="primary">
+                            <Remove/>
+                        </Fab>
                         <Button
-                            onClick={() => this.pushImages({item:"xd", url:url})}
+                            component="label"
                             style={styles.addPictureButton}>
                             <Add/>
+                            <input
+                                type="file"
+                                style={{ display: "none" }}
+                                accept="image/*"
+                                onChange={(e) => this.pushImages(e.target.files[0])}
+                            />
                         </Button>
                     </Box>
                 </DialogContent>
@@ -117,7 +125,22 @@ class DialogComponent extends Component {
                             color="primary">
                         Zamknij
                     </Button>
-                    <Button onClick={() => this.props.addPost(this.state.content, this.state.pictures)}
+                    <Button onClick={() => {
+                        if(this.state.content.length !== 0){
+                            this.props.addPost(this.state.content, this.state.file)
+                            this.setState({
+                                content:'',
+                                contentError:false,
+                                file:null,
+                                imagePreviewUrl: null
+
+                            })
+                        }else{
+                            this.setState({
+                                contentError:true
+                            })
+                        }
+                    }}
                             variant="contained"
                             color="primary">
                         Opublikuj
