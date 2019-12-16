@@ -11,7 +11,7 @@ export function addPostAction(content, photos){
         };
 
         const instance = axios.create({
-            baseURL:'https://nz-social-media-api.herokuapp.com',
+            baseURL:process.env.REACT_APP_API_URL,
             timeout:3000,
             headers:headers
         });

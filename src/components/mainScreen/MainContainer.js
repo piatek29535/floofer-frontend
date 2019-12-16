@@ -13,6 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Profile from "./mainScreenComponents/Other/Profile";
 import {fetchCurrentlyLoggedUser} from "../../actions/fetchCurrentlyLoggedUser";
 import {connect} from "react-redux";
+import io from "socket.io-client";
 
 const styles = {
     mainContainer:{
@@ -67,10 +68,25 @@ const styles = {
     }
 };
 
+
+
 class MainContainer extends Component {
 
     componentDidMount() {
-        this.props.dispatch(fetchCurrentlyLoggedUser())
+        this.props.dispatch(fetchCurrentlyLoggedUser()).then(() => {
+            this.connect()
+        })
+    }
+
+    connect(){
+        let ENDPOINT = process.env.REACT_APP_API_URL;
+        let socket = io(ENDPOINT);
+        
+        socket.emit('testConnection', this.props.user.userData._id)
+
+        socket.on(this.props.user.userData._id, function(msg){
+            console.log("message just for you: " + msg)
+          });
     }
 
     render() {
@@ -78,7 +94,6 @@ class MainContainer extends Component {
         const {username, _id} = this.props.user.userData;
 
         return (
-
             <div style={styles.mainContainer}>
                 <div style={styles.menuPanel}>
 
