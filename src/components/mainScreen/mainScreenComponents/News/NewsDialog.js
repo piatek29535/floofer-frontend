@@ -20,6 +20,8 @@ import {likeAction} from "../../../../actions/likeAction";
 import {commentAction} from "../../../../actions/commentAction";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Divider from "@material-ui/core/Divider";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import {commentLikeAction} from "../../../../actions/commentLikeAction";
 
 const styles={
     postTypography:{
@@ -43,6 +45,13 @@ const styles={
     },
     avatar:{
         backgroundColor:'#004E92'
+    },
+    commentLikeAction:{
+        display:'flex',
+        alignItems:'center'
+    },
+    commentLikeAmount:{
+        marginLeft:12
     }
 };
 
@@ -91,7 +100,6 @@ class NewsDialog extends Component {
         if(Object.entries(post).length === 0){
             return null
         }else{
-            console.log(post)
 
             const likeCondition = post.likes.filter(e => e._id === this.props.myId).length > 0;
 
@@ -152,7 +160,9 @@ class NewsDialog extends Component {
                             {post.commentsAmount === 0
                                 ? <Typography>Ten post nie ma jeszcze komentarzy. Bądź pierwszym który go napisze!</Typography>
                                 : post.comments.map((item) =>
-                                    <ListItem button key={item._id}>
+                                    <ListItem
+                                        button
+                                        key={item._id}>
                                         <ListItemAvatar>
                                             <Avatar
                                                 alt=" "
@@ -165,6 +175,17 @@ class NewsDialog extends Component {
                                         <ListItemText
                                             primary={item.author.username}
                                             secondary={item.content}/>
+                                        <ListItemSecondaryAction style={styles.commentLikeAction}>
+                                            <IconButton
+                                                onClick={() => this.props.dispatch(commentLikeAction(item._id,post._id))}
+                                                edge="end">
+                                                <ThumbUp
+                                                    fontSize='small'
+                                                    color={item.likes.filter(e => e._id === this.props.myId).length > 0 ? "secondary" : "primary"}
+                                                />
+                                            </IconButton>
+                                            <span style={styles.commentLikeAmount}>{item.likesAmount}</span>
+                                        </ListItemSecondaryAction>
                                     </ListItem>
                                 )}
                         </DialogContent>
@@ -179,7 +200,8 @@ class NewsDialog extends Component {
 
 const mapStateToProps = (state) => ({
     likedPost:state.likeReducers,
-    commentedPost:state.commentReducers
+    commentedPost:state.commentReducers,
+    commentLikeReducers:state.commentLikeReducers
 });
 
 export default connect(mapStateToProps)(NewsDialog);

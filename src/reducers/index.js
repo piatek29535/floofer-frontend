@@ -14,6 +14,7 @@ import {userPostsReducers} from "./userPostsReducers";
 import {followUserReducers} from "./followUserReducers";
 import {addPostReducers} from "./addPostReducers";
 import {changeProfilePicReducers} from "./changeProfilePicReducers";
+import {commentLikeReducers} from "./commentLikeReducers";
 
 const reducers = combineReducers({
     fetchData,
@@ -33,6 +34,7 @@ const reducers = combineReducers({
     followUserReducers,
     addPostReducers,
     changeProfilePicReducers,
+    commentLikeReducers,
 });
 
 export default reducers;
