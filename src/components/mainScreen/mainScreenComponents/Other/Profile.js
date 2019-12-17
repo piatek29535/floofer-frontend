@@ -10,6 +10,11 @@ import Tooltip from "@material-ui/core/Tooltip";
 import DialogComponent from "./DialogComponent";
 import {addPostAction} from "../../../../actions/addPostAction";
 import {changeProfilePicAction} from "../../../../actions/changeProfilePicAction";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItem from "@material-ui/core/ListItem";
+import Divider from "@material-ui/core/Divider";
 
 const styles = {
     mainContainer:{
@@ -48,12 +53,19 @@ const styles = {
     followersAmount:{
         margin:'1%',
         width:'50%',
-        boxShadow:'0 0 10px'
+        boxShadow:'0 0 10px',
+        marginBottom:'3%'
     },
     addPostIcon:{
         position:"fixed",
         bottom: 50,
         right: 50,
+    },
+    posts:{
+        borderTop:'1px solid black',
+        display:'flex',
+        flexDirection:'column',
+        width:'80%'
     }
 };
 
@@ -94,8 +106,6 @@ class Profile extends Component {
         const {isUserFetching, userData, userError} = this.props.user;
         const {userPostsFetching, userPosts, userPostsError} = this.props.userPostsData;
 
-        console.log(userData)
-
         return (
             <div style={styles.mainContainer}>
                 <Box style={styles.backgroundTopImage}/>
@@ -127,19 +137,39 @@ class Profile extends Component {
                         <Typography>tutaj można zrobić ilość followersow i followee</Typography>
                     </Box>
 
-                    <Box>
-                        {userPosts.map((item, key) => (
-                            <Paper key={key}>
-                                <Typography>{item.content}</Typography>
-                                {item.photo
-                                ? <img
-                                        alt={''}
-                                        style={{width:200, height:200, objectFit:'cover'}}
-                                        src={process.env.REACT_APP_API_URL+'/'+item.photo.url}
-                                    />
-                                : null}
+                    <Typography variant="h5">Tablica aktualności</Typography>
 
-                            </Paper>
+                    <Box style={styles.posts}>
+                        {userPosts.map((item, key) => (
+                            <ListItem
+                                button
+                                key={key}
+                                style={{width:'100%'}}
+                            >
+                                <ListItemAvatar>
+                                    <Avatar
+                                        alt=" "
+                                        src={`${process.env.REACT_APP_API_URL+'/'+userData.profilePic}`}
+                                    />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={item.author.username}
+                                    secondary={item.content}/>
+                            </ListItem>
+
+                            //-------
+
+                            // <Paper key={key}>
+                            //     <Typography>{item.content}</Typography>
+                            //     {item.photo
+                            //     ? <img
+                            //             alt={''}
+                            //             style={{width:200, height:200, objectFit:'cover'}}
+                            //             src={process.env.REACT_APP_API_URL+'/'+item.photo.url}
+                            //         />
+                            //     : null}
+                            //
+                            // </Paper>
                         ))}
                     </Box>
                 </Paper>

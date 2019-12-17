@@ -11,8 +11,6 @@ import Remove from "@material-ui/icons/Remove"
 import Typography from "@material-ui/core/Typography";
 import Fab from "@material-ui/core/Fab";
 
-const url = "https://cdn.pixabay.com/photo/2017/03/25/18/06/color-2174065_960_720.png"
-
 const styles = {
     addPictureButton:{
         height:100,
@@ -98,6 +96,7 @@ class DialogComponent extends Component {
                     <Typography>Dołącz zdjęcie</Typography>
                     <Box style={styles.images}>
                         <img
+                            alt=" "
                             style={styles.imagePreview}
                             src={this.state.imagePreviewUrl}>
                         </img>

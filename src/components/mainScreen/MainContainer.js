@@ -99,7 +99,7 @@ class MainContainer extends Component {
 
                     <div style={styles.avatarAndName}>
                         <Link to="/main/profil" style={{textDecoration:'none'}}>
-                            <IconButton>
+                            <IconButton style={{outline:'none'}}>
                                 <Avatar
                                     alt=" "
                                     src={`${process.env.REACT_APP_API_URL+'/'+profilePic}`}
