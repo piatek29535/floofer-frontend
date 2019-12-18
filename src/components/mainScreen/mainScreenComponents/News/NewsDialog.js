@@ -27,10 +27,8 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Close from "@material-ui/icons/Close";
-import {commentEditReducers} from "../../../../reducers/commentEditReducers";
 import {commentEditAction} from "../../../../actions/commentEditAction";
 import {commentDeleteAction} from "../../../../actions/commentDeleteAction";
-import {commentDeleteReducers} from "../../../../reducers/commentDeleteReducers";
 
 const styles={
     postTypography:{
@@ -57,10 +55,22 @@ const styles={
     },
     commentLikeAction:{
         display:'flex',
-        alignItems:'center'
+        alignItems:'center',
     },
     commentLikeAmount:{
         marginLeft:12
+    },
+    listItem:{
+        border:'1px solid red',
+        display:'flex',
+        flexWrap:'wrap'
+    },
+    listItemAvatar:{
+        width:'80%',
+        display:'flex',
+        flexDirection: 'row',
+        alignItems:'center',
+        flexWrap:'wrap'
     }
 };
 
@@ -165,8 +175,6 @@ class NewsDialog extends Component {
     render() {
         let {isOpened, post} = this.props.newsDialogData;
 
-        console.log(this.props.commentDeleteReducers);
-
         if(Object.entries(post).length === 0){
             return null
         }else{
@@ -231,43 +239,45 @@ class NewsDialog extends Component {
                                 ? <Typography>Ten post nie ma jeszcze komentarzy. Bądź pierwszym który go napisze!</Typography>
                                 : post.comments.map((item) =>
                                     <ListItem
-                                        //pack it with grid
+                                        style={styles.listItem}
                                         key={item._id}>
-                                        <ListItemAvatar>
-                                            <Avatar
-                                                alt=" "
-                                                style={styles.avatar}
-                                                // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
-                                            >
-                                                {item.author.username.charAt(0).toLocaleUpperCase()}
-                                            </Avatar>
-                                        </ListItemAvatar>
-                                        {
-                                            item._id === this.state.currentCommentId && this.state.commentEditing
-                                                ?
-                                                <TextField
-                                                    size="small"
-                                                    variant="outlined"
-                                                    value={this.state.commentEditPlaceholder}
-                                                    onChange={(e) => this.commentPlaceholderEdit(e.target.value)}
-                                                    onKeyPress={(e) => this.commentEditDone(e, post)}
-                                                    InputProps={{
-                                                        endAdornment: (
-                                                            <InputAdornment>
-                                                                <IconButton
-                                                                    onClick={() => this.commentEditCancel()}
-                                                                >
-                                                                    <Close />
-                                                                </IconButton>
-                                                            </InputAdornment>
-                                                        ),
-                                                    }}
-                                                />
-                                                : <ListItemText
-                                                    primary={item.author.username}
-                                                    secondary={item.content}
-                                                />
-                                        }
+                                        <Box style={styles.listItemAvatar}>
+                                            <ListItemAvatar>
+                                                <Avatar
+                                                    alt=" "
+                                                    style={styles.avatar}
+                                                    // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
+                                                >
+                                                    {item.author.username.charAt(0).toLocaleUpperCase()}
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            {
+                                                item._id === this.state.currentCommentId && this.state.commentEditing
+                                                    ?
+                                                    <TextField
+                                                        size="small"
+                                                        variant="outlined"
+                                                        value={this.state.commentEditPlaceholder}
+                                                        onChange={(e) => this.commentPlaceholderEdit(e.target.value)}
+                                                        onKeyPress={(e) => this.commentEditDone(e, post)}
+                                                        InputProps={{
+                                                            endAdornment: (
+                                                                <InputAdornment>
+                                                                    <IconButton
+                                                                        onClick={() => this.commentEditCancel()}
+                                                                    >
+                                                                        <Close />
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
+                                                    : <ListItemText
+                                                        primary={item.author.username}
+                                                        secondary={item.content}
+                                                    />
+                                            }
+                                        </Box>
                                         <ListItemSecondaryAction style={styles.commentLikeAction}>
                                             <IconButton
                                                 onClick={() => this.props.dispatch(commentLikeAction(item._id,post._id))}
