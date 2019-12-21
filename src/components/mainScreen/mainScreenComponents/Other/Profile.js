@@ -14,6 +14,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
+import profilePic from '../../../../images/mainScreen/profilePic.png'
 
 const styles = {
     mainContainer:{
@@ -117,7 +118,7 @@ class Profile extends Component {
                                 alt=" "
                                 src={
                                     userData.profilePic === undefined
-                                        ? null
+                                        ? profilePic
                                         : `${process.env.REACT_APP_API_URL+'/'+userData.profilePic}`
                                 }
                                 style={styles.avatar} >

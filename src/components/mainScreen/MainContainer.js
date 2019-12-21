@@ -14,49 +14,19 @@ import Profile from "./mainScreenComponents/Other/Profile";
 import {fetchCurrentlyLoggedUser} from "../../actions/fetchCurrentlyLoggedUser";
 import {connect} from "react-redux";
 import io from "socket.io-client";
+import MainScreenNavbar from "./mainScreenComponents/MainScreenNavbar";
 
 const styles = {
     mainContainer:{
         display:'flex',
-        flexDirection:'row',
-        height:'100vh',
-    },
-
-
-    //Right menu
-    menuPanel:{
-        display:'flex',
         flexDirection:'column',
-        overflow:'auto',
-        backgroundColor:'#004E92',
-        flex:2,
-        color:'#FFFFFF'
-    },
-    avatarAndName:{
-        display:'flex',
-        alignItems:'center',
-        justifyContent:'center',
-        flexDirection: 'column',
-        borderBottom:'1px solid #6699CC',
-        paddingBottom:'20px',
-        wordBreak:'break-all'
-    },
-    avatar:{
-        width:180,
-        height:171,
-        objectFit:'cover',
-    },
-    listContainer:{
-        color:'#FFFFFF',
-    },
-    listRouter:{
-        color:'#FFFFFF'
+        height:'100vh',
     },
 
     //Content
     contentPanel:{
         padding:'1% 1% 0 1%',
-        flex:9,
+        flex:1,
         backgroundColor: '#FFFFFF'
     },
     contentPaper:{
@@ -67,8 +37,6 @@ const styles = {
         borderBottomRightRadius:'0',
     }
 };
-
-
 
 class MainContainer extends Component {
 
@@ -95,40 +63,7 @@ class MainContainer extends Component {
 
         return (
             <div style={styles.mainContainer}>
-                <div style={styles.menuPanel}>
-
-                    <div style={styles.avatarAndName}>
-                        <Link to="/main/profil" style={{textDecoration:'none'}}>
-                            <IconButton style={{outline:'none'}}>
-                                <Avatar
-                                    alt=" "
-                                    src={`${process.env.REACT_APP_API_URL+'/'+profilePic}`}
-                                    style={styles.avatar} >
-                                </Avatar>
-                            </IconButton>
-                        </Link>
-                        <Typography variant="h6">{username}</Typography>
-                        <Typography variant="h6"></Typography>
-                    </div>
-
-                    <div style={styles.listContainer}>
-                        <List>
-                            {
-                                [{name:"Aktualności", link:'/main'},
-                                    {name:"Znajomi", link:'/main/znajomi'},
-                                    {name:"Wiadomości", link:'/main/wiadomosci'},
-                                    {name:"Ustawienia", link:'/main/ustawienia'},
-                                    {name:"Wyloguj", link:'/'},
-                                ].map((item, i) => (
-                                    <ListItem style={{padding:0}} button key={i}>
-                                        <Link style={{color:'white', width:'100%', padding:"10px 10px 10px 20px", textDecoration:'none'}} to={item.link}>{item.name}</Link>
-                                    </ListItem>
-                                ))
-                            }
-                        </List>
-                    </div>
-                </div>
-
+                <MainScreenNavbar user={this.props.user.userData}/>
                 <div style={styles.contentPanel}>
                     <Paper style={styles.contentPaper}>
                         <Switch>

@@ -28,7 +28,6 @@ const styles = {
     },
     contentContainer:{
         maxHeight:'80%',
-        overflow:'auto'
     },
 };
 
@@ -83,6 +82,7 @@ class Friends extends Component {
                     : <LinearProgress color="primary" variant="determinate" value={100}/>}
                 <div style={styles.topBar}>
                     <Tabs
+                        variant="fullWidth"
                         value={this.state.whichTab}
                         indicatorColor="primary"
                         textColor="primary"
