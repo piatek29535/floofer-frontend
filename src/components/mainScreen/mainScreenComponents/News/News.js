@@ -14,6 +14,7 @@ import NewsDialog from "./NewsDialog";
 import {newsDialogPostOpen} from "../../../../actions/newsDialogActions";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import profilePic from "../../../../images/mainScreen/profilePic.png";
 
 const styles={
     mainContainer:{
@@ -27,7 +28,6 @@ const styles={
     },
     list:{
         maxHeight:'90%',
-        overflow:'auto'
     },
     listItem:{
         borderRadius:'10px',
@@ -72,7 +72,11 @@ class News extends Component {
                                         <Avatar
                                             alt=" "
                                             style={styles.avatar}
-                                            // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
+                                            src={
+                                                item.author.profilePic === undefined
+                                                    ? profilePic
+                                                    : `${process.env.REACT_APP_API_URL+'/'+item.author.profilePic}`
+                                            }
                                         >
                                             {item.author.username.charAt(0).toLocaleUpperCase()}
                                         </Avatar>

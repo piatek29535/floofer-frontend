@@ -29,6 +29,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Close from "@material-ui/icons/Close";
 import {commentEditAction} from "../../../../actions/commentEditAction";
 import {commentDeleteAction} from "../../../../actions/commentDeleteAction";
+import profilePic from "../../../../images/mainScreen/profilePic.png";
 
 const styles={
     postTypography:{
@@ -61,7 +62,6 @@ const styles={
         marginLeft:12
     },
     listItem:{
-        border:'1px solid red',
         display:'flex',
         flexWrap:'wrap'
     },
@@ -192,7 +192,11 @@ class NewsDialog extends Component {
                                 <Avatar
                                     style={styles.avatar}
                                     alt=" "
-                                    // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
+                                    src={
+                                        post.author.profilePic === undefined
+                                            ? profilePic
+                                            : `${process.env.REACT_APP_API_URL+'/'+post.author.profilePic}`
+                                    }
                                 >
                                     {post.author.username.charAt(0).toLocaleUpperCase()}
                                 </Avatar>
@@ -246,7 +250,11 @@ class NewsDialog extends Component {
                                                 <Avatar
                                                     alt=" "
                                                     style={styles.avatar}
-                                                    // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
+                                                    src={
+                                                        item.author.profilePic === undefined
+                                                            ? profilePic
+                                                            : `${process.env.REACT_APP_API_URL+'/'+post.author.profilePic}`
+                                                    }
                                                 >
                                                     {item.author.username.charAt(0).toLocaleUpperCase()}
                                                 </Avatar>

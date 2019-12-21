@@ -10,6 +10,7 @@ import Add from "@material-ui/icons/Add";
 import Remove from "@material-ui/icons/Remove"
 import Typography from "@material-ui/core/Typography";
 import Fab from "@material-ui/core/Fab";
+import preview from "../../../../images/mainScreen/podgląd.png"
 
 const styles = {
     addPictureButton:{
@@ -98,14 +99,19 @@ class DialogComponent extends Component {
                         <img
                             alt=" "
                             style={styles.imagePreview}
-                            src={this.state.imagePreviewUrl}>
+                            src={this.state.imagePreviewUrl
+                                ? this.state.imagePreviewUrl
+                                : preview}>
                         </img>
-                        <Fab
-                            onClick={() => this.removeImage()}
-                            style={styles.removeFab}
-                            color="primary">
-                            <Remove/>
-                        </Fab>
+                        {this.state.imagePreviewUrl
+                        ?
+                            <Fab
+                                onClick={() => this.removeImage()}
+                                style={styles.removeFab}
+                                color="primary">
+                                <Remove/>
+                            </Fab>
+                        :null}
                         <Button
                             component="label"
                             style={styles.addPictureButton}>
@@ -132,7 +138,6 @@ class DialogComponent extends Component {
                                 contentError:false,
                                 file:null,
                                 imagePreviewUrl: null
-
                             })
                         }else{
                             this.setState({
