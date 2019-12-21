@@ -20,6 +20,16 @@ import {likeAction} from "../../../../actions/likeAction";
 import {commentAction} from "../../../../actions/commentAction";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Divider from "@material-ui/core/Divider";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import {commentLikeAction} from "../../../../actions/commentLikeAction";
+import MoreVert from "@material-ui/icons/MoreVert";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Close from "@material-ui/icons/Close";
+import {commentEditAction} from "../../../../actions/commentEditAction";
+import {commentDeleteAction} from "../../../../actions/commentDeleteAction";
+import profilePic from "../../../../images/mainScreen/profilePic.png";
 
 const styles={
     postTypography:{
@@ -43,6 +53,24 @@ const styles={
     },
     avatar:{
         backgroundColor:'#004E92'
+    },
+    commentLikeAction:{
+        display:'flex',
+        alignItems:'center',
+    },
+    commentLikeAmount:{
+        marginLeft:12
+    },
+    listItem:{
+        display:'flex',
+        flexWrap:'wrap'
+    },
+    listItemAvatar:{
+        width:'80%',
+        display:'flex',
+        flexDirection: 'row',
+        alignItems:'center',
+        flexWrap:'wrap'
     }
 };
 
@@ -51,7 +79,13 @@ class NewsDialog extends Component {
     state = {
         isCommentFieldShown: false,
         commentFieldValue:"",
-        commentFieldError:false
+        commentFieldError:false,
+        menuOpen:false,
+        anchorEl:null,
+        currentCommentId:null,
+        commentEditing:false,
+        commentEditPlaceholder:null,
+        currentPostId:null
     };
 
     buttonClicked = (type, id) => {
@@ -81,8 +115,61 @@ class NewsDialog extends Component {
     };
 
     postComment = (post) => {
-        this.setState({commentFieldValue:"", isCommentFieldShown:false})
+        this.setState({commentFieldValue:"", isCommentFieldShown:false});
         this.props.dispatch(commentAction(post._id,this.state.commentFieldValue))
+    };
+
+    menuOpen = (e, commentId, placeholder, postId) => {
+        this.setState({
+            anchorEl:e.currentTarget,
+            menuOpen:true,
+            currentCommentId:commentId,
+            commentEditing:false,
+            commentEditPlaceholder:placeholder,
+            currentPostId:postId
+        })
+    };
+
+    menuClose = () => {
+        this.setState({
+            anchorEl:null,
+            menuOpen:false,
+            currentCommentId:null,
+        })
+    };
+
+    toggleCommentEdit = (value) => {
+        this.setState({
+            menuOpen:false,
+            commentEditing:true,
+            commentEditValue:value
+        })
+    };
+
+    commentPlaceholderEdit = (value) => {
+        this.setState({
+            commentEditPlaceholder:value
+        })
+    };
+
+    commentEditDone = (e, post) => {
+        if(e.key === "Enter"){
+            this.props.dispatch(commentEditAction(this.state.currentCommentId, post._id, this.state.commentEditPlaceholder))
+            this.commentEditCancel()
+        }
+    };
+
+    commentEditCancel = () => {
+        this.setState({
+            commentEditing:true,
+            currentCommentId:null,
+            commentEditPlaceholder:null
+        })
+    };
+
+    deleteComment = () => {
+        this.props.dispatch(commentDeleteAction(this.state.currentCommentId,this.state.currentPostId));
+        this.menuClose();
     };
 
     render() {
@@ -91,7 +178,6 @@ class NewsDialog extends Component {
         if(Object.entries(post).length === 0){
             return null
         }else{
-            console.log(post)
 
             const likeCondition = post.likes.filter(e => e._id === this.props.myId).length > 0;
 
@@ -106,7 +192,11 @@ class NewsDialog extends Component {
                                 <Avatar
                                     style={styles.avatar}
                                     alt=" "
-                                    // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
+                                    src={
+                                        post.author.profilePic === undefined
+                                            ? profilePic
+                                            : `${process.env.REACT_APP_API_URL+'/'+post.author.profilePic}`
+                                    }
                                 >
                                     {post.author.username.charAt(0).toLocaleUpperCase()}
                                 </Avatar>
@@ -152,21 +242,80 @@ class NewsDialog extends Component {
                             {post.commentsAmount === 0
                                 ? <Typography>Ten post nie ma jeszcze komentarzy. Bądź pierwszym który go napisze!</Typography>
                                 : post.comments.map((item) =>
-                                    <ListItem button key={item._id}>
-                                        <ListItemAvatar>
-                                            <Avatar
-                                                alt=" "
-                                                style={styles.avatar}
-                                                // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
-                                            >
-                                                {item.author.username.charAt(0).toLocaleUpperCase()}
-                                            </Avatar>
-                                        </ListItemAvatar>
-                                        <ListItemText
-                                            primary={item.author.username}
-                                            secondary={item.content}/>
+                                    <ListItem
+                                        style={styles.listItem}
+                                        key={item._id}>
+                                        <Box style={styles.listItemAvatar}>
+                                            <ListItemAvatar>
+                                                <Avatar
+                                                    alt=" "
+                                                    style={styles.avatar}
+                                                    src={
+                                                        item.author.profilePic === undefined
+                                                            ? profilePic
+                                                            : `${process.env.REACT_APP_API_URL+'/'+post.author.profilePic}`
+                                                    }
+                                                >
+                                                    {item.author.username.charAt(0).toLocaleUpperCase()}
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            {
+                                                item._id === this.state.currentCommentId && this.state.commentEditing
+                                                    ?
+                                                    <TextField
+                                                        size="small"
+                                                        variant="outlined"
+                                                        value={this.state.commentEditPlaceholder}
+                                                        onChange={(e) => this.commentPlaceholderEdit(e.target.value)}
+                                                        onKeyPress={(e) => this.commentEditDone(e, post)}
+                                                        InputProps={{
+                                                            endAdornment: (
+                                                                <InputAdornment>
+                                                                    <IconButton
+                                                                        onClick={() => this.commentEditCancel()}
+                                                                    >
+                                                                        <Close />
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
+                                                    : <ListItemText
+                                                        primary={item.author.username}
+                                                        secondary={item.content}
+                                                    />
+                                            }
+                                        </Box>
+                                        <ListItemSecondaryAction style={styles.commentLikeAction}>
+                                            <IconButton
+                                                onClick={() => this.props.dispatch(commentLikeAction(item._id,post._id))}
+                                                edge="end">
+                                                <ThumbUp
+                                                    fontSize='small'
+                                                    color={item.likes.filter(e => e._id === this.props.myId).length > 0 ? "secondary" : "primary"}
+                                                />
+                                            </IconButton>
+                                            <span style={styles.commentLikeAmount}>{item.likesAmount}</span>
+                                            {item.author._id === this.props.myId
+                                                ?
+                                                <IconButton
+                                                    onClick={(e) => this.menuOpen(e, item._id, item.content, post._id)}
+                                                    edge="end">
+                                                    <MoreVert/>
+                                                </IconButton>
+                                                : null}
+                                        </ListItemSecondaryAction>
                                     </ListItem>
                                 )}
+                            <Menu
+                                anchorEl={this.state.anchorEl}
+                                keepMounted
+                                open={this.state.menuOpen}
+                                onClose={() => this.menuClose()}
+                            >
+                                <MenuItem onClick={() => this.toggleCommentEdit()}>Edytuj</MenuItem>
+                                <MenuItem onClick={() => this.deleteComment()}>Usuń</MenuItem>
+                            </Menu>
                         </DialogContent>
                     </List>
                 </Dialog>
@@ -179,7 +328,10 @@ class NewsDialog extends Component {
 
 const mapStateToProps = (state) => ({
     likedPost:state.likeReducers,
-    commentedPost:state.commentReducers
+    commentedPost:state.commentReducers,
+    commentLikeReducers:state.commentLikeReducers,
+    commentEditReducers:state.commentEditReducers,
+    commentDeleteReducers:state.commentDeleteReducers
 });
 
 export default connect(mapStateToProps)(NewsDialog);

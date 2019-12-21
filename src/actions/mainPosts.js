@@ -7,7 +7,7 @@ export function fetchPosts(){
     };
 
     const instance = axios.create({
-        baseURL:'https://nz-social-media-api.herokuapp.com',
+        baseURL:process.env.REACT_APP_API_URL,
         timeout:3000,
         headers:headers
     });
@@ -21,18 +21,4 @@ export function fetchPosts(){
             .catch(err => dispatch({type:'POSTS_FETCH_ERROR', payload:err}))
     }
 
-}
-
-export function toggleOnDialog() {
-    return {
-        type:'TOGGLE_ON',
-        payload:true
-    }
-}
-
-export function toggleOffDialog() {
-    return {
-        type:'TOGGLE_OFF',
-        payload:false
-    }
 }

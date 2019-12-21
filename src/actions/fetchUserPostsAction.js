@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export function fetchFollowersAndFollowee() {
+export function fetchUserPostsAction(id) {
     return dispatch => {
-        dispatch({type:'FETCHING_FOLLOWERS', payload:true});
+        dispatch({type:'FETCHING_USER_POSTS',payload:true})
 
         const headers = {
             'Content-type': 'application/json',
@@ -15,8 +15,8 @@ export function fetchFollowersAndFollowee() {
             headers:headers
         });
 
-        instance.get(`/api/me/follows`)
-            .then(response => dispatch({type:'FOLLOWERS_SUCCESS', payload: response.data}))
-            .catch(err => dispatch({type:'FOLLOWERS_ERROR',payload:err}))
+        instance.get(`/api/users/${id}/posts`)
+            .then(response => dispatch({type:'USER_POSTS_SUCCESS', payload:response.data}))
+            .catch(err => dispatch({type:'USER_POSTS_FAILURE', payload:err}))
     }
 }

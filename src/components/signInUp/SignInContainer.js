@@ -47,13 +47,13 @@ class SignInContainer extends Component{
                 break;
             }
             default:
-                return this.state;
+                return;
         }
     };
 
     handleClose = () => {
         this.setState({
-            isError:!this.state.isError
+            isError:false
         })
     };
 
@@ -76,13 +76,7 @@ class SignInContainer extends Component{
                 );
                 break;
             default:
-                this.setState({
-                        ...this.state,
-                        errorMessage:"Whops! Wystąpił błąd. Spróbuj jeszcze raz.",
-                        isError:true
-                    }
-                );
-                break;
+                return;
         }
     };
 

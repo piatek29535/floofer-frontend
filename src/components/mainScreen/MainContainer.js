@@ -13,49 +13,20 @@ import IconButton from "@material-ui/core/IconButton";
 import Profile from "./mainScreenComponents/Other/Profile";
 import {fetchCurrentlyLoggedUser} from "../../actions/fetchCurrentlyLoggedUser";
 import {connect} from "react-redux";
+import io from "socket.io-client";
+import MainScreenNavbar from "./mainScreenComponents/MainScreenNavbar";
 
 const styles = {
     mainContainer:{
         display:'flex',
-        flexDirection:'row',
-        height:'100vh',
-    },
-
-
-    //Right menu
-    menuPanel:{
-        display:'flex',
         flexDirection:'column',
-        overflow:'auto',
-        backgroundColor:'#004E92',
-        flex:2,
-        color:'#FFFFFF'
-    },
-    avatarAndName:{
-        display:'flex',
-        alignItems:'center',
-        justifyContent:'center',
-        flexDirection: 'column',
-        borderBottom:'1px solid #6699CC',
-        paddingBottom:'20px',
-        wordBreak:'break-all'
-    },
-    avatar:{
-        width:180,
-        height:171,
-        objectFit:'cover',
-    },
-    listContainer:{
-        color:'#FFFFFF',
-    },
-    listRouter:{
-        color:'#FFFFFF'
+        height:'100vh',
     },
 
     //Content
     contentPanel:{
         padding:'1% 1% 0 1%',
-        flex:9,
+        flex:1,
         backgroundColor: '#FFFFFF'
     },
     contentPaper:{
@@ -70,53 +41,29 @@ const styles = {
 class MainContainer extends Component {
 
     componentDidMount() {
-        this.props.dispatch(fetchCurrentlyLoggedUser())
+        this.props.dispatch(fetchCurrentlyLoggedUser()).then(() => {
+            this.connect()
+        })
+    }
+
+    connect(){
+        let ENDPOINT = process.env.REACT_APP_API_URL;
+        let socket = io(ENDPOINT);
+        
+        socket.emit('testConnection', this.props.user.userData._id)
+
+        socket.on(this.props.user.userData._id, function(msg){
+            console.log("message just for you: " + msg)
+          });
     }
 
     render() {
 
-        const {username, _id} = this.props.user.userData;
+        const {username, _id, profilePic} = this.props.user.userData;
 
         return (
-
             <div style={styles.mainContainer}>
-                <div style={styles.menuPanel}>
-
-                    <div style={styles.avatarAndName}>
-                        <Link to="/main/profil" style={{textDecoration:'none'}}>
-                            <IconButton>
-                                <Avatar
-                                    alt=" "
-                                    // src="https://cdn.pixabay.com/photo/2018/09/03/10/10/cape-gannet-3650803_960_720.jpg"
-                                    style={styles.avatar} >
-                                    {username !==  undefined // also add here if url is not present
-                                        ? username.charAt(0).toLocaleUpperCase()
-                                        : null}
-                                </Avatar>
-                            </IconButton>
-                        </Link>
-                        <Typography variant="h6">{username}</Typography>
-                        <Typography variant="h6"></Typography>
-                    </div>
-
-                    <div style={styles.listContainer}>
-                        <List>
-                            {
-                                [{name:"Aktualności", link:'/main'},
-                                    {name:"Znajomi", link:'/main/znajomi'},
-                                    {name:"Wiadomości", link:'/main/wiadomosci'},
-                                    {name:"Ustawienia", link:'/main/ustawienia'},
-                                    {name:"Wyloguj", link:'/'},
-                                ].map((item, i) => (
-                                    <ListItem button key={i}>
-                                        <Link style={{color:'white', width:'100%', textDecoration:'none'}} to={item.link}>{item.name}</Link>
-                                    </ListItem>
-                                ))
-                            }
-                        </List>
-                    </div>
-                </div>
-
+                <MainScreenNavbar user={this.props.user.userData}/>
                 <div style={styles.contentPanel}>
                     <Paper style={styles.contentPaper}>
                         <Switch>
@@ -127,7 +74,7 @@ class MainContainer extends Component {
                             />
                             <Route
                                 path="/main/znajomi"
-                                children={<Friends/>}
+                                children={<Friends myId={_id}/>}
                             />
                             <Route
                                 path="/main/wiadomosci"
@@ -139,7 +86,7 @@ class MainContainer extends Component {
                             />
                             <Route
                                 path="/main/profil"
-                                children={<Profile user={this.props.user}/>}
+                                children={<Profile myId={_id} user={this.props.user}/>}
                             />
                         </Switch>
                     </Paper>

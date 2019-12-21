@@ -10,6 +10,13 @@ import {likeReducers} from "./likeReducers";
 import {commentReducers} from "./commentReducers";
 import {followersAndFolloweReducers} from "./followersAndFolloweeFetchReducers";
 import {searchUsersReducers} from "./searchUsersReducers";
+import {userPostsReducers} from "./userPostsReducers";
+import {followUserReducers} from "./followUserReducers";
+import {addPostReducers} from "./addPostReducers";
+import {changeProfilePicReducers} from "./changeProfilePicReducers";
+import {commentLikeReducers} from "./commentLikeReducers";
+import {commentEditReducers} from "./commentEditReducers";
+import {commentDeleteReducers} from "./commentDeleteReducers";
 
 const reducers = combineReducers({
     fetchData,
@@ -24,7 +31,14 @@ const reducers = combineReducers({
     likeReducers,
     commentReducers,
     followersAndFolloweReducers,
-    searchUsersReducers
+    searchUsersReducers,
+    userPostsReducers,
+    followUserReducers,
+    addPostReducers,
+    changeProfilePicReducers,
+    commentLikeReducers,
+    commentEditReducers,
+    commentDeleteReducers,
 });
 
 export default reducers;

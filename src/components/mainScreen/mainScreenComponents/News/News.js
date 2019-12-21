@@ -8,13 +8,13 @@ import ListItem from "@material-ui/core/ListItem";
 import Container from "@material-ui/core/Container";
 import {connect} from "react-redux";
 import {fetchPosts} from "../../../../actions/mainPosts";
-import DialogComponent from "./DialogComponent";
 import ThumbUp from "@material-ui/icons/ThumbUp";
 import Comment from "@material-ui/icons/Comment";
 import NewsDialog from "./NewsDialog";
 import {newsDialogPostOpen} from "../../../../actions/newsDialogActions";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import profilePic from "../../../../images/mainScreen/profilePic.png";
 
 const styles={
     mainContainer:{
@@ -28,7 +28,6 @@ const styles={
     },
     list:{
         maxHeight:'90%',
-        overflow:'auto'
     },
     listItem:{
         borderRadius:'10px',
@@ -37,11 +36,6 @@ const styles={
         boxShadow:'0 0 10px',
         maxWidth:'97%',
         flexDirection:'column'
-    },
-    fab:{
-        position: 'fixed',
-        bottom: 50,
-        right: 50,
     },
     avatar:{
         backgroundColor:'#004E92'
@@ -78,7 +72,11 @@ class News extends Component {
                                         <Avatar
                                             alt=" "
                                             style={styles.avatar}
-                                            // src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png"
+                                            src={
+                                                item.author.profilePic === undefined
+                                                    ? profilePic
+                                                    : `${process.env.REACT_APP_API_URL+'/'+item.author.profilePic}`
+                                            }
                                         >
                                             {item.author.username.charAt(0).toLocaleUpperCase()}
                                         </Avatar>
@@ -110,7 +108,6 @@ class News extends Component {
                     fetchNewsFeed={fetchPosts}
                     newsDialogData={this.props.newsDialogData}
                     myId={this.props.myId}/>
-                <DialogComponent isDialogOpened={this.props}/>
             </div>
         );
     }

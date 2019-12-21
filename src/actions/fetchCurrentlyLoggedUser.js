@@ -1,4 +1,5 @@
 import axios from "axios";
+import {fetchUserPostsAction} from "./fetchUserPostsAction";
 
 export function fetchCurrentlyLoggedUser() {
 
@@ -8,7 +9,7 @@ export function fetchCurrentlyLoggedUser() {
     };
 
     const instance = axios.create({
-        baseURL:'https://nz-social-media-api.herokuapp.com',
+        baseURL:process.env.REACT_APP_API_URL,
         timeout:3000,
         headers:headers
     });
@@ -17,9 +18,12 @@ export function fetchCurrentlyLoggedUser() {
 
         dispatch({type:'CURRENTLY_LOGGED_USER_FETCHING', payload:true});
 
-        instance.get('/api/me')
+        return instance.get('/api/me')
             .then(response => response.data)
-            .then(json => dispatch({type:'CURRENTLY_LOGGED_USER_FETCHED', payload:json}))
+            .then(json => {
+                dispatch(fetchUserPostsAction(json._id));
+                dispatch({type:'CURRENTLY_LOGGED_USER_FETCHED', payload:json})
+            })
             .catch(err => dispatch({type:'CURRENTLY_LOGGED_USER_ERROR',payload:err}))
     }
 }
