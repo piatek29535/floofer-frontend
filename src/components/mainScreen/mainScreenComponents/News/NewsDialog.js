@@ -30,6 +30,7 @@ import Close from "@material-ui/icons/Close";
 import {commentEditAction} from "../../../../actions/commentEditAction";
 import {commentDeleteAction} from "../../../../actions/commentDeleteAction";
 import profilePic from "../../../../images/mainScreen/profilePic.png";
+import {Link} from "react-router-dom";
 
 const styles={
     postTypography:{
@@ -181,6 +182,8 @@ class NewsDialog extends Component {
 
             const likeCondition = post.likes.filter(e => e._id === this.props.myId).length > 0;
 
+            console.log(post)
+
             return (
                 <Dialog fullWidth onClose={() => {
                     this.props.dispatch(this.props.fetchNewsFeed());
@@ -188,19 +191,19 @@ class NewsDialog extends Component {
                 }} open={isOpened}>
                     <List>
                         <DialogTitle>
-                            <IconButton>
-                                <Avatar
-                                    style={styles.avatar}
-                                    alt=" "
-                                    src={
-                                        post.author.profilePic === undefined
-                                            ? profilePic
-                                            : `${process.env.REACT_APP_API_URL+'/'+post.author.profilePic}`
-                                    }
-                                >
-                                    {post.author.username.charAt(0).toLocaleUpperCase()}
-                                </Avatar>
-                            </IconButton>
+                            <Link to={`/main/profil/${post.author._id}`}>
+                                <IconButton onClick={() => this.props.dispatch(newsDialogPostClose())}>
+                                    <Avatar
+                                        style={styles.avatar}
+                                        alt=" "
+                                        src={
+                                            post.author.profilePic === undefined
+                                                ? profilePic
+                                                : `${process.env.REACT_APP_API_URL+'/'+post.author.profilePic}`
+                                        }
+                                    />
+                                </IconButton>
+                            </Link>
                             {`Uzytkownik ${post.author.username} napisał:`}
                         </DialogTitle>
                         <DialogContent>
@@ -256,7 +259,6 @@ class NewsDialog extends Component {
                                                             : `${process.env.REACT_APP_API_URL+'/'+post.author.profilePic}`
                                                     }
                                                 >
-                                                    {item.author.username.charAt(0).toLocaleUpperCase()}
                                                 </Avatar>
                                             </ListItemAvatar>
                                             {

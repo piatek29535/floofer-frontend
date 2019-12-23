@@ -15,6 +15,7 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import profilePic from '../../../../images/mainScreen/profilePic.png'
+import {fetchUserAction} from "../../../../actions/fetchUserAction";
 
 const styles = {
     mainContainer:{
@@ -75,6 +76,10 @@ class Profile extends Component {
         dialogOpened:false,
     };
 
+    componentDidMount() {
+        this.props.dispatch(fetchUserAction(this.props.match.params.id))
+    }
+
     toggleOnDialog = () => {
         this.setState({
             dialogOpened:true
@@ -103,95 +108,104 @@ class Profile extends Component {
     };
 
     render() {
-        const {isUserFetching, userData, userError} = this.props.user;
+
+        const {userFetching, userSuccess: userData, userError} = this.props.userDataFetch;
         const {userPostsFetching, userPosts, userPostsError} = this.props.userPostsData;
 
-        return (
-            <div style={styles.mainContainer}>
-                <Box style={styles.backgroundTopImage}/>
-                <Paper style={styles.contentContainer} elevation={10}>
-                    <Box style={styles.userInfo}>
-                        <Button
-                            component="label"
-                        >
-                            <img
-                                alt=" "
-                                src={
-                                    userData.profilePic === undefined
-                                        ? profilePic
-                                        : `${process.env.REACT_APP_API_URL+'/'+userData.profilePic}`
-                                }
-                                style={styles.avatar} >
-                            </img>
-                            <input
-                                type="file"
-                                style={{ display: "none" }}
-                                accept="image/*"
-                                onChange={(e) => this.profilePicChange(e.target.files[0])}
-                            />
-                        </Button>
-                        <Typography>{userData.username}</Typography>
-                    </Box>
+        console.log(userData)
 
-                    <Box style={styles.followersAmount}>
-                        <Typography>tutaj można zrobić ilość followersow i followee</Typography>
-                    </Box>
-
-                    <Typography variant="h5">Tablica aktualności</Typography>
-
-                    <Box style={styles.posts}>
-                        {userPosts.map((item, key) => (
-                            <ListItem
-                                button
-                                key={key}
-                                style={{width:'100%'}}
+        if(userFetching){
+            return null
+        }else{
+            return (
+                <div style={styles.mainContainer}>
+                    <Box style={styles.backgroundTopImage}/>
+                    <Paper style={styles.contentContainer} elevation={10}>
+                        <Box style={styles.userInfo}>
+                            <Button
+                                component="label"
                             >
-                                <ListItemAvatar>
-                                    <Avatar
-                                        alt=" "
-                                        src={`${process.env.REACT_APP_API_URL+'/'+userData.profilePic}`}
-                                    />
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary={item.author.username}
-                                    secondary={item.content}/>
-                            </ListItem>
+                                <img
+                                    alt=" "
+                                    src={
+                                        userData.profilePic === undefined
+                                            ? profilePic
+                                            : `${process.env.REACT_APP_API_URL+'/'+userData.profilePic}`
+                                    }
+                                    style={styles.avatar} >
+                                </img>
+                                <input
+                                    type="file"
+                                    style={{ display: "none" }}
+                                    accept="image/*"
+                                    onChange={(e) => this.profilePicChange(e.target.files[0])}
+                                />
+                            </Button>
+                            <Typography>{userData.username}</Typography>
+                        </Box>
 
-                            //-------
+                        <Box style={styles.followersAmount}>
+                            <Typography>tutaj można zrobić ilość followersow i followee</Typography>
+                        </Box>
 
-                            // <Paper key={key}>
-                            //     <Typography>{item.content}</Typography>
-                            //     {item.photo
-                            //     ? <img
-                            //             alt={''}
-                            //             style={{width:200, height:200, objectFit:'cover'}}
-                            //             src={process.env.REACT_APP_API_URL+'/'+item.photo.url}
-                            //         />
-                            //     : null}
-                            //
-                            // </Paper>
-                        ))}
-                    </Box>
-                </Paper>
+                        <Typography variant="h5">Tablica aktualności</Typography>
 
-                <Tooltip onClick={() => this.toggleOnDialog()} style={styles.addPostIcon} title="Dodaj post" placement="top">
-                    <Fab color="primary">
-                        <Add/>
-                    </Fab>
-                </Tooltip>
+                        <Box style={styles.posts}>
+                            {userPosts.map((item, key) => (
+                                <ListItem
+                                    button
+                                    key={key}
+                                    style={{width:'100%'}}
+                                >
+                                    <ListItemAvatar>
+                                        <Avatar
+                                            alt=" "
+                                            src={`${process.env.REACT_APP_API_URL+'/'+userData.profilePic}`}
+                                        />
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary={item.author.username}
+                                        secondary={item.content}/>
+                                </ListItem>
 
-                <DialogComponent
-                    toggleOffDialog={this.toggleOffDialog}
-                    dialogOpened={this.state.dialogOpened}
-                    addPost={this.addPost}
-                />
-            </div>
-        );
+                                //-------
+
+                                // <Paper key={key}>
+                                //     <Typography>{item.content}</Typography>
+                                //     {item.photo
+                                //     ? <img
+                                //             alt={''}
+                                //             style={{width:200, height:200, objectFit:'cover'}}
+                                //             src={process.env.REACT_APP_API_URL+'/'+item.photo.url}
+                                //         />
+                                //     : null}
+                                //
+                                // </Paper>
+                            ))}
+                        </Box>
+                    </Paper>
+
+                    <Tooltip onClick={() => this.toggleOnDialog()} style={styles.addPostIcon} title="Dodaj post" placement="top">
+                        <Fab color="primary">
+                            <Add/>
+                        </Fab>
+                    </Tooltip>
+
+                    <DialogComponent
+                        toggleOffDialog={this.toggleOffDialog}
+                        dialogOpened={this.state.dialogOpened}
+                        addPost={this.addPost}
+                    />
+                </div>
+            );
+        }
+
     }
 }
 
 const mapStateToProps = (state) => ({
-    userPostsData:state.userPostsReducers,
+    userDataFetch:state.fetchUserReducers,
+    userPostsData:state.userPostsReducers, // replace it with normal user fetch
     addPostReducers:state.addPostReducers,
     changeProfilePic:state.changeProfilePicReducers
 });

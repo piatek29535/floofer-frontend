@@ -49,7 +49,7 @@ class MainScreenNavbar extends Component {
                 bg="primary"
                 variant="dark"
                 style={styles.menuPanel}>
-                <Link to="/main/profil" style={{textDecoration:'none'}}>
+                <Link to={`/main/profil/${this.props.user._id}`} style={{textDecoration:'none'}}>
                     <IconButton style={{outline:'none'}}>
                         <Avatar
                             alt=" "

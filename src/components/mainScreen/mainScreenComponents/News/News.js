@@ -77,9 +77,7 @@ class News extends Component {
                                                     ? profilePic
                                                     : `${process.env.REACT_APP_API_URL+'/'+item.author.profilePic}`
                                             }
-                                        >
-                                            {item.author.username.charAt(0).toLocaleUpperCase()}
-                                        </Avatar>
+                                        />
                                     </ListItemAvatar>
                                     <ListItemText
                                         primary={item.author.username}
