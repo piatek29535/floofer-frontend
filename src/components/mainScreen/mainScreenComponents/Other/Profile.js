@@ -16,6 +16,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import profilePic from '../../../../images/mainScreen/profilePic.png'
 import {fetchUserAction} from "../../../../actions/fetchUserAction";
+import {fetchUserPostsAction} from "../../../../actions/fetchUserPostsAction";
 
 const styles = {
     mainContainer:{
@@ -77,7 +78,7 @@ class Profile extends Component {
     };
 
     componentDidMount() {
-        this.props.dispatch(fetchUserAction(this.props.match.params.id))
+        this.props.dispatch(fetchUserAction(this.props.match.params.id));
     }
 
     toggleOnDialog = () => {
@@ -112,7 +113,7 @@ class Profile extends Component {
         const {userFetching, userSuccess: userData, userError} = this.props.userDataFetch;
         const {userPostsFetching, userPosts, userPostsError} = this.props.userPostsData;
 
-        console.log(userData)
+        console.log(this.props.userDataFetch)
 
         if(userFetching){
             return null
@@ -151,37 +152,41 @@ class Profile extends Component {
                         <Typography variant="h5">Tablica aktualności</Typography>
 
                         <Box style={styles.posts}>
-                            {userPosts.map((item, key) => (
-                                <ListItem
-                                    button
-                                    key={key}
-                                    style={{width:'100%'}}
-                                >
-                                    <ListItemAvatar>
-                                        <Avatar
-                                            alt=" "
-                                            src={`${process.env.REACT_APP_API_URL+'/'+userData.profilePic}`}
-                                        />
-                                    </ListItemAvatar>
-                                    <ListItemText
-                                        primary={item.author.username}
-                                        secondary={item.content}/>
-                                </ListItem>
+                            {userPosts.length !== 0
+                                ? userPosts.map((item, key) => (
+                                    <ListItem
+                                        button
+                                        key={key}
+                                        style={{width:'100%'}}
+                                    >
+                                        <ListItemAvatar>
+                                            <Avatar
+                                                alt=" "
+                                                src={`${process.env.REACT_APP_API_URL+'/'+userData.profilePic}`}
+                                            />
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary={item.author.username}
+                                            secondary={item.content}/>
+                                    </ListItem>
 
-                                //-------
+                                    //-------
 
-                                // <Paper key={key}>
-                                //     <Typography>{item.content}</Typography>
-                                //     {item.photo
-                                //     ? <img
-                                //             alt={''}
-                                //             style={{width:200, height:200, objectFit:'cover'}}
-                                //             src={process.env.REACT_APP_API_URL+'/'+item.photo.url}
-                                //         />
-                                //     : null}
-                                //
-                                // </Paper>
-                            ))}
+                                    // <Paper key={key}>
+                                    //     <Typography>{item.content}</Typography>
+                                    //     {item.photo
+                                    //     ? <img
+                                    //             alt={''}
+                                    //             style={{width:200, height:200, objectFit:'cover'}}
+                                    //             src={process.env.REACT_APP_API_URL+'/'+item.photo.url}
+                                    //         />
+                                    //     : null}
+                                    //
+                                    // </Paper>
+                                ))
+                                :
+                                <Typography style={{margin:'5%', alignSelf:'center'}}>Ten użytkownik nie opublikował jeszcze nic na swojej tablicy</Typography>
+                            }
                         </Box>
                     </Paper>
 

@@ -9,6 +9,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Message from '@material-ui/icons/Comment';
 import Profile from '@material-ui/icons/Person';
 import Tooltip from "@material-ui/core/Tooltip";
+import {Link} from "react-router-dom";
+import profilePic from "../../../../images/mainScreen/profilePic.png";
 
 const styles = {
     listItem:{
@@ -30,7 +32,13 @@ class Followers extends Component {
                     ? followers.map((item) =>
                         ( <ListItem style={styles.listItem} button key={item._id}>
                             <ListItemAvatar>
-                                <Avatar alt=" " src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
+                                <Avatar
+                                    alt=" "
+                                    src={
+                                        item.profilePic === undefined
+                                            ? profilePic
+                                            : `${process.env.REACT_APP_API_URL+'/'+item.profilePic}`
+                                    }/>
                             </ListItemAvatar>
                             <ListItemText primary={item.username} />
                             <ListItemSecondaryAction>
@@ -40,9 +48,11 @@ class Followers extends Component {
                                     </IconButton>
                                 </Tooltip>
                                 <Tooltip title="Odwiedź profil" placement="top">
-                                    <IconButton style={{color:'white'}} edge="end">
-                                        <Profile />
-                                    </IconButton>
+                                    <Link to={`/main/profil/${item._id}`}>
+                                        <IconButton style={{color:'white'}} edge="end">
+                                            <Profile />
+                                        </IconButton>
+                                    </Link>
                                 </Tooltip>
                             </ListItemSecondaryAction>
                         </ListItem>)

@@ -16,6 +16,8 @@ import Home from '@material-ui/icons/Home';
 import Public from '@material-ui/icons/Public';
 import {connect} from "react-redux";
 import {searchUsersAction} from "../../../../actions/searchUsersAction";
+import {Link} from "react-router-dom";
+import profilePic from "../../../../images/mainScreen/profilePic.png";
 
 const styles = {
     mainContainer:{
@@ -30,7 +32,6 @@ const styles = {
         padding: '2px 4px',
         display: 'flex',
         alignItems: 'center',
-        width:400,
     },
     inputBase:{
         flex:9
@@ -124,7 +125,11 @@ class Search extends Component {
                                             <Avatar
                                                 style={styles.individualFriendAvatar}
                                                 alt=" "
-                                                src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
+                                                src={
+                                                    item.profilePic === undefined
+                                                        ? profilePic
+                                                        : `${process.env.REACT_APP_API_URL+'/'+item.profilePic}`
+                                                }/>
                                             <Typography style={styles.individualFriendDesc}>{item.username}</Typography>
                                             <Button
                                                 style={styles.individualFriendDesc}
@@ -150,27 +155,28 @@ class Search extends Component {
                                             <div style={styles.individualFriendButtons}>
                                                 {item._id !== myId
                                                     ?
-                                                        <Button
-                                                            size="small"
-                                                            style={{flex:1}}
-                                                            onClick={() => this.handleIsObserved()}
-                                                            variant={this.state.isObserved ? "contained" : "outlined"}
-                                                            color="primary"
-                                                            startIcon={this.state.isObserved ? <Observing/> :<Observe />}
-                                                        >
-                                                            {this.state.isObserved ? "Obserwujesz": "Obserwuj"}
-                                                        </Button>
+                                                    <Button
+                                                        size="small"
+                                                        style={{flex:1}}
+                                                        onClick={() => this.handleIsObserved()}
+                                                        variant={this.state.isObserved ? "contained" : "outlined"}
+                                                        color="primary"
+                                                        startIcon={this.state.isObserved ? <Observing/> :<Observe />}
+                                                    >
+                                                        {this.state.isObserved ? "Obserwujesz": "Obserwuj"}
+                                                    </Button>
                                                     : null
                                                 }
-                                                <Button
-                                                    size="small"
-                                                    style={{flex:1}}
-                                                    color="primary"
-                                                    variant="outlined"
-                                                    startIcon={<Person />}
-                                                >
-                                                    profil
-                                                </Button>
+                                                <Link to={`/main/profil/${item._id}`}>
+                                                    <Button
+                                                        size="small"
+                                                        color="primary"
+                                                        variant="outlined"
+                                                        startIcon={<Person />}
+                                                    >
+                                                        profil
+                                                    </Button>
+                                                </Link>
                                             </div>
                                         </div>
                                     </Paper>
