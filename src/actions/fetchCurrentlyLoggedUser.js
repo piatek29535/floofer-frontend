@@ -20,10 +20,7 @@ export function fetchCurrentlyLoggedUser() {
 
         return instance.get('/api/me')
             .then(response => response.data)
-            .then(json => {
-                dispatch(fetchUserPostsAction(json._id));
-                dispatch({type:'CURRENTLY_LOGGED_USER_FETCHED', payload:json})
-            })
+            .then(json => dispatch({type:'CURRENTLY_LOGGED_USER_FETCHED', payload:json}))
             .catch(err => dispatch({type:'CURRENTLY_LOGGED_USER_ERROR',payload:err}))
     }
 }

@@ -18,7 +18,7 @@ export function activateAccountAction(id) {
 
         return instance.get(`/api/activate/${id}`, {_token:id})
             .then(response => response.data)
-            .then(json => {dispatch({type:'ACTIVATION_SUCCESS', payload:json})})
+            .then(json => dispatch({type:'ACTIVATION_SUCCESS', payload:json}))
             .catch(err => dispatch({type:'ACTIVATION_FAILURE',payload:err}))
     }
 }

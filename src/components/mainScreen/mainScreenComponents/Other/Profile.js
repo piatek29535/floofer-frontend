@@ -16,7 +16,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import profilePic from '../../../../images/mainScreen/profilePic.png'
 import {fetchUserAction} from "../../../../actions/fetchUserAction";
-import {fetchUserPostsAction} from "../../../../actions/fetchUserPostsAction";
+import Photo from "@material-ui/icons/Photo";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import IconButton from "@material-ui/core/IconButton";
+import List from "@material-ui/core/List";
 
 const styles = {
     mainContainer:{
@@ -81,6 +84,12 @@ class Profile extends Component {
         this.props.dispatch(fetchUserAction(this.props.match.params.id));
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        if(nextProps.match.params.id !== this.props.match.params.id){
+            this.props.dispatch(fetchUserAction(nextProps.match.params.id));
+        }
+    }
+
     toggleOnDialog = () => {
         this.setState({
             dialogOpened:true
@@ -113,7 +122,9 @@ class Profile extends Component {
         const {userFetching, userSuccess: userData, userError} = this.props.userDataFetch;
         const {userPostsFetching, userPosts, userPostsError} = this.props.userPostsData;
 
-        console.log(this.props.userDataFetch)
+        const myProfileCondition = this.props.myId === this.props.match.params.id;
+
+        console.log(userPosts)
 
         if(userFetching){
             return null
@@ -123,25 +134,40 @@ class Profile extends Component {
                     <Box style={styles.backgroundTopImage}/>
                     <Paper style={styles.contentContainer} elevation={10}>
                         <Box style={styles.userInfo}>
-                            <Button
-                                component="label"
-                            >
-                                <img
-                                    alt=" "
-                                    src={
-                                        userData.profilePic === undefined
-                                            ? profilePic
-                                            : `${process.env.REACT_APP_API_URL+'/'+userData.profilePic}`
-                                    }
-                                    style={styles.avatar} >
-                                </img>
-                                <input
-                                    type="file"
-                                    style={{ display: "none" }}
-                                    accept="image/*"
-                                    onChange={(e) => this.profilePicChange(e.target.files[0])}
-                                />
-                            </Button>
+                            {
+                                myProfileCondition
+                                    ?
+                                    <Button
+                                        component="label"
+                                    >
+                                        <img
+                                            alt=" "
+                                            src={
+                                                userData.profilePic === undefined
+                                                    ? profilePic
+                                                    : `${process.env.REACT_APP_API_URL+'/'+userData.profilePic}`
+                                            }
+                                            style={styles.avatar} >
+                                        </img>
+                                        <input
+                                            type="file"
+                                            style={{ display: "none" }}
+                                            accept="image/*"
+                                            onChange={(e) => this.profilePicChange(e.target.files[0])}
+                                        />
+                                    </Button>
+                                    :
+                                    <img
+                                        alt=" "
+                                        src={
+                                            userData.profilePic === undefined
+                                                ? profilePic
+                                                : `${process.env.REACT_APP_API_URL+'/'+userData.profilePic}`
+                                        }
+                                        style={styles.avatar} >
+                                    </img>
+                            }
+
                             <Typography>{userData.username}</Typography>
                         </Box>
 
@@ -151,9 +177,9 @@ class Profile extends Component {
 
                         <Typography variant="h5">Tablica aktualności</Typography>
 
-                        <Box style={styles.posts}>
+                        <List style={styles.posts}>
                             {userPosts.length !== 0
-                                ? userPosts.map((item, key) => (
+                                ? userPosts.sort((a,b) => new Date(b.create_date) - new Date(a.create_date)).map((item, key) => (
                                     <ListItem
                                         button
                                         key={key}
@@ -166,8 +192,22 @@ class Profile extends Component {
                                             />
                                         </ListItemAvatar>
                                         <ListItemText
-                                            primary={item.author.username}
+                                            primary={"autor imie"}
                                             secondary={item.content}/>
+
+                                        {
+                                            item.photo !== null
+                                                ?
+                                                <ListItemSecondaryAction>
+                                                    <IconButton edge="end" disabled>
+                                                        <Photo/>
+                                                    </IconButton>
+                                                </ListItemSecondaryAction>
+                                                :
+                                                null
+                                        }
+
+
                                     </ListItem>
 
                                     //-------
@@ -187,14 +227,21 @@ class Profile extends Component {
                                 :
                                 <Typography style={{margin:'5%', alignSelf:'center'}}>Ten użytkownik nie opublikował jeszcze nic na swojej tablicy</Typography>
                             }
-                        </Box>
+                        </List>
                     </Paper>
 
-                    <Tooltip onClick={() => this.toggleOnDialog()} style={styles.addPostIcon} title="Dodaj post" placement="top">
-                        <Fab color="primary">
-                            <Add/>
-                        </Fab>
-                    </Tooltip>
+                    {
+                        myProfileCondition
+                            ?
+                            <Tooltip onClick={() => this.toggleOnDialog()} style={styles.addPostIcon} title="Dodaj post" placement="top">
+                                <Fab color="primary">
+                                    <Add/>
+                                </Fab>
+                            </Tooltip>
+                            :
+                            null
+                    }
+
 
                     <DialogComponent
                         toggleOffDialog={this.toggleOffDialog}

@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import {connect} from "react-redux";
 import {activateAccountAction} from "../../actions/activateAccountAction";
+import {Redirect} from "react-router-dom";
 
 const styles = {
     mainContainer:{
@@ -40,29 +41,36 @@ class ConfirmRegistration extends Component {
     };
 
     render() {
-
         const {id} = this.props.match.params;
+        const {activationSuccess} = this.props.activate;
 
-        return (
-            <div style={styles.mainContainer}>
-                <Container style={styles.confirmContainer}>
-                    <Typography><b>Gratulacje!</b></Typography>
-                    <Typography>Aby aktywować konto kliknij przycisk poniżej</Typography>
-                    <Button
-                        onClick={() => this.activateAccount(id)}
-                        style={{margin:'20px 20px 0 20px'}}
-                        variant="outlined"
-                        color="primary">
-                        Aktywuj
-                    </Button>
-                </Container>
-            </div>
-        );
+
+        if(Object.keys(activationSuccess).length === 0){
+            return (
+                <div style={styles.mainContainer}>
+                    <Container style={styles.confirmContainer}>
+                        <Typography><b>Gratulacje!</b></Typography>
+                        <Typography>Aby aktywować konto kliknij przycisk poniżej</Typography>
+                        <Button
+                            onClick={() => this.activateAccount(id)}
+                            style={{margin:'20px 20px 0 20px'}}
+                            variant="outlined"
+                            color="primary">
+                            Aktywuj
+                        </Button>
+                    </Container>
+                </div>
+            );
+        }else{
+            return (
+                <Redirect to="/signUp"/>
+            )
+        }
     }
 }
 
 const mapStateToProps = (state) => ({
     activate: state.activateAccountReducers
-})
+});
 
 export default connect(mapStateToProps)(ConfirmRegistration);

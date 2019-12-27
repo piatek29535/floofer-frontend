@@ -1,13 +1,13 @@
 export const activateAccountReducers = (state = {
     activatingAccount:false,
-    activationSuccess:null,
+    activationSuccess:{},
     activationFailure:null
 },action) => {
     switch (action.type) {
         case 'ACTIVATING_ACCOUNT':
             return {
                 activatingAccount:action.payload,
-                activationSuccess:null,
+                activationSuccess:{},
                 activationFailure:null
             };
         case 'ACTIVATION_SUCCESS':
@@ -19,7 +19,7 @@ export const activateAccountReducers = (state = {
         case 'ACTIVATION_FAILURE':
             return {
                 activatingAccount:false,
-                activationSuccess:null,
+                activationSuccess:{},
                 activationFailure:action.payload
             };
         default:
