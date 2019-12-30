@@ -31,6 +31,7 @@ import {commentEditAction} from "../../../../actions/commentEditAction";
 import {commentDeleteAction} from "../../../../actions/commentDeleteAction";
 import profilePic from "../../../../images/mainScreen/profilePic.png";
 import {Link} from "react-router-dom";
+import preview from "../../../../images/mainScreen/podgląd.png";
 
 const styles={
     postTypography:{
@@ -72,6 +73,11 @@ const styles={
         flexDirection: 'row',
         alignItems:'center',
         flexWrap:'wrap'
+    },
+    image:{
+        width:"100%",
+        height:'200px',
+        objectFit:'cover'
     }
 };
 
@@ -182,11 +188,11 @@ class NewsDialog extends Component {
 
             const likeCondition = post.likes.filter(e => e._id === this.props.myId).length > 0;
 
-            console.log(post)
-
             return (
                 <Dialog fullWidth onClose={() => {
-                    this.props.dispatch(this.props.fetchNewsFeed());
+                    if(this.props.fetchNewsFeed !== undefined){
+                        this.props.dispatch(this.props.fetchNewsFeed());
+                    }
                     this.props.dispatch(newsDialogPostClose())
                 }} open={isOpened}>
                     <List>
@@ -210,6 +216,14 @@ class NewsDialog extends Component {
                             <Typography gutterBottom style={styles.postTypography}>
                                 {`"${post.content}"`}
                             </Typography>
+                            {post.photo !== null
+                            ?
+                                <img
+                                    alt=" "
+                                    style={styles.image}
+                                    src="https://cdn.pixabay.com/photo/2019/12/19/22/48/wolf-4707294_960_720.jpg">
+                                </img>
+                            : null}
                         </DialogContent>
                         <DialogActions style={styles.dialogActions}>
                             <div style={styles.dialogActionsLikesAndComments}>

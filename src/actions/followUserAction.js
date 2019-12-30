@@ -1,5 +1,6 @@
 import axios from "axios";
 import {fetchFollowersAndFollowee} from "./followersAndFolloweFetchAction";
+import {fetchUserAction} from "./fetchUserAction";
 
 export function followUserAction(id) {
     return dispatch => {
@@ -16,11 +17,10 @@ export function followUserAction(id) {
             headers:headers
         });
 
-        console.log(id)
-
         instance.post(`/api/users/${id}/follow`)
             .then(response => {
                 dispatch(fetchFollowersAndFollowee())
+                dispatch(fetchUserAction(id))
                 dispatch({type:'FOLLOW_USER_SUCCESS', payload:response.data})
             })
             .catch(err => dispatch({type:'FOLLOW_USER_ERROR', payload:err}))

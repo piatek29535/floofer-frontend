@@ -82,7 +82,8 @@ class Friends extends Component {
                     : <LinearProgress color="primary" variant="determinate" value={100}/>}
                 <div style={styles.topBar}>
                     <Tabs
-                        variant="fullWidth"
+                        variant="scrollable"
+                        scrollButtons="on"
                         value={this.state.whichTab}
                         indicatorColor="primary"
                         textColor="primary"

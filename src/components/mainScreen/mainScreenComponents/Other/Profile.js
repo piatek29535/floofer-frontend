@@ -20,6 +20,13 @@ import Photo from "@material-ui/icons/Photo";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
+import People from "@material-ui/icons/People";
+import PeopleOutine from "@material-ui/icons/PeopleOutline";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import {followUserAction} from "../../../../actions/followUserAction";
+import {newsDialogPostOpen} from "../../../../actions/newsDialogActions";
+import NewsDialog from "../News/NewsDialog";
+import {fetchPosts} from "../../../../actions/mainPosts";
 
 const styles = {
     mainContainer:{
@@ -49,16 +56,18 @@ const styles = {
         flexDirection: 'column'
     },
     userInfo:{
-        padding:'20px',
+        padding:'10px',
         display:'flex',
         justifyContent:'center',
         alignItems:'center',
         flexDirection:'column'
     },
     followersAmount:{
+        display:'flex',
+        alignItems:'center',
+        justifyContent:'center',
         margin:'1%',
         width:'50%',
-        boxShadow:'0 0 10px',
         marginBottom:'3%'
     },
     addPostIcon:{
@@ -71,20 +80,29 @@ const styles = {
         display:'flex',
         flexDirection:'column',
         width:'80%'
-    }
+    },
+    followersAmountBox:{
+        cursor:'pointer',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+        flexDirection:'column',
+        margin:'2%'
+    },
 };
 
 class Profile extends Component {
 
     state = {
         dialogOpened:false,
+        bottomNavValue:2,
     };
 
     componentDidMount() {
         this.props.dispatch(fetchUserAction(this.props.match.params.id));
     }
 
-    componentWillReceiveProps(nextProps, nextContext) {
+    UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
         if(nextProps.match.params.id !== this.props.match.params.id){
             this.props.dispatch(fetchUserAction(nextProps.match.params.id));
         }
@@ -117,14 +135,30 @@ class Profile extends Component {
         }
     };
 
+    renderButton = (isFollowed, userId) => {
+        if(isFollowed === "true"){
+            return <Button
+                onClick={() => this.props.dispatch(followUserAction(userId))}
+                color="primary"
+                variant="outlined">
+                Obserwujesz
+            </Button>
+        }else{
+            return <Button
+                onClick={() => this.props.dispatch(followUserAction(userId))}
+                color="primary"
+                variant="contained">
+                Obserwuj
+            </Button>
+        }
+    };
+
     render() {
 
         const {userFetching, userSuccess: userData, userError} = this.props.userDataFetch;
         const {userPostsFetching, userPosts, userPostsError} = this.props.userPostsData;
 
         const myProfileCondition = this.props.myId === this.props.match.params.id;
-
-        console.log(userPosts)
 
         if(userFetching){
             return null
@@ -141,7 +175,7 @@ class Profile extends Component {
                                         component="label"
                                     >
                                         <img
-                                            alt=" "
+                                            alt=""
                                             src={
                                                 userData.profilePic === undefined
                                                     ? profilePic
@@ -168,11 +202,26 @@ class Profile extends Component {
                                     </img>
                             }
 
-                            <Typography>{userData.username}</Typography>
+                            <Typography style={{margin:10}}>{userData.username}</Typography>
+                            {myProfileCondition
+                                ? null
+                                : this.renderButton(userData.isFollowed, userData._id)
+                            }
                         </Box>
 
                         <Box style={styles.followersAmount}>
-                            <Typography>tutaj można zrobić ilość followersow i followee</Typography>
+                            <Tooltip placement="left" title="0">
+                                <Box style={styles.followersAmountBox}>
+                                    <People/>
+                                    <span>Obserwujący</span>
+                                </Box>
+                            </Tooltip>
+                            <Tooltip placement="right" title="0">
+                                <Box style={styles.followersAmountBox}>
+                                    <PeopleOutine/>
+                                    <span>Obserwowani</span>
+                                </Box>
+                            </Tooltip>
                         </Box>
 
                         <Typography variant="h5">Tablica aktualności</Typography>
@@ -181,20 +230,20 @@ class Profile extends Component {
                             {userPosts.length !== 0
                                 ? userPosts.sort((a,b) => new Date(b.create_date) - new Date(a.create_date)).map((item, key) => (
                                     <ListItem
+                                        onClick={() => this.props.dispatch(newsDialogPostOpen(item._id))}
                                         button
                                         key={key}
                                         style={{width:'100%'}}
                                     >
                                         <ListItemAvatar>
                                             <Avatar
-                                                alt=" "
+                                                alt=""
                                                 src={`${process.env.REACT_APP_API_URL+'/'+userData.profilePic}`}
                                             />
                                         </ListItemAvatar>
                                         <ListItemText
                                             primary={"autor imie"}
                                             secondary={item.content}/>
-
                                         {
                                             item.photo !== null
                                                 ?
@@ -206,23 +255,7 @@ class Profile extends Component {
                                                 :
                                                 null
                                         }
-
-
                                     </ListItem>
-
-                                    //-------
-
-                                    // <Paper key={key}>
-                                    //     <Typography>{item.content}</Typography>
-                                    //     {item.photo
-                                    //     ? <img
-                                    //             alt={''}
-                                    //             style={{width:200, height:200, objectFit:'cover'}}
-                                    //             src={process.env.REACT_APP_API_URL+'/'+item.photo.url}
-                                    //         />
-                                    //     : null}
-                                    //
-                                    // </Paper>
                                 ))
                                 :
                                 <Typography style={{margin:'5%', alignSelf:'center'}}>Ten użytkownik nie opublikował jeszcze nic na swojej tablicy</Typography>
@@ -248,6 +281,11 @@ class Profile extends Component {
                         dialogOpened={this.state.dialogOpened}
                         addPost={this.addPost}
                     />
+                    <NewsDialog
+                        dispatch={this.props.dispatch}
+                        fetchNewsFeed={undefined} //change it to fetch user posts
+                        newsDialogData={this.props.newsDialogData}
+                        myId={this.props.myId}/>
                 </div>
             );
         }
@@ -259,7 +297,8 @@ const mapStateToProps = (state) => ({
     userDataFetch:state.fetchUserReducers,
     userPostsData:state.userPostsReducers, // replace it with normal user fetch
     addPostReducers:state.addPostReducers,
-    changeProfilePic:state.changeProfilePicReducers
+    changeProfilePic:state.changeProfilePicReducers,
+    newsDialogData:state.newsDialogData
 });
 
 export default connect(mapStateToProps)(Profile);
