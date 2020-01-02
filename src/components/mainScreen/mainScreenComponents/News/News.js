@@ -53,6 +53,8 @@ class News extends Component {
 
         const posts = this.props.posts;
 
+        console.log(posts)
+
         return (
             <div style={styles.mainContainer}>
                 <Container style={styles.mainContainerTypography}>
@@ -77,12 +79,10 @@ class News extends Component {
                                                     ? profilePic
                                                     : `${process.env.REACT_APP_API_URL+'/'+item.author.profilePic}`
                                             }
-                                        >
-                                            {item.author.username.charAt(0).toLocaleUpperCase()}
-                                        </Avatar>
+                                        />
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary={item.author.username}
+                                        primary={item.author.username === undefined ? "Użytkownik" : item.author.username}
                                         secondary={item.content}
                                     />
                                 </div>

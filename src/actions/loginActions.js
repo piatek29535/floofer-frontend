@@ -5,7 +5,7 @@ export function login(credentials){
         dispatch({type:'IS_AUTHENTICATING', payload:true});
 
         const body = {
-            username:credentials.email.split('@')[0],
+            email:credentials.email.split('@')[0],
             password:credentials.password
         };
 

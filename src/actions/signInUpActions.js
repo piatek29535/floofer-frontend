@@ -17,12 +17,13 @@ export function signUpButtonClicked(user){
     return dispatch => {
         dispatch({type:'SIGN_UP_BUTTON_FETCHING', payload:true});
 
-        const {email, password} = user;
+        const {name, surname, email, password, country, town, birthDate, maleOrFemale} = user;
 
         const newUser = {
-            username:email.split('@')[0],
-            email,
-            password
+            first_name:name,
+            last_name:surname,
+            email:email,
+            password:password
         };
 
         const config = {

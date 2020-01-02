@@ -30,6 +30,8 @@ import Close from "@material-ui/icons/Close";
 import {commentEditAction} from "../../../../actions/commentEditAction";
 import {commentDeleteAction} from "../../../../actions/commentDeleteAction";
 import profilePic from "../../../../images/mainScreen/profilePic.png";
+import {Link} from "react-router-dom";
+import preview from "../../../../images/mainScreen/podgląd.png";
 
 const styles={
     postTypography:{
@@ -71,6 +73,11 @@ const styles={
         flexDirection: 'row',
         alignItems:'center',
         flexWrap:'wrap'
+    },
+    image:{
+        width:"100%",
+        height:'200px',
+        objectFit:'cover'
     }
 };
 
@@ -183,30 +190,40 @@ class NewsDialog extends Component {
 
             return (
                 <Dialog fullWidth onClose={() => {
-                    this.props.dispatch(this.props.fetchNewsFeed());
+                    if(this.props.fetchNewsFeed !== undefined){
+                        this.props.dispatch(this.props.fetchNewsFeed());
+                    }
                     this.props.dispatch(newsDialogPostClose())
                 }} open={isOpened}>
                     <List>
                         <DialogTitle>
-                            <IconButton>
-                                <Avatar
-                                    style={styles.avatar}
-                                    alt=" "
-                                    src={
-                                        post.author.profilePic === undefined
-                                            ? profilePic
-                                            : `${process.env.REACT_APP_API_URL+'/'+post.author.profilePic}`
-                                    }
-                                >
-                                    {post.author.username.charAt(0).toLocaleUpperCase()}
-                                </Avatar>
-                            </IconButton>
+                            <Link to={`/main/profil/${post.author._id}`}>
+                                <IconButton onClick={() => this.props.dispatch(newsDialogPostClose())}>
+                                    <Avatar
+                                        style={styles.avatar}
+                                        alt=" "
+                                        src={
+                                            post.author.profilePic === undefined
+                                                ? profilePic
+                                                : `${process.env.REACT_APP_API_URL+'/'+post.author.profilePic}`
+                                        }
+                                    />
+                                </IconButton>
+                            </Link>
                             {`Uzytkownik ${post.author.username} napisał:`}
                         </DialogTitle>
                         <DialogContent>
                             <Typography gutterBottom style={styles.postTypography}>
                                 {`"${post.content}"`}
                             </Typography>
+                            {post.photo !== null
+                            ?
+                                <img
+                                    alt=" "
+                                    style={styles.image}
+                                    src="https://cdn.pixabay.com/photo/2019/12/19/22/48/wolf-4707294_960_720.jpg">
+                                </img>
+                            : null}
                         </DialogContent>
                         <DialogActions style={styles.dialogActions}>
                             <div style={styles.dialogActionsLikesAndComments}>
@@ -256,7 +273,6 @@ class NewsDialog extends Component {
                                                             : `${process.env.REACT_APP_API_URL+'/'+post.author.profilePic}`
                                                     }
                                                 >
-                                                    {item.author.username.charAt(0).toLocaleUpperCase()}
                                                 </Avatar>
                                             </ListItemAvatar>
                                             {

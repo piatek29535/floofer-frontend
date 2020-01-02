@@ -17,7 +17,8 @@ class RegisterSuccessDialog extends Component {
                 <DialogTitle >Rejestracja zakończona sukcesem!</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Świetnie! Udało Ci się zarejestrować konto na naszym serwisie. Aby móc korzystać z konta, przejdź do zakładki <b>Zaloguj się</b>
+                        Dziękujemy za zarejestrowanie konta na naszym portalu.
+                        Na Twoją pocztę została wysłana wiadomość z linkiem do aktywacji konta.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

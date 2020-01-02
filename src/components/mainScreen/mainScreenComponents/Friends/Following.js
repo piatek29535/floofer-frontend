@@ -13,6 +13,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import StopFollowingDialog from "./StopFollowingDialog";
 import {connect} from "react-redux";
 import {followUserAction} from "../../../../actions/followUserAction";
+import {Link} from "react-router-dom";
+import profilePic from "../../../../images/mainScreen/profilePic.png";
 
 const styles = {
     listItem:{
@@ -61,7 +63,13 @@ class Following extends Component {
                     ? followee.map((item) =>
                         ( <ListItem style={styles.listItem} button key={item._id}>
                             <ListItemAvatar>
-                                <Avatar alt=" " src="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/10_avatar-256.png" />
+                                <Avatar
+                                    alt=" "
+                                    src={
+                                        item.profilePic === undefined
+                                            ? profilePic
+                                            : `${process.env.REACT_APP_API_URL+'/'+item.profilePic}`
+                                    }/>
                             </ListItemAvatar>
                             <ListItemText primary={item.username} />
                             <ListItemSecondaryAction>
@@ -71,9 +79,11 @@ class Following extends Component {
                                     </IconButton>
                                 </Tooltip>
                                 <Tooltip title="Odwiedź profil" placement="top">
-                                    <IconButton style={{color:'white'}} edge="end">
-                                        <Profile />
-                                    </IconButton>
+                                    <Link to={`/main/profil/${item._id}`}>
+                                        <IconButton style={{color:'white'}} edge="end">
+                                            <Profile />
+                                        </IconButton>
+                                    </Link>
                                 </Tooltip>
                                 <Tooltip title="Przestań obserwować" placement="top">
                                     <IconButton onClick={() => this.handleDialogOpen(item.username, item._id)} style={{color:'white'}} edge="end">
@@ -96,7 +106,7 @@ class Following extends Component {
 }
 
 const mapStateToProps = (state) => ({
-   followUnfollowUser:state.followUserReducers
+    followUnfollowUser:state.followUserReducers
 });
 
 export default connect(mapStateToProps)(Following);

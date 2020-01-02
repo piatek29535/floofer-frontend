@@ -9,10 +9,11 @@ import SignUpContainer from "./SignUpContainer";
 import {connect} from "react-redux";
 import {signInClicked, signUpClicked} from "../../actions/signInUpActions";
 import RegisterSuccessDialog from "./RegisterSuccessDialog";
+import signUpBackground from "../../images/signUp/signUpBackground.png"
 
 const styles = {
     mainContainer:{
-        backgroundImage:`url(https://cdn.pixabay.com/photo/2017/03/25/18/06/color-2174065_960_720.png)`,
+        backgroundImage:`url(${signUpBackground})`,
         backgroundPosition:'center',
         backgroundRepeat:'no-repeat',
         backgroundSize:'cover',

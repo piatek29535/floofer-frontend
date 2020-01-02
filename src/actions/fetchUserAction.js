@@ -1,8 +1,7 @@
 import axios from "axios";
 import {fetchUserPostsAction} from "./fetchUserPostsAction";
 
-export function fetchCurrentlyLoggedUser() {
-
+export function fetchUserAction(id) {
     const headers = {
         'Content-type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -16,11 +15,14 @@ export function fetchCurrentlyLoggedUser() {
 
     return dispatch => {
 
-        dispatch({type:'CURRENTLY_LOGGED_USER_FETCHING', payload:true});
+        dispatch({type:'USER_FETCHING', payload:true});
 
-        return instance.get('/api/me')
+        return instance.get(`/api/users/${id}`)
             .then(response => response.data)
-            .then(json => dispatch({type:'CURRENTLY_LOGGED_USER_FETCHED', payload:json}))
-            .catch(err => dispatch({type:'CURRENTLY_LOGGED_USER_ERROR',payload:err}))
+            .then(json => {
+                dispatch(fetchUserPostsAction(json._id));
+                dispatch({type:'USER_SUCCESS', payload:json})
+            })
+            .catch(err => dispatch({type:'USER_ERROR',payload:err}))
     }
 }

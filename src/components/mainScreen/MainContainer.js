@@ -1,15 +1,10 @@
 import React, {Component} from 'react';
-import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import {Link, Route, Switch} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import News from "./mainScreenComponents/News/News";
 import Friends from "./mainScreenComponents/Friends/Friends";
 import Settings from "./mainScreenComponents/Settings/Settings";
 import Paper from "@material-ui/core/Paper";
 import Messages from "./mainScreenComponents/Messages/Messages";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
 import Profile from "./mainScreenComponents/Other/Profile";
 import {fetchCurrentlyLoggedUser} from "../../actions/fetchCurrentlyLoggedUser";
 import {connect} from "react-redux";
@@ -25,7 +20,7 @@ const styles = {
 
     //Content
     contentPanel:{
-        padding:'1% 1% 0 1%',
+        padding:'1% 5% 0 5%',
         flex:1,
         backgroundColor: '#FFFFFF'
     },
@@ -85,8 +80,8 @@ class MainContainer extends Component {
                                 children={<Settings/>}
                             />
                             <Route
-                                path="/main/profil"
-                                children={<Profile myId={_id} user={this.props.user}/>}
+                                path="/main/profil/:id"
+                                render={({match}) => <Profile myId={_id} match={match}/>}
                             />
                         </Switch>
                     </Paper>
