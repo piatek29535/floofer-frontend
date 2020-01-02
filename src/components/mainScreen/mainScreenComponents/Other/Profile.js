@@ -121,15 +121,15 @@ class Profile extends Component {
     };
 
     addPost = (content, photos) => {
-        this.props.dispatch(addPostAction(content,photos))
+        this.props.dispatch(addPostAction(content,photos, this.props.myId))
         this.setState({
             dialogOpened:false
         })
     };
 
-    profilePicChange = (image) => {
+    profilePicChange = (image, userId) => {
         if(image.type.substring(0,5) === "image"){
-            this.props.dispatch(changeProfilePicAction(image))
+            this.props.dispatch(changeProfilePicAction(image, userId))
         }else{
             // do sth if not a correct file
         }
@@ -138,14 +138,14 @@ class Profile extends Component {
     renderButton = (isFollowed, userId) => {
         if(isFollowed === "true"){
             return <Button
-                onClick={() => this.props.dispatch(followUserAction(userId))}
+                onClick={() => this.props.dispatch(followUserAction(userId, "profile", null))}
                 color="primary"
                 variant="outlined">
                 Obserwujesz
             </Button>
         }else{
             return <Button
-                onClick={() => this.props.dispatch(followUserAction(userId))}
+                onClick={() => this.props.dispatch(followUserAction(userId, "profile", null))}
                 color="primary"
                 variant="contained">
                 Obserwuj
@@ -187,7 +187,7 @@ class Profile extends Component {
                                             type="file"
                                             style={{ display: "none" }}
                                             accept="image/*"
-                                            onChange={(e) => this.profilePicChange(e.target.files[0])}
+                                            onChange={(e) => this.profilePicChange(e.target.files[0], this.props.myId)}
                                         />
                                     </Button>
                                     :
@@ -202,7 +202,7 @@ class Profile extends Component {
                                     </img>
                             }
 
-                            <Typography style={{margin:10}}>{userData.username}</Typography>
+                            <Typography style={{margin:10}}>{userData.first_name+" "+userData.last_name}</Typography>
                             {myProfileCondition
                                 ? null
                                 : this.renderButton(userData.isFollowed, userData._id)
@@ -242,7 +242,7 @@ class Profile extends Component {
                                             />
                                         </ListItemAvatar>
                                         <ListItemText
-                                            primary={"autor imie"}
+                                            primary={item.author.first_name}
                                             secondary={item.content}/>
                                         {
                                             item.photo !== null

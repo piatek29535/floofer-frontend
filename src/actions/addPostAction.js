@@ -1,7 +1,7 @@
 import axios from "axios";
-import {fetchCurrentlyLoggedUser} from "./fetchCurrentlyLoggedUser";
+import {fetchUserAction} from "./fetchUserAction";
 
-export function addPostAction(content, postImage){
+export function addPostAction(content, postImage, myId){
 
     return dispatch => {
         dispatch({type:'ADDING_POST', payload:true});
@@ -23,7 +23,7 @@ export function addPostAction(content, postImage){
 
         instance.post('/api/posts/',formData)
             .then(response => {
-                dispatch(fetchCurrentlyLoggedUser());
+                dispatch(fetchUserAction(myId));
                 dispatch({type:'ADD_POST_SUCCESS', payload:response.data})
             })
             .catch(err => dispatch({type:'ADD_POST_FAILURE', payload:err}))

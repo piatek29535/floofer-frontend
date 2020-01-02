@@ -53,8 +53,6 @@ class News extends Component {
 
         const posts = this.props.posts;
 
-        console.log(posts)
-
         return (
             <div style={styles.mainContainer}>
                 <Container style={styles.mainContainerTypography}>
@@ -82,7 +80,7 @@ class News extends Component {
                                         />
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary={item.author.username === undefined ? "Użytkownik" : item.author.username}
+                                        primary={item.author.first_name+" "+item.author.last_name}
                                         secondary={item.content}
                                     />
                                 </div>

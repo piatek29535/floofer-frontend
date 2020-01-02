@@ -182,6 +182,8 @@ class NewsDialog extends Component {
     render() {
         let {isOpened, post} = this.props.newsDialogData;
 
+        console.log(post)
+
         if(Object.entries(post).length === 0){
             return null
         }else{
@@ -210,7 +212,7 @@ class NewsDialog extends Component {
                                     />
                                 </IconButton>
                             </Link>
-                            {`Uzytkownik ${post.author.username} napisał:`}
+                            {`Uzytkownik ${post.author.first_name} napisał:`}
                         </DialogTitle>
                         <DialogContent>
                             <Typography gutterBottom style={styles.postTypography}>
@@ -221,7 +223,7 @@ class NewsDialog extends Component {
                                 <img
                                     alt=" "
                                     style={styles.image}
-                                    src="https://cdn.pixabay.com/photo/2019/12/19/22/48/wolf-4707294_960_720.jpg">
+                                    src={process.env.REACT_APP_API_URL+'/'+post.photo.url}>
                                 </img>
                             : null}
                         </DialogContent>
@@ -297,7 +299,7 @@ class NewsDialog extends Component {
                                                         }}
                                                     />
                                                     : <ListItemText
-                                                        primary={item.author.username}
+                                                        primary={item.author.first_name}
                                                         secondary={item.content}
                                                     />
                                             }

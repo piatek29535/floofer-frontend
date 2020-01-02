@@ -40,7 +40,7 @@ class Followers extends Component {
                                             : `${process.env.REACT_APP_API_URL+'/'+item.profilePic}`
                                     }/>
                             </ListItemAvatar>
-                            <ListItemText primary={item.username} />
+                            <ListItemText primary={item.first_name+" "+item.last_name} />
                             <ListItemSecondaryAction>
                                 <Tooltip title="Wyślij wiadomość" placement="top">
                                     <IconButton style={{color:'white'}} edge="end">

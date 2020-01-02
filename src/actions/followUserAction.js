@@ -1,8 +1,9 @@
 import axios from "axios";
 import {fetchFollowersAndFollowee} from "./followersAndFolloweFetchAction";
 import {fetchUserAction} from "./fetchUserAction";
+import {searchUsersAction} from "./searchUsersAction";
 
-export function followUserAction(id) {
+export function followUserAction(id, from, searchText) {
     return dispatch => {
         dispatch({type:'FOLLOW_USER_SENDING',payload:true});
 
@@ -19,8 +20,20 @@ export function followUserAction(id) {
 
         instance.post(`/api/users/${id}/follow`)
             .then(response => {
-                dispatch(fetchFollowersAndFollowee())
-                dispatch(fetchUserAction(id))
+
+                switch(from){
+                    case "search":
+                        dispatch(searchUsersAction(searchText));
+                    case "followers":
+                        dispatch(fetchFollowersAndFollowee());
+                        break;
+                    case "profile":
+                        dispatch(fetchUserAction(id));
+                        break;
+                    default:
+                        break;
+                }
+
                 dispatch({type:'FOLLOW_USER_SUCCESS', payload:response.data})
             })
             .catch(err => dispatch({type:'FOLLOW_USER_ERROR', payload:err}))

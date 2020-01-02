@@ -18,6 +18,7 @@ import {connect} from "react-redux";
 import {searchUsersAction} from "../../../../actions/searchUsersAction";
 import {Link} from "react-router-dom";
 import profilePic from "../../../../images/mainScreen/profilePic.png";
+import {followUserAction} from "../../../../actions/followUserAction";
 
 const styles = {
     mainContainer:{
@@ -82,7 +83,6 @@ class Search extends Component {
 
     state = {
         inputBaseValue:'',
-        isObserved:true,
     };
 
     handleChange = (e) => {
@@ -91,16 +91,13 @@ class Search extends Component {
         })
     };
 
-    handleIsObserved = () => {
-        this.setState({
-            isObserved:!this.state.isObserved
-        })
+    handleIsObserved = (id) => {
+        this.props.dispatch(followUserAction(id, "search", this.state.inputBaseValue))
     };
 
     render() {
 
         const users = this.props.users.users;
-        const myId = this.props.myId;
 
         return (
             <div style={styles.mainContainer}>
@@ -130,7 +127,7 @@ class Search extends Component {
                                                         ? profilePic
                                                         : `${process.env.REACT_APP_API_URL+'/'+item.profilePic}`
                                                 }/>
-                                            <Typography style={styles.individualFriendDesc}>{item.username}</Typography>
+                                            <Typography style={styles.individualFriendDesc}>{item.first_name+" "+item.last_name}</Typography>
                                             <Button
                                                 style={styles.individualFriendDesc}
                                                 disabled
@@ -153,20 +150,16 @@ class Search extends Component {
                                         <div style={{flex:1}}>
                                             <Divider/>
                                             <div style={styles.individualFriendButtons}>
-                                                {item._id !== myId
-                                                    ?
-                                                    <Button
-                                                        size="small"
-                                                        style={{flex:1}}
-                                                        onClick={() => this.handleIsObserved()}
-                                                        variant={this.state.isObserved ? "contained" : "outlined"}
-                                                        color="primary"
-                                                        startIcon={this.state.isObserved ? <Observing/> :<Observe />}
-                                                    >
-                                                        {this.state.isObserved ? "Obserwujesz": "Obserwuj"}
-                                                    </Button>
-                                                    : null
-                                                }
+                                                <Button
+                                                    size="small"
+                                                    style={{flex:1}}
+                                                    onClick={() => this.handleIsObserved(item._id)}
+                                                    variant={item.isFollowed === "true" ? "contained" : "outlined"}
+                                                    color="primary"
+                                                    startIcon={item.isFollowed === "true" ? <Observing/> :<Observe />}
+                                                >
+                                                    {item.isFollowed === "true" ? "Obserwujesz": "Obserwuj"}
+                                                </Button>
                                                 <Link to={`/main/profil/${item._id}`}>
                                                     <Button
                                                         size="small"
@@ -192,6 +185,6 @@ class Search extends Component {
 
 const mapStateToProps = (state) => ({
     users:state.searchUsersReducers
-})
+});
 
 export default connect(mapStateToProps)(Search);
