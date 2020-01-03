@@ -27,6 +27,9 @@ import {followUserAction} from "../../../../actions/followUserAction";
 import {newsDialogPostOpen} from "../../../../actions/newsDialogActions";
 import NewsDialog from "../News/NewsDialog";
 import {fetchPosts} from "../../../../actions/mainPosts";
+import {userFollowersAndFolloweeFetchAction} from "../../../../actions/userFollowersAndFolloweeFetchAction";
+import {userFollowersAndFolloweReducers} from "../../../../reducers/userFollowersAndFolloweeFetchReducers";
+import FollowersFolloweeDialog from "./FollowersFolloweeDialog";
 
 const styles = {
     mainContainer:{
@@ -95,16 +98,21 @@ class Profile extends Component {
 
     state = {
         dialogOpened:false,
-        bottomNavValue:2,
+        followersDialogOpened:false,
+        followersDialogTitle:'',
+        followers:[],
+        followersAmount:''
     };
 
     componentDidMount() {
         this.props.dispatch(fetchUserAction(this.props.match.params.id));
+        this.props.dispatch(userFollowersAndFolloweeFetchAction(this.props.match.params.id))
     }
 
     UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
         if(nextProps.match.params.id !== this.props.match.params.id){
             this.props.dispatch(fetchUserAction(nextProps.match.params.id));
+            this.props.dispatch(userFollowersAndFolloweeFetchAction(nextProps.match.params.id))
         }
     }
 
@@ -120,16 +128,34 @@ class Profile extends Component {
         })
     };
 
+    openFollowersDialog = (title, followers, amount) => {
+        this.setState({
+            followersDialogOpened:true,
+            followersDialogTitle:title,
+            followers:followers,
+            followersAmount:amount
+        })
+    };
+
+    closeFollowersDialog = () => {
+        this.setState({
+            followersDialogOpened:false,
+            followersDialogTitle:'',
+            followers:[],
+            followersAmount:''
+        })
+    };
+
     addPost = (content, photos) => {
-        this.props.dispatch(addPostAction(content,photos))
+        this.props.dispatch(addPostAction(content,photos, this.props.myId))
         this.setState({
             dialogOpened:false
         })
     };
 
-    profilePicChange = (image) => {
+    profilePicChange = (image, userId) => {
         if(image.type.substring(0,5) === "image"){
-            this.props.dispatch(changeProfilePicAction(image))
+            this.props.dispatch(changeProfilePicAction(image, userId))
         }else{
             // do sth if not a correct file
         }
@@ -138,14 +164,14 @@ class Profile extends Component {
     renderButton = (isFollowed, userId) => {
         if(isFollowed === "true"){
             return <Button
-                onClick={() => this.props.dispatch(followUserAction(userId))}
+                onClick={() => this.props.dispatch(followUserAction(userId, "profile", null))}
                 color="primary"
                 variant="outlined">
                 Obserwujesz
             </Button>
         }else{
             return <Button
-                onClick={() => this.props.dispatch(followUserAction(userId))}
+                onClick={() => this.props.dispatch(followUserAction(userId, "profile", null))}
                 color="primary"
                 variant="contained">
                 Obserwuj
@@ -155,8 +181,14 @@ class Profile extends Component {
 
     render() {
 
-        const {userFetching, userSuccess: userData, userError} = this.props.userDataFetch;
-        const {userPostsFetching, userPosts, userPostsError} = this.props.userPostsData;
+        const {userFetching, userSuccess: userData} = this.props.userDataFetch;
+        const {userPosts} = this.props.userPostsData;
+        const {
+            followersAmount,
+            followers,
+            followeeAmount,
+            followee
+        } = this.props.followersAndFollowee;
 
         const myProfileCondition = this.props.myId === this.props.match.params.id;
 
@@ -187,12 +219,12 @@ class Profile extends Component {
                                             type="file"
                                             style={{ display: "none" }}
                                             accept="image/*"
-                                            onChange={(e) => this.profilePicChange(e.target.files[0])}
+                                            onChange={(e) => this.profilePicChange(e.target.files[0], this.props.myId)}
                                         />
                                     </Button>
                                     :
                                     <img
-                                        alt=" "
+                                        alt=""
                                         src={
                                             userData.profilePic === undefined
                                                 ? profilePic
@@ -202,7 +234,7 @@ class Profile extends Component {
                                     </img>
                             }
 
-                            <Typography style={{margin:10}}>{userData.username}</Typography>
+                            <Typography variant="h5" style={{margin:10}}>{userData.first_name+" "+userData.last_name}</Typography>
                             {myProfileCondition
                                 ? null
                                 : this.renderButton(userData.isFollowed, userData._id)
@@ -210,14 +242,18 @@ class Profile extends Component {
                         </Box>
 
                         <Box style={styles.followersAmount}>
-                            <Tooltip placement="left" title="0">
-                                <Box style={styles.followersAmountBox}>
+                            <Tooltip placement="left" title={followersAmount}>
+                                <Box
+                                    style={styles.followersAmountBox}
+                                    onClick={() => this.openFollowersDialog("Obserwujący", followers, followersAmount)}>
                                     <People/>
                                     <span>Obserwujący</span>
                                 </Box>
                             </Tooltip>
-                            <Tooltip placement="right" title="0">
-                                <Box style={styles.followersAmountBox}>
+                            <Tooltip placement="right" title={followeeAmount}>
+                                <Box
+                                    style={styles.followersAmountBox}
+                                    onClick={() => this.openFollowersDialog("Obserwowani", followee, followeeAmount)}>
                                     <PeopleOutine/>
                                     <span>Obserwowani</span>
                                 </Box>
@@ -242,7 +278,7 @@ class Profile extends Component {
                                             />
                                         </ListItemAvatar>
                                         <ListItemText
-                                            primary={"autor imie"}
+                                            primary={item.author.first_name}
                                             secondary={item.content}/>
                                         {
                                             item.photo !== null
@@ -286,6 +322,13 @@ class Profile extends Component {
                         fetchNewsFeed={undefined} //change it to fetch user posts
                         newsDialogData={this.props.newsDialogData}
                         myId={this.props.myId}/>
+                    <FollowersFolloweeDialog
+                        followersDialogOpened={this.state.followersDialogOpened}
+                        followersDialogTitle={this.state.followersDialogTitle}
+                        closeFollowersDialog={this.closeFollowersDialog}
+                        followers={this.state.followers}
+                        followersAmount={this.state.followersAmount}
+                    />
                 </div>
             );
         }
@@ -296,6 +339,7 @@ class Profile extends Component {
 const mapStateToProps = (state) => ({
     userDataFetch:state.fetchUserReducers,
     userPostsData:state.userPostsReducers, // replace it with normal user fetch
+    followersAndFollowee:state.userFollowersAndFolloweReducers,
     addPostReducers:state.addPostReducers,
     changeProfilePic:state.changeProfilePicReducers,
     newsDialogData:state.newsDialogData

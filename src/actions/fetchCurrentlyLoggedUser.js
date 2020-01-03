@@ -1,5 +1,4 @@
 import axios from "axios";
-import {fetchUserPostsAction} from "./fetchUserPostsAction";
 
 export function fetchCurrentlyLoggedUser() {
 

@@ -34,7 +34,7 @@ class Following extends Component {
 
     handleDialogClose = (id, action) => {
         if(action === 'unfollow'){
-            this.props.dispatch(followUserAction(id));
+            this.props.dispatch(followUserAction(id, "followers", null));
         }
         this.setState({
             dialogOpen:false,
@@ -55,7 +55,7 @@ class Following extends Component {
 
         const followee = this.props.followee;
         const followersFetching = this.props.followersFetching;
-        const followUnfollowUser = this.props.followUnfollowUser
+        // const followUnfollowUser = this.props.followUnfollowUser
 
         return (
             <List>
@@ -71,7 +71,7 @@ class Following extends Component {
                                             : `${process.env.REACT_APP_API_URL+'/'+item.profilePic}`
                                     }/>
                             </ListItemAvatar>
-                            <ListItemText primary={item.username} />
+                            <ListItemText primary={item.first_name+" "+item.last_name} />
                             <ListItemSecondaryAction>
                                 <Tooltip title="Wyślij wiadomość" placement="top">
                                     <IconButton style={{color:'white'}} edge="end">

@@ -19,6 +19,7 @@ import {commentEditReducers} from "./commentEditReducers";
 import {commentDeleteReducers} from "./commentDeleteReducers";
 import {fetchUserReducers} from "./fetchUserReducers";
 import {activateAccountReducers} from "./activateAccountReducers";
+import {userFollowersAndFolloweReducers} from "./userFollowersAndFolloweeFetchReducers";
 
 const reducers = combineReducers({
     fetchData,
@@ -43,6 +44,7 @@ const reducers = combineReducers({
     commentDeleteReducers,
     fetchUserReducers,
     activateAccountReducers,
+    userFollowersAndFolloweReducers,
 });
 
 export default reducers;

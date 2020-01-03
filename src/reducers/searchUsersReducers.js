@@ -7,8 +7,8 @@ export const searchUsersReducers = (state = {
         case "FETCHING_USERS":
             return {
                 fetchingUsers: action.payload,
-                usersError: null,
-                users:state.users
+                users:[...state.users],
+                usersError: null
             };
         case "USERS_SUCCESS":
             return {
