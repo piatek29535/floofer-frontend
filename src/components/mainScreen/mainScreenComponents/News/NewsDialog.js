@@ -182,8 +182,6 @@ class NewsDialog extends Component {
     render() {
         let {isOpened, post} = this.props.newsDialogData;
 
-        console.log(post)
-
         if(Object.entries(post).length === 0){
             return null
         }else{
