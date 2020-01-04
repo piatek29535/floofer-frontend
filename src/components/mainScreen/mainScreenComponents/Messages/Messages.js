@@ -1,12 +1,22 @@
 import React, {Component} from 'react';
-import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Conversations from "./Conversations";
+import MessageBox from "./MessageBox";
+
+const styles = {
+    mainContainer:{
+        display:'flex',
+        flex:1,
+    },
+};
 
 class Messages extends Component {
     render() {
         return (
-            <Typography variant="h5" component="h3">
-                Messages goes here!
-            </Typography>
+            <Grid container style={styles.mainContainer}>
+                <Conversations />
+                <MessageBox />
+            </Grid>
         );
     }
 }
