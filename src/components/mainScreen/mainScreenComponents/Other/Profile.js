@@ -22,13 +22,10 @@ import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import People from "@material-ui/icons/People";
 import PeopleOutine from "@material-ui/icons/PeopleOutline";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import {followUserAction} from "../../../../actions/followUserAction";
 import {newsDialogPostOpen} from "../../../../actions/newsDialogActions";
 import NewsDialog from "../News/NewsDialog";
-import {fetchPosts} from "../../../../actions/mainPosts";
 import {userFollowersAndFolloweeFetchAction} from "../../../../actions/userFollowersAndFolloweeFetchAction";
-import {userFollowersAndFolloweReducers} from "../../../../reducers/userFollowersAndFolloweeFetchReducers";
 import FollowersFolloweeDialog from "./FollowersFolloweeDialog";
 
 const styles = {
@@ -74,6 +71,7 @@ const styles = {
         marginBottom:'3%'
     },
     addPostIcon:{
+        borderRadius:0,
         position:"fixed",
         bottom: 50,
         right: 50,
