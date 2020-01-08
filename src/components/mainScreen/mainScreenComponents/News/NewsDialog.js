@@ -31,7 +31,6 @@ import {commentEditAction} from "../../../../actions/commentEditAction";
 import {commentDeleteAction} from "../../../../actions/commentDeleteAction";
 import profilePic from "../../../../images/mainScreen/profilePic.png";
 import {Link} from "react-router-dom";
-import preview from "../../../../images/mainScreen/podgląd.png";
 
 const styles={
     postTypography:{
