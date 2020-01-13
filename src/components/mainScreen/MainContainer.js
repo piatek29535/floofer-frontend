@@ -54,7 +54,7 @@ class MainContainer extends Component {
 
     render() {
 
-        const {username, _id, profilePic} = this.props.user.userData;
+        const {_id} = this.props.user.userData;
 
         return (
             <div style={styles.mainContainer}>
