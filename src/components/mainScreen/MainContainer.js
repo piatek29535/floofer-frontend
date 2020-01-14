@@ -10,6 +10,7 @@ import {fetchCurrentlyLoggedUser} from "../../actions/fetchCurrentlyLoggedUser";
 import {connect} from "react-redux";
 import io from "socket.io-client";
 import MainScreenNavbar from "./mainScreenComponents/MainScreenNavbar";
+import Conversation from "./mainScreenComponents/Messages/Conversation";
 
 const styles = {
     mainContainer:{
@@ -72,6 +73,7 @@ class MainContainer extends Component {
                                 children={<Friends myId={_id}/>}
                             />
                             <Route
+                                exact
                                 path="/main/wiadomosci"
                                 children={<Messages/>}
                             />
@@ -82,6 +84,10 @@ class MainContainer extends Component {
                             <Route
                                 path="/main/profil/:id"
                                 render={({match}) => <Profile myId={_id} match={match}/>}
+                            />
+                            <Route
+                                path="/main/wiadomosci/:id"
+                                render={({match}) => <Conversation myId={_id} match={match}/>}
                             />
                         </Switch>
                     </Paper>

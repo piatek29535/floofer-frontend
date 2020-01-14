@@ -15,8 +15,8 @@ import Add from "@material-ui/icons/Add";
 import CreateConversation from "./CreateConversation";
 import {fetchFollowersAndFollowee} from "../../../../actions/followersAndFolloweFetchAction";
 import {connect} from "react-redux";
-import {followersAndFolloweReducers} from "../../../../reducers/followersAndFolloweeFetchReducers";
 import {fetchConversationsAction} from "../../../../actions/fetchConversationsAction";
+import {Link} from "react-router-dom";
 
 const styles = {
     mainContainer:{
@@ -47,7 +47,7 @@ const styles = {
     },
     openConversationGridItem:{
         display:'flex',
-        flex:1
+        flex:1,
     },
     openConversationButton:{
         flex:1,
@@ -116,11 +116,13 @@ class Conversations extends Component {
                                     </ExpansionPanelDetails>
                                     <Grid container alignItems="stretch" justify='center'>
                                         <Grid item style={styles.openConversationGridItem}>
-                                            <Button
-                                                style={styles.openConversationButton}
-                                                color="primary"
-                                                variant='contained'
-                                            >Otwórz</Button>
+                                            <Link to={`/main/wiadomosci/${item._id}`} style={{flex:1, display:'flex'}}>
+                                                <Button
+                                                    style={styles.openConversationButton}
+                                                    color="primary"
+                                                    variant='contained'
+                                                >Otwórz</Button>
+                                            </Link>
                                         </Grid>
                                     </Grid>
                                 </ExpansionPanel>
