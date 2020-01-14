@@ -2,9 +2,6 @@ import React, {Component} from 'react';
 import Grid from "@material-ui/core/Grid";
 import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import {ButtonGroup} from "react-bootstrap";
-import {Button as Buttonstrap} from 'react-bootstrap';
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
@@ -15,8 +12,12 @@ import Avatar from "@material-ui/core/Avatar";
 import Fade from "@material-ui/core/Fade";
 import {fetchSingleConversationAction} from "../../../../actions/fetchSingleConversationAction";
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import ScrollToBottom from "react-scroll-to-bottom";
+import profilePic from "../../../../images/mainScreen/profilePic.png";
+import {sendMessageAction} from "../../../../actions/sendMessageAction";
+
+import "../../../../style/Conversation.css"
 
 const styles = {
     mainContainer:{
@@ -41,10 +42,8 @@ const styles = {
     },
 
     // --------- Content ---------
-    contentBox:{
-        overflow:'auto',
-        maxHeight:'58vh'
-    },
+
+    // Tutaj muszę używać styli z pliku css, gdyż ScrollToBottom komponent nie wspomaga propsów "style"
 
     message:{
         borderRadius:'20px',
@@ -77,9 +76,26 @@ const styles = {
 
 class Conversation extends Component {
 
+    state = {
+        message:''
+    };
+
     componentDidMount() {
         this.props.dispatch(fetchSingleConversationAction(this.props.match.params.id))
     }
+
+    pushMessages = (conversationId, message) => {
+        this.setState({
+            message:''
+        });
+        this.props.dispatch(sendMessageAction(conversationId, message))
+    };
+
+    changeMessage = (value) => {
+        this.setState({
+            message:value
+        })
+    };
 
     render() {
 
@@ -104,24 +120,30 @@ class Conversation extends Component {
                         </Button>
                     </Grid>
 
-                    <List style={styles.contentBox}>
-                        {[1,2,2,1,1,1,2,2,1,1,1,2,2,1,1,1,2,2,1,1,1,2,2,1,1,1,2,2,1,1,1,2,2,1,1].map((item, key) => (
+                    <ScrollToBottom className="messages">
+                        {conversation.messages.map((item, key) => (
                             <Fade in key={key}>
                                 <ListItem
-                                    style={item === 1 ? styles.myMessage : styles.message}
+                                    style={item.sender._id === this.props.myId ? styles.myMessage : styles.message}
                                     alignItems="flex-start">
                                     <ListItemAvatar>
-                                        <Avatar alt="" src="" />
+                                        <Avatar
+                                            alt=""
+                                            src={
+                                                item.sender.profilePic === undefined
+                                                    ? profilePic
+                                                    : `${process.env.REACT_APP_API_URL+'/'+item.sender.profilePic}`
+                                            } />
                                     </ListItemAvatar>
                                     <ListItemText
                                         style={styles.messageText}
-                                        primary="Użytkownik inny"
-                                        secondary="Spoooooook Spoooooook Spoooooook Spoooooook Spoooooook Spoooooook Spoooooook Spoooooook Spoooooook Spoooooook Spoooooook "
+                                        primary={item.sender.first_name}
+                                        secondary={item.content}
                                     />
                                 </ListItem>
                             </Fade>
                         ))}
-                    </List>
+                    </ScrollToBottom>
 
                     <Grid style={styles.footerBox}>
                         <Input
@@ -129,6 +151,8 @@ class Conversation extends Component {
                             type="text"
                             multiline
                             rows="4"
+                            value={this.state.message}
+                            onChange={(e) => this.changeMessage(e.target.value)}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton>
@@ -137,6 +161,7 @@ class Conversation extends Component {
                                 </InputAdornment>
                             }
                             style={styles.footerBoxInput}
+                            onKeyPress={(event) => event.key === "Enter" ? this.pushMessages(conversation._id, this.state.message) : null}
                         />
                     </Grid>
                 </Grid>
@@ -149,7 +174,8 @@ class Conversation extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    conversation:state.fetchSingleConversationReducers
+    conversation:state.fetchSingleConversationReducers,
+    message:state.sendMessageReducers
 });
 
 export default connect(mapStateToProps)(Conversation);
