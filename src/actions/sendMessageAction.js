@@ -1,4 +1,5 @@
 import axios from "axios";
+import {fetchSingleConversationAction} from "./fetchSingleConversationAction";
 
 export function sendMessageAction(id, message){
 
@@ -17,7 +18,10 @@ export function sendMessageAction(id, message){
         dispatch({type:'MESSAGE_SEND',payload:true});
 
         instance.post(`/api/conversations/${id}`, {content:message})
-            .then(response => dispatch({type:'MESSAGE_SUCCESS', payload:response.data}))
+            .then(response => {
+                dispatch(fetchSingleConversationAction(id));
+                dispatch({type:'MESSAGE_SUCCESS', payload:response.data})
+            })
             .catch(err => dispatch({type:'MESSAGE_FAILURE',payload:err}))
     }
 }

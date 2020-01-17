@@ -11,6 +11,7 @@ import {connect} from "react-redux";
 import io from "socket.io-client";
 import MainScreenNavbar from "./mainScreenComponents/MainScreenNavbar";
 import Conversation from "./mainScreenComponents/Messages/Conversation";
+import NotificationToast from "./mainScreenComponents/Other/NotificationToast";
 
 const styles = {
     mainContainer:{
@@ -31,10 +32,15 @@ const styles = {
         boxShadow:'0 0 10px',
         borderBottomLeftRadius:'0',
         borderBottomRightRadius:'0',
-    }
+    },
+
 };
 
 class MainContainer extends Component {
+
+    state = {
+        showToast:false,
+    };
 
     componentDidMount() {
         this.props.dispatch(fetchCurrentlyLoggedUser()).then(() => {
@@ -45,12 +51,30 @@ class MainContainer extends Component {
     connect(){
         let ENDPOINT = process.env.REACT_APP_API_URL;
         let socket = io(ENDPOINT);
-        
+
         socket.emit('testConnection', this.props.user.userData._id)
 
-        socket.on(this.props.user.userData._id, function(msg){
-            console.log("message just for you: " + msg)
-          });
+        socket.on(this.props.user.userData._id, (msg) => {
+            console.log("message just for you: " + msg);
+
+            this.setState({
+                showToast:true
+            });
+
+            if(this.state.showToast){
+                setTimeout(() => this.setState({
+                    showToast:false
+                }), 5000)
+            }
+
+
+        });
+    }
+
+    closeToast = () => {
+        this.setState({
+            showToast:false
+        })
     }
 
     render() {
@@ -92,6 +116,13 @@ class MainContainer extends Component {
                         </Switch>
                     </Paper>
                 </div>
+
+                {this.state.showToast
+                    ?
+                    <NotificationToast
+                        closeToast={this.closeToast}
+                    />
+                    : null}
             </div>
         );
     }

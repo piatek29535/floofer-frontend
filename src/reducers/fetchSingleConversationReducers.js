@@ -7,7 +7,7 @@ export const fetchSingleConversationReducers = (state = {
         case 'SINGLE_CONVERSATION_FETCH_SEND':
             return {
                 fetchingSingleConversation:action.payload,
-                fetchingSingleConversationSuccess:{},
+                fetchingSingleConversationSuccess:{...state.fetchingSingleConversationSuccess},
                 fetchingSingleConversationFailure:null
             };
         case 'SINGLE_CONVERSATION_FETCH_SUCCESS':

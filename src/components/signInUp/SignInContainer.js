@@ -86,8 +86,6 @@ class SignInContainer extends Component{
 
                 <CustomSnackbarLogin handleClose={this.handleClose} isError={this.state.isError} errorMessage={this.state.errorMessage}/>
 
-                {/*{this.renderSwitch(this.props.data.loginErrorStatus,this.props.data.loginErrorData)}*/}
-
                 <TextField
                     autoFocus
                     label="E-mail"
@@ -95,6 +93,7 @@ class SignInContainer extends Component{
                     margin="normal"
                     value={this.state.credentials.email}
                     onChange={(e) => {this.onChange(e,'email')}}
+                    onKeyPress={(e) => e.key === "Enter" ? this.props.dispatch(login(this.state.credentials)) : null}
                     variant="outlined"
                 />
                 <TextField
@@ -103,13 +102,11 @@ class SignInContainer extends Component{
                     margin="normal"
                     value={this.state.credentials.password}
                     onChange={(e) => this.onChange(e, 'password')}
+                    onKeyPress={(e) => e.key === "Enter" ? this.props.dispatch(login(this.state.credentials)) : null}
                     variant="outlined"
                 />
                 <Button
-                    onClick={() => {
-                        this.props.dispatch(login(this.state.credentials))
-                        // console.log(this.props.data)
-                    }}
+                    onClick={() => this.props.dispatch(login(this.state.credentials))}
                     variant="outline-success"
                 >
                     {this.props.data.isAuthenticating ? <CircularProgress/> : "Zaloguj"}
