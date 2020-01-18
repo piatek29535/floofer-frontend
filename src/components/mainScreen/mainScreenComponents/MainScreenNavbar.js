@@ -69,6 +69,30 @@ class MainScreenNavbar extends Component {
         })
     };
 
+    renderNotification = (notification) => {
+
+        // eslint-disable-next-line default-case
+        switch(notification.action){
+            case 'follow':
+                return <span>
+                    Użytkownik <strong>{notification.who.first_name+" "+notification.who.last_name}</strong> obserwuje Cię!
+                </span>;
+            case 'comment':
+                return <span>
+                    Użytkownik <strong>{notification.who.first_name+" "+notification.who.last_name}</strong> skomentował Twój post
+                </span>;
+            case 'likePost':
+                return <span>
+                    Użytkownik <strong>{notification.who.first_name+" "+notification.who.last_name}</strong> polubił Twój post
+                </span>;
+            case 'likeComment':
+                return <span>
+                    Użytkownik <strong>{notification.who.first_name+" "+notification.who.last_name}</strong> polubił Twój komentarz
+                </span>
+        }
+
+    };
+
     render() {
 
         const {
@@ -76,8 +100,6 @@ class MainScreenNavbar extends Component {
             notificationsSuccess:notifications,
             // notificationsError:error
         } = this.props.notifications;
-
-        console.log(notifications)
 
         return (
             <Navbar
@@ -133,20 +155,17 @@ class MainScreenNavbar extends Component {
                     <Popover
                         style={styles.notificationList}
                     >
-                        <Popover.Title><strong>Powiadomienia</strong></Popover.Title>
+                        <Popover.Title style={{position:'sticky'}}><strong>Powiadomienia</strong></Popover.Title>
                         <ListGroup>
                         {notifications.map(item => (
                             <ListGroup.Item
-                                onClick={() => {
-                                    this.props.dispatch(readNotificationAction(item._id))
-                                    this.props.dispatch(fetchNotificationsAction())
-                                }}
+                                onClick={() => this.props.dispatch(readNotificationAction(item._id))}
                                 style={styles.listItem}
                                 action
                                 key={item._id}
-                                variant={!item.read ? "primary" : "success"}
+                                variant={!item.read ? "info" : null}
                             >
-                                <strong>{item.who.first_name}</strong>
+                                {this.renderNotification(item)}
                             </ListGroup.Item>
                         ))}
                         </ListGroup>

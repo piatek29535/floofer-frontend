@@ -1,4 +1,5 @@
 import axios from "axios";
+import {fetchNotificationsAction} from "./fetchNotificationsAction";
 
 export function readNotificationAction(id){
 
@@ -16,8 +17,11 @@ export function readNotificationAction(id){
     return dispatch => {
         dispatch({type:'NOTIFICATION_READ_FETCHING',payload:true});
 
-        instance.get(`/api/me/notifications/${id}`)
-            .then(response => dispatch({type:'NOTIFICATION_READ_SUCCESS', payload:response.data}))
+        instance.get(`/api/notifications/${id}`)
+            .then(response => {
+                dispatch(fetchNotificationsAction())
+                dispatch({type:'NOTIFICATION_READ_SUCCESS', payload:response.data})
+            })
             .catch(err => dispatch({type:'NOTIFICATION_READ_FAILURE',payload:err}))
     }
 }
