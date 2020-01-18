@@ -12,6 +12,11 @@ import Container from "@material-ui/core/Container";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Fab from "@material-ui/core/Fab";
 import Add from "@material-ui/icons/Add";
+import CreateConversation from "./CreateConversation";
+import {fetchFollowersAndFollowee} from "../../../../actions/followersAndFolloweFetchAction";
+import {connect} from "react-redux";
+import {fetchConversationsAction} from "../../../../actions/fetchConversationsAction";
+import {Link} from "react-router-dom";
 
 const styles = {
     mainContainer:{
@@ -40,61 +45,115 @@ const styles = {
         justifyContent:'space-around',
         alignItems:'center',
     },
+    openConversationGridItem:{
+        display:'flex',
+        flex:1,
+    },
+    openConversationButton:{
+        flex:1,
+        borderTopLeftRadius:0,
+        borderTopRightRadius:0,
+        outline:'none'
+    }
 };
 
 class Conversations extends Component {
+
+    state = {
+        createConversationOpened:false,
+    };
+
+    componentDidMount() {
+        this.props.dispatch(fetchFollowersAndFollowee());
+        this.props.dispatch(fetchConversationsAction());
+    }
+
+    openCreateConversation = () => {
+        this.setState({
+            createConversationOpened:true
+        })
+    };
+
+    closeCreateConversation = () => {
+        this.setState({
+            createConversationOpened:false
+        })
+    };
+
     render() {
-        return (
-            <Box style={styles.mainContainer}>
-                <Container style={styles.conversationsContainerTypography}>
-                    <Typography variant={"h4"}>
-                        Wiadomości
-                    </Typography>
-                </Container>
-                {<LinearProgress color="primary" variant="determinate" value={100}/>}
 
-                <Grid style={{marginTop:'1%'}} container spacing={2}>
-                    {[1,2,3,4,5,6,7,8,9,10].map((item, value) => (
-                        <Grid item xs={6} key={value}>
-                            <ExpansionPanel
-                                style={styles.expansionPanel}
+        const {followers} = this.props.followersAndFollowee;
+        const {fetchingConversations:fetching,fetchingConversationsSuccess:conversations} = this.props.conversations;
+
+        if(conversations !== undefined){
+            return (
+                <Box style={styles.mainContainer}>
+                    <Container style={styles.conversationsContainerTypography}>
+                        <Typography variant={"h4"}>
+                            Wiadomości
+                        </Typography>
+                    </Container>
+                    {fetching
+                        ? <LinearProgress color="primary" />
+                        : <LinearProgress color="primary" variant="determinate" value={100}/>}
+
+                    <Grid style={{marginTop:'1%'}} container spacing={2}>
+                        {conversations.map((item, value) => (
+                            <Grid item xs={6} key={value}>
+                                <ExpansionPanel
+                                    style={styles.expansionPanel}
                                 >
-                                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                    <Typography>Użytkownicy</Typography>
-                                </ExpansionPanelSummary>
-                                <ExpansionPanelDetails>
-                                    <Typography style={styles.detailsDescription}>
-                                        Uzytkownik: ostatnia wiadomość
-                                    </Typography>
-                                </ExpansionPanelDetails>
-                                <Grid container justify='space-between'>
-                                    <Grid item>
-                                        <Button
-                                            color="primary"
-                                            variant='contained'
-                                        >Otwórz</Button>
+                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                        <Typography>{item.participants.length > 2
+                                            ? item.participants[0].first_name+", "+item.participants[1].first_name+" +"+(item.participants.length-2)+" więcej"
+                                            : item.participants[0].first_name+", "+item.participants[1].first_name
+                                        }</Typography>
+                                    </ExpansionPanelSummary>
+                                    <ExpansionPanelDetails>
+                                        <Typography style={styles.detailsDescription}>
+                                            Uzytkownik: ostatnia wiadomość
+                                        </Typography>
+                                    </ExpansionPanelDetails>
+                                    <Grid container alignItems="stretch" justify='center'>
+                                        <Grid item style={styles.openConversationGridItem}>
+                                            <Link to={`/main/wiadomosci/${item._id}`} style={{flex:1, display:'flex'}}>
+                                                <Button
+                                                    style={styles.openConversationButton}
+                                                    color="primary"
+                                                    variant='contained'
+                                                >Otwórz</Button>
+                                            </Link>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item>
-                                        <Button
-                                            color="secondary"
-                                            variant='contained'
-                                        >Opuść konwersację</Button>
-                                    </Grid>
-                                </Grid>
-                            </ExpansionPanel>
-                        </Grid>
+                                </ExpansionPanel>
+                            </Grid>
 
-                    ))}
-                </Grid>
-                <Fab
-                    color="primary"
-                    style={styles.createConversationButton}
-                >
-                    <Add/>
-                </Fab>
-            </Box>
-        );
+                        ))}
+                    </Grid>
+                    <Fab
+                        onClick={() => this.openCreateConversation()}
+                        color="primary"
+                        style={styles.createConversationButton}
+                    >
+                        <Add/>
+                    </Fab>
+
+                    <CreateConversation
+                        open={this.state.createConversationOpened}
+                        followersAndFollowee={followers}
+                        closeDialog={this.closeCreateConversation}
+                    />
+                </Box>
+            );
+        }else{
+            return null;
+        }
     }
 }
 
-export default Conversations;
+const mapStateToProps = (state) => ({
+    followersAndFollowee:state.followersAndFolloweReducers,
+    conversations:state.fetchConversationsReducers
+});
+
+export default connect(mapStateToProps)(Conversations);

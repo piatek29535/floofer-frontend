@@ -10,6 +10,10 @@ import {fetchCurrentlyLoggedUser} from "../../actions/fetchCurrentlyLoggedUser";
 import {connect} from "react-redux";
 import io from "socket.io-client";
 import MainScreenNavbar from "./mainScreenComponents/MainScreenNavbar";
+import Conversation from "./mainScreenComponents/Messages/Conversation";
+import NotificationToast from "./mainScreenComponents/Other/NotificationToast";
+import {fetchSingleConversationAction} from "../../actions/fetchSingleConversationAction";
+import {fetchFollowersAndFollowee} from "../../actions/followersAndFolloweFetchAction";
 
 const styles = {
     mainContainer:{
@@ -30,10 +34,17 @@ const styles = {
         boxShadow:'0 0 10px',
         borderBottomLeftRadius:'0',
         borderBottomRightRadius:'0',
-    }
+    },
+
 };
 
 class MainContainer extends Component {
+
+    state = {
+        showToast:false,
+        content:{},
+        relevantPost:''
+    };
 
     componentDidMount() {
         this.props.dispatch(fetchCurrentlyLoggedUser()).then(() => {
@@ -44,17 +55,76 @@ class MainContainer extends Component {
     connect(){
         let ENDPOINT = process.env.REACT_APP_API_URL;
         let socket = io(ENDPOINT);
-        
+
         socket.emit('testConnection', this.props.user.userData._id)
 
-        socket.on(this.props.user.userData._id, function(msg){
-            console.log("message just for you: " + msg)
-          });
+        socket.on(this.props.user.userData._id, (msg) => {
+
+            this.closeToast();
+
+            if(typeof msg === "string" && msg.includes("You are connected on socket")){
+                return;
+            }
+
+            switch(msg.type){
+                case 'notification':
+                    switch(msg.content.action){
+                        case 'follow':
+                            this.props.dispatch(fetchFollowersAndFollowee());
+                            this.openToast("Nowy obserwator",
+                                `Użytkownik ${msg.content.who.first_name+" "+msg.content.who.last_name} obserwuje Cię!`);
+                            break;
+                        case 'comment':
+                            this.openToast("Komentarz",
+                                `Użytkownik ${msg.content.who.first_name+" "+msg.content.who.last_name} napisał komentarz pod Twoim postem.`,
+                                msg.content.relevantPost);
+                            break;
+                        case 'likePost':
+                            this.openToast("Polubienie posta",
+                                `Użytkownik ${msg.content.who.first_name+" "+msg.content.who.last_name} polubił Twój post.`,
+                                msg.content.relevantPost);
+                            break;
+                        case 'likeComment':
+                            this.openToast("Polubienie komentarza",
+                                `Użytkownik ${msg.content.who.first_name+" "+msg.content.who.last_name} polubił Twój komentarz.`,
+                                msg.content.relevantPost);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 'message':
+                    this.props.dispatch(fetchSingleConversationAction(msg.content));
+                    if(this.props.location.pathname.includes("wiadomosci/")){
+                        return;
+                    }
+                    this.openToast("Wiadomość","Masz nową wiadomość!");
+                    break;
+                default:
+                    break;
+            }
+        });
     }
+
+    openToast = (header, body, relevantPost) => {
+        this.setState({
+            showToast:true,
+            content:{type:header, body:body},
+            relevantPost:relevantPost
+        })
+    };
+
+    closeToast = () => {
+        this.setState({
+            showToast:false,
+            content:{},
+            relevantPost:''
+        })
+    };
 
     render() {
 
-        const {username, _id, profilePic} = this.props.user.userData;
+        const {_id} = this.props.user.userData;
 
         return (
             <div style={styles.mainContainer}>
@@ -72,6 +142,7 @@ class MainContainer extends Component {
                                 children={<Friends myId={_id}/>}
                             />
                             <Route
+                                exact
                                 path="/main/wiadomosci"
                                 children={<Messages/>}
                             />
@@ -83,9 +154,19 @@ class MainContainer extends Component {
                                 path="/main/profil/:id"
                                 render={({match}) => <Profile myId={_id} match={match}/>}
                             />
+                            <Route
+                                path="/main/wiadomosci/:id"
+                                render={({match}) => <Conversation myId={_id} match={match}/>}
+                            />
                         </Switch>
                     </Paper>
                 </div>
+                <NotificationToast
+                    showToast={this.state.showToast}
+                    closeToast={this.closeToast}
+                    content={this.state.content}
+                    relevantPost={this.state.relevantPost}
+                />
             </div>
         );
     }
