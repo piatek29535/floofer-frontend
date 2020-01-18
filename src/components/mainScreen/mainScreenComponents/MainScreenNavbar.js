@@ -6,6 +6,14 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import profilePic from "../../../images/mainScreen/profilePic.png";
 import Button from "react-bootstrap/Button";
+import Badge from "@material-ui/core/Badge";
+import Notifications from "@material-ui/icons/Notifications";
+import Overlay from "react-bootstrap/Overlay";
+import Popover from "react-bootstrap/Popover";
+import {connect} from "react-redux";
+import {fetchNotificationsAction} from "../../../actions/fetchNotificationsAction";
+import ListGroup from "react-bootstrap/ListGroup";
+import {readNotificationAction} from "../../../actions/readNotificationAction";
 
 const styles = {
     menuPanel:{
@@ -18,6 +26,15 @@ const styles = {
         color:'white',
         margin:0,
         padding:"10px 10px 10px 20px",
+    },
+    notificationList:{
+        width:'100%',
+        height:'300px',
+        overflow:'auto',
+        borderRadius:0
+    },
+    listItem:{
+        borderRadius: 0,
     }
 };
 
@@ -25,7 +42,13 @@ class MainScreenNavbar extends Component {
 
     state = {
         menuExpanded:false,
+        notificationOpen:false,
+        notificationTarget:{},
     };
+
+    componentDidMount() {
+        this.props.dispatch(fetchNotificationsAction())
+    }
 
     expandMenu = () => {
         this.setState({
@@ -39,7 +62,23 @@ class MainScreenNavbar extends Component {
         })
     };
 
+    notificationsToggle = (target) => {
+        this.setState({
+            notificationOpen:!this.state.notificationOpen,
+            notificationTarget:target,
+        })
+    };
+
     render() {
+
+        const {
+            // notificationsFetching:fetching,
+            notificationsSuccess:notifications,
+            // notificationsError:error
+        } = this.props.notifications;
+
+        console.log(notifications)
+
         return (
             <Navbar
                 collapseOnSelect
@@ -62,6 +101,13 @@ class MainScreenNavbar extends Component {
                         </Avatar>
                     </IconButton>
                 </Link>
+                <IconButton
+                    onClick={(e) => this.notificationsToggle(e.target)}
+                >
+                    <Badge badgeContent={notifications.filter(x => !x.read).length} max={999} color="secondary">
+                        <Notifications/>
+                    </Badge>
+                </IconButton>
                 <Navbar.Toggle onClick={() => this.expandMenu()}/>
                 <Navbar.Collapse>
                     <Nav className="mr-auto">
@@ -78,9 +124,42 @@ class MainScreenNavbar extends Component {
                         <Button href="/" variant="outline-light">Wyloguj się</Button>
                     </Nav>
                 </Navbar.Collapse>
+
+                <Overlay
+                    show={this.state.notificationOpen}
+                    target={this.state.notificationTarget}
+                    placement="bottom"
+                >
+                    <Popover
+                        style={styles.notificationList}
+                    >
+                        <Popover.Title><strong>Powiadomienia</strong></Popover.Title>
+                        <ListGroup>
+                        {notifications.map(item => (
+                            <ListGroup.Item
+                                onClick={() => {
+                                    this.props.dispatch(readNotificationAction(item._id))
+                                    this.props.dispatch(fetchNotificationsAction())
+                                }}
+                                style={styles.listItem}
+                                action
+                                key={item._id}
+                                variant={!item.read ? "primary" : "success"}
+                            >
+                                <strong>{item.who.first_name}</strong>
+                            </ListGroup.Item>
+                        ))}
+                        </ListGroup>
+                    </Popover>
+                </Overlay>
+
             </Navbar>
         );
     }
 }
 
-export default MainScreenNavbar;
+const mapStateToProps = (state) => ({
+    notifications:state.fetchNotificationsReducers
+});
+
+export default connect(mapStateToProps)(MainScreenNavbar);
