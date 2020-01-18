@@ -4,7 +4,9 @@ import PersonAdd from "@material-ui/icons/PersonAdd"
 import Message from "@material-ui/icons/Message"
 import ThumbUp from "@material-ui/icons/ThumbUp"
 import ModeComment from "@material-ui/icons/ModeComment"
-import Slide from "@material-ui/core/Slide";
+import Button from "@material-ui/core/Button";
+import {newsDialogPostOpen} from "../../../../actions/newsDialogActions";
+import {connect} from "react-redux";
 
 const styles = {
     toast:{
@@ -23,20 +25,53 @@ const styles = {
 };
 
 class NotificationToast extends Component {
+
+    renderIcon = () => {
+        switch(this.props.content.type){
+            case 'Nowy obserwator':
+                return <PersonAdd className="rounded mr-2" />;
+            case 'Komentarz':
+                return <Message className="rounded mr-2" />;
+            case 'Polubienie posta':
+                return <ThumbUp className="rounded mr-2" />;
+            case 'Polubienie komentarza':
+                return <ModeComment className="rounded mr-2" />;
+            default:
+                return;
+        }
+    };
+
     render() {
+        const {type:header, body} = this.props.content;
+
+        console.log(this.props.relevantPost)
+
         return (
-            <Slide in direction="right">
-                <Toast style={styles.toast}>
-                    <Toast.Header closeButton={false}>
-                        <ModeComment className="rounded mr-2" />
-                        <strong className="mr-auto">Typ powiadomienia</strong>
-                        <small>data</small>
-                    </Toast.Header>
-                    <Toast.Body>Co sie zrobiło</Toast.Body>
-                </Toast>
-            </Slide>
+            <Toast
+                style={styles.toast}
+                show={this.props.showToast}
+                delay={5000}
+                onClose={() => this.props.closeToast()}
+                autohide
+                animation
+            >
+                <Toast.Header>
+                    {this.renderIcon()}
+                    <strong className="mr-auto">{header}</strong>
+                </Toast.Header>
+                <Toast.Body>{body}</Toast.Body>
+                {header === "Nowy obserwator"
+                    ? null
+                    :  <Button
+                        color="primary"
+                        variant="outlined"
+                        size="small"
+                        className="m-2"
+                        onClick={() => this.props.dispatch(newsDialogPostOpen(this.props.relevantPost))}
+                    >Otwórz post</Button>}
+            </Toast>
         );
     }
 }
 
-export default NotificationToast;
+export default connect()(NotificationToast);

@@ -12,6 +12,8 @@ import io from "socket.io-client";
 import MainScreenNavbar from "./mainScreenComponents/MainScreenNavbar";
 import Conversation from "./mainScreenComponents/Messages/Conversation";
 import NotificationToast from "./mainScreenComponents/Other/NotificationToast";
+import {fetchSingleConversationAction} from "../../actions/fetchSingleConversationAction";
+import {fetchFollowersAndFollowee} from "../../actions/followersAndFolloweFetchAction";
 
 const styles = {
     mainContainer:{
@@ -40,6 +42,8 @@ class MainContainer extends Component {
 
     state = {
         showToast:false,
+        content:{},
+        relevantPost:''
     };
 
     componentDidMount() {
@@ -55,27 +59,68 @@ class MainContainer extends Component {
         socket.emit('testConnection', this.props.user.userData._id)
 
         socket.on(this.props.user.userData._id, (msg) => {
-            console.log("message just for you: " + msg);
 
-            this.setState({
-                showToast:true
-            });
+            this.closeToast();
 
-            if(this.state.showToast){
-                setTimeout(() => this.setState({
-                    showToast:false
-                }), 5000)
+            if(typeof msg === "string" && msg.includes("You are connected on socket")){
+                return;
             }
 
-
+            switch(msg.type){
+                case 'notification':
+                    switch(msg.content.action){
+                        case 'follow':
+                            this.props.dispatch(fetchFollowersAndFollowee());
+                            this.openToast("Nowy obserwator",
+                                `Użytkownik ${msg.content.who.first_name+" "+msg.content.who.last_name} obserwuje Cię!`);
+                            break;
+                        case 'comment':
+                            this.openToast("Komentarz",
+                                `Użytkownik ${msg.content.who.first_name+" "+msg.content.who.last_name} napisał komentarz pod Twoim postem.`,
+                                msg.content.relevantPost);
+                            break;
+                        case 'likePost':
+                            this.openToast("Polubienie posta",
+                                `Użytkownik ${msg.content.who.first_name+" "+msg.content.who.last_name} polubił Twój post.`,
+                                msg.content.relevantPost);
+                            break;
+                        case 'likeComment':
+                            this.openToast("Polubienie komentarza",
+                                `Użytkownik ${msg.content.who.first_name+" "+msg.content.who.last_name} polubił Twój komentarz.`,
+                                msg.content.relevantPost);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 'message':
+                    this.props.dispatch(fetchSingleConversationAction(msg.content));
+                    if(this.props.location.pathname.includes("wiadomosci/")){
+                        return;
+                    }
+                    this.openToast("Wiadomość","Masz nową wiadomość!");
+                    break;
+                default:
+                    break;
+            }
         });
     }
 
+    openToast = (header, body, relevantPost) => {
+        this.setState({
+            showToast:true,
+            content:{type:header, body:body},
+            relevantPost:relevantPost
+        })
+    };
+
     closeToast = () => {
         this.setState({
-            showToast:false
+            showToast:false,
+            content:{},
+            relevantPost:''
         })
-    }
+    };
 
     render() {
 
@@ -116,13 +161,12 @@ class MainContainer extends Component {
                         </Switch>
                     </Paper>
                 </div>
-
-                {this.state.showToast
-                    ?
-                    <NotificationToast
-                        closeToast={this.closeToast}
-                    />
-                    : null}
+                <NotificationToast
+                    showToast={this.state.showToast}
+                    closeToast={this.closeToast}
+                    content={this.state.content}
+                    relevantPost={this.state.relevantPost}
+                />
             </div>
         );
     }
