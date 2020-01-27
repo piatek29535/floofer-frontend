@@ -14,14 +14,12 @@ const styles = {
         bottom:20,
         left:20,
         width:'300px',
-        borderColor:'blue'
+        backgroundColor:'#BBDED6'
     },
     toastHeader:{
-
+        color:'white',
+        backgroundColor:'#8AC6D1',
     },
-    toastBody:{
-
-    }
 };
 
 class NotificationToast extends Component {
@@ -44,8 +42,6 @@ class NotificationToast extends Component {
     render() {
         const {type:header, body} = this.props.content;
 
-        console.log(this.props.relevantPost)
-
         return (
             <Toast
                 style={styles.toast}
@@ -55,12 +51,12 @@ class NotificationToast extends Component {
                 autohide
                 animation
             >
-                <Toast.Header>
+                <Toast.Header style={styles.toastHeader}>
                     {this.renderIcon()}
                     <strong className="mr-auto">{header}</strong>
                 </Toast.Header>
                 <Toast.Body>{body}</Toast.Body>
-                {header === "Nowy obserwator"
+                {header === "Nowy obserwator" || header === "Wiadomość"
                     ? null
                     :  <Button
                         color="primary"

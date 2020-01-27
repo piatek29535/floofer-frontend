@@ -1,5 +1,6 @@
 import axios from "axios";
 import {fetchUserAction} from "./fetchUserAction";
+import {fetchCurrentlyLoggedUser} from "./fetchCurrentlyLoggedUser";
 
 export function changeProfilePicAction(image, userId){
     return dispatch => {
@@ -22,7 +23,8 @@ export function changeProfilePicAction(image, userId){
         instance.put('/api/me/profilePic', formData)
             .then(response => {
                 dispatch({type:'PROFILE_PIC_SUCCESS', payload:response.data});
-                dispatch(fetchUserAction(userId))
+                dispatch(fetchUserAction(userId));
+                dispatch(fetchCurrentlyLoggedUser());
             })
             .catch(err => dispatch({type:'PROFILE_PIC_FAILURE', payload:err}))
     }
