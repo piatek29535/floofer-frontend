@@ -14,6 +14,10 @@ import {connect} from "react-redux";
 import {fetchNotificationsAction} from "../../../actions/fetchNotificationsAction";
 import ListGroup from "react-bootstrap/ListGroup";
 import {readNotificationAction} from "../../../actions/readNotificationAction";
+import {LinearProgress} from "@material-ui/core";
+import Box from "@material-ui/core/Box";
+import NavbarNotificationBox from "./NavbarNotificationBox";
+import {newsDialogPostOpen} from "../../../actions/newsDialogActions";
 
 const styles = {
     menuPanel:{
@@ -35,7 +39,7 @@ const styles = {
     },
     listItem:{
         borderRadius: 0,
-    }
+    },
 };
 
 class MainScreenNavbar extends Component {
@@ -70,27 +74,56 @@ class MainScreenNavbar extends Component {
     };
 
     renderNotification = (notification) => {
-
         // eslint-disable-next-line default-case
         switch(notification.action){
             case 'follow':
-                return <span>
-                    Użytkownik <strong>{notification.who.first_name+" "+notification.who.last_name}</strong> obserwuje Cię!
-                </span>;
+                return <NavbarNotificationBox
+                    message={
+                        `Użytkownik ${notification.who.first_name+" "+notification.who.last_name} obserwuje Cię!`
+                    }
+                    userProfilePic={notification.who.profilePic}
+                    isRead={notification.read}
+                    dialogOpen={() => console.log(notification._id)}
+                    />;
             case 'comment':
-                return <span>
-                    Użytkownik <strong>{notification.who.first_name+" "+notification.who.last_name}</strong> skomentował Twój post
-                </span>;
+                return <NavbarNotificationBox
+                    message={
+                        `Użytkownik ${notification.who.first_name+" "+notification.who.last_name} skomentował Twój post`
+                    }
+                    userProfilePic={notification.who.profilePic}
+                    isRead={notification.read}
+                    dialogOpen={() => console.log(notification._id)}
+                />;
             case 'likePost':
-                return <span>
-                    Użytkownik <strong>{notification.who.first_name+" "+notification.who.last_name}</strong> polubił Twój post
-                </span>;
-            case 'likeComment':
-                return <span>
-                    Użytkownik <strong>{notification.who.first_name+" "+notification.who.last_name}</strong> polubił Twój komentarz
-                </span>
-        }
+                return <NavbarNotificationBox
+                    message={
+                        `Użytkownik ${notification.who.first_name+" "+notification.who.last_name} polubił Twój post`
+                    }
+                    userProfilePic={notification.who.profilePic}
+                    isRead={notification.read}
+                    dialogOpen={() => console.log(notification._id)}
+                />;
 
+            case 'likeComment':
+                return <NavbarNotificationBox
+                    message={
+                        `Użytkownik ${notification.who.first_name+" "+notification.who.last_name} polubił Twój komentarz`
+                    }
+                    userProfilePic={notification.who.profilePic}
+                    isRead={notification.read}
+                    dialogOpen={() => console.log(notification._id)}
+                />;
+            }
+
+    };
+
+    openPostDialog = (item, action) => {
+        if(action === "follow"){
+            this.props.dispatch(readNotificationAction(item._id));
+        }else{
+            this.props.dispatch(readNotificationAction(item._id));
+            this.props.dispatch(newsDialogPostOpen(item.relevantPost._id));
+        }
     };
 
     render() {
@@ -154,20 +187,20 @@ class MainScreenNavbar extends Component {
                 >
                     <Popover
                         style={styles.notificationList}
-                    >
-                        <Popover.Title style={{position:'sticky'}}><strong>Powiadomienia</strong></Popover.Title>
+                        id="notifications">
+                        <Popover.Title><strong>Powiadomienia</strong></Popover.Title>
                         <ListGroup>
-                        {notifications.map(item => (
-                            <ListGroup.Item
-                                onClick={() => this.props.dispatch(readNotificationAction(item._id))}
-                                style={styles.listItem}
-                                action
-                                key={item._id}
-                                variant={!item.read ? "info" : null}
-                            >
-                                {this.renderNotification(item)}
-                            </ListGroup.Item>
-                        ))}
+                            {notifications.sort((a,b) => Date.parse(b.when)-Date.parse(a.when)).map(item => (
+                                <ListGroup.Item
+                                    onClick={() => this.openPostDialog(item, item.action)}
+                                    style={styles.listItem}
+                                    action
+                                    key={item._id}
+                                    variant={!item.read ? "info" : null}
+                                >
+                                    {this.renderNotification(item)}
+                                </ListGroup.Item>
+                            ))}
                         </ListGroup>
                     </Popover>
                 </Overlay>

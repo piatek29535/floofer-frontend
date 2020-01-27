@@ -14,6 +14,7 @@ import Conversation from "./mainScreenComponents/Messages/Conversation";
 import NotificationToast from "./mainScreenComponents/Other/NotificationToast";
 import {fetchSingleConversationAction} from "../../actions/fetchSingleConversationAction";
 import {fetchFollowersAndFollowee} from "../../actions/followersAndFolloweFetchAction";
+import {fetchNotificationsAction} from "../../actions/fetchNotificationsAction";
 
 const styles = {
     mainContainer:{
@@ -103,6 +104,7 @@ class MainContainer extends Component {
                 default:
                     break;
             }
+            this.props.dispatch(fetchNotificationsAction())
         });
     }
 
