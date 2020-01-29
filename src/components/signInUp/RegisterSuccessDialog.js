@@ -11,6 +11,7 @@ class RegisterSuccessDialog extends Component {
     render() {
         return (
             <Dialog
+                id="successDialog"
                 open={this.props.status}
                 onClose={() => this.props.handleClose()}
             >
@@ -22,7 +23,7 @@ class RegisterSuccessDialog extends Component {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => this.props.handleClose()} color="primary">
+                    <Button id="confirmRegistrationButton" onClick={() => this.props.handleClose()} color="primary">
                         Zamknij
                     </Button>
                 </DialogActions>
