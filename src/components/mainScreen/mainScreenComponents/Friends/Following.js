@@ -58,7 +58,7 @@ class Following extends Component {
         // const followUnfollowUser = this.props.followUnfollowUser
 
         return (
-            <List>
+            <List id="followeeList">
                 {!followersFetching
                     ? followee.map((item) =>
                         ( <ListItem style={styles.listItem} button key={item._id}>

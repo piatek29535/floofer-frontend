@@ -171,7 +171,7 @@ class MainScreenNavbar extends Component {
                                 {name:'Znajomi', link:'/main/znajomi'},
                                 {name:'Wiadomości', link:'/main/wiadomosci'},
                                 {name:'Ustawienia', link:'/main/ustawienia'}].map((item, key) => (
-                                <Link key={key} onClick={() => this.closeMenu()} style={styles.link} to={item.link}>{item.name}</Link>
+                                <Link id={item.name} key={key} onClick={() => this.closeMenu()} style={styles.link} to={item.link}>{item.name}</Link>
                             ))
                         }
                     </Nav>

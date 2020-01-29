@@ -42,4 +42,4 @@ test('should allow user to register account', async () => {
     await page.click('button#confirmRegistrationButton');
 
     await browser.close();
-}, 100000);
+}, 30000);

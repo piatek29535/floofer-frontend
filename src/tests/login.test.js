@@ -21,4 +21,4 @@ test('should not allow user to login', async () => {
     expect(await page.$('div#errorSnackbar')).toBeTruthy();
 
     await browser.close();
-}, 100000);
+}, 30000);

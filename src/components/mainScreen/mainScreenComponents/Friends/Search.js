@@ -103,12 +103,13 @@ class Search extends Component {
             <div style={styles.mainContainer}>
                 <Paper elevation={4} style={styles.paper}>
                     <InputBase
+                        id="searchInputBase"
                         value={this.state.inputBaseValue}
                         onChange={(event) => this.handleChange(event)}
                         style={styles.inputBase}
                         placeholder="Wyszukaj znajomych"
                     />
-                    <IconButton onClick={() => this.props.dispatch(searchUsersAction(this.state.inputBaseValue))} style={styles.iconButton} aria-label="search">
+                    <IconButton id="searchFriendsButton" onClick={() => this.props.dispatch(searchUsersAction(this.state.inputBaseValue))} style={styles.iconButton} aria-label="search">
                         <SearchIcon />
                     </IconButton>
                 </Paper>
@@ -117,7 +118,7 @@ class Search extends Component {
                         <Grid container justify="center" spacing={2}>
                             {users.map(item => (
                                 <Grid key={item._id} item>
-                                    <Paper elevation={10} style={styles.individualFriend}>
+                                    <Paper id="singleUser" elevation={10} style={styles.individualFriend}>
                                         <Container style={styles.individualFriendContent}>
                                             <Avatar
                                                 style={styles.individualFriendAvatar}
