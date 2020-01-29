@@ -112,6 +112,7 @@ class SignUpContainer extends Component{
             <form style={this.props.style}>
                 <Grid>
                     <TextField
+                        id="name"
                         required
                         label="Imię"
                         margin="normal"
@@ -121,6 +122,7 @@ class SignUpContainer extends Component{
                         variant="outlined"
                     />
                     <TextField
+                        id="surname"
                         required
                         label="Nazwisko"
                         margin="normal"
@@ -130,6 +132,7 @@ class SignUpContainer extends Component{
                     />
                 </Grid>
                 <TextField
+                    id="email"
                     required
                     label={this.state.emailError ? "Niepoprawny E-mail" : "E-mail"}
                     type="email"
@@ -141,6 +144,7 @@ class SignUpContainer extends Component{
                     variant="outlined"
                 />
                 <TextField
+                    id="password"
                     required
                     label={this.state.passwordError ? "Błędne hasło" : "Hasło"}
                     type="password"
@@ -152,6 +156,7 @@ class SignUpContainer extends Component{
                     variant="outlined"
                 />
                 <TextField
+                    id="country"
                     required
                     label="Kraj pochodzenia"
                     margin="normal"
@@ -161,6 +166,7 @@ class SignUpContainer extends Component{
                     variant="outlined"
                 />
                 <TextField
+                    id="town"
                     required
                     label="Miasto"
                     margin="normal"

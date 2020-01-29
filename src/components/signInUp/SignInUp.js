@@ -86,8 +86,8 @@ class SignInUp extends Component {
                             centered
                             style={styles.tabs}
                         >
-                            <Tab label="Zaloguj się" />
-                            <Tab label="Zarejestruj się" />
+                            <Tab id="login" label="Zaloguj się" />
+                            <Tab id="register" label="Zarejestruj się" />
                         </Tabs>
                         {this.props.value === 0 ?
                             <SignInContainer style={styles.contentBox}/>

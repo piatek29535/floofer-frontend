@@ -88,6 +88,7 @@ class SignInContainer extends Component{
 
                 <TextField
                     autoFocus
+                    id="login"
                     label="E-mail"
                     type="email"
                     margin="normal"
@@ -97,6 +98,7 @@ class SignInContainer extends Component{
                     variant="outlined"
                 />
                 <TextField
+                    id="password"
                     label="Hasło"
                     type="password"
                     margin="normal"
@@ -106,6 +108,7 @@ class SignInContainer extends Component{
                     variant="outlined"
                 />
                 <Button
+                    id="loginButton"
                     onClick={() => this.props.dispatch(login(this.state.credentials))}
                     variant="outline-success"
                 >

@@ -6,6 +6,7 @@ class CustomSnackbarLogin extends Component {
     render() {
         return (
             <Snackbar
+                id="errorSnackbar"
                 anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'left',
