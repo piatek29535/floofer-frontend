@@ -24,15 +24,25 @@ test('should user follow another user', async () => {
     await page.click('button#searchForFriends');
 
     await page.click('input#searchInputBase');
-    await page.type('input#searchInputBase', '');
+    await page.type('input#searchInputBase', 'Adam');
     await page.click('button#searchFriendsButton');
 
-    //!! rework this, to take every element from the generated array
+    await Promise.race([
+        page.waitForSelector('p#noUsersTypography'),
+        page.waitForSelector('div#singleUser')
+    ]);
 
-    await page.waitForSelector('div#singleUser');
+    expect(await page.$('p#noUsersTypography')).toBeFalsy();
+    expect(await page.$('div#singleUser')).toBeTruthy();
 
-    const text = await page.$eval('div#singleUser', el => el.innerText);
-    console.log(text)
+    let elements = await page.$$('button#followButton');
+    let firstElement = await (await elements[0].getProperty('innerText')).jsonValue();
+
+    await page.click("button#followButton");
+
+    elements = await page.$$('button#followButton');
+    firstElement = await (await elements[0].getProperty('innerText')).jsonValue();
+    expect(firstElement).toBe("OBSERWUJESZ");
 
     browser.close();
 }, 30000);
