@@ -189,7 +189,7 @@ class MainScreenNavbar extends Component {
                     <Popover
                         style={styles.notificationList}
                         id="notifications">
-                        <Popover.Title id="notificationsTitle"><strong>Powiadomienia</strong></Popover.Title>
+                        <Popover.Title><strong>Powiadomienia</strong></Popover.Title>
                         <ListGroup>
                             {notifications.sort((a,b) => Date.parse(b.when)-Date.parse(a.when)).map(item => (
                                 <ListGroup.Item

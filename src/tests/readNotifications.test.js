@@ -27,11 +27,13 @@ test('should notification be read', async () => {
     expect(elements.length).toBeGreaterThan(0);
 
     let firstElement = await elements[0].$('#isReadCheckbox');
-    let firstElementCheckbox = await(await firstElement.getProperty('checked')).jsonValue()
+    await firstElement.click();
 
-    await page.click('button.singleNotification');
+    await page.waitFor(10000);
 
-    //Check if checkbox is checked after function finishes
+    let firstElementCheckbox = await (await firstElement.getProperty('checked')).jsonValue();
+
+    expect(firstElementCheckbox).toBeTruthy();
 
     browser.close();
 },30000);
