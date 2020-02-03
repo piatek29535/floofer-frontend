@@ -158,6 +158,7 @@ class MainScreenNavbar extends Component {
                 </Link>
                 <IconButton
                     onClick={(e) => this.notificationsToggle(e.target)}
+                    id="notificationButton"
                 >
                     <Badge badgeContent={notifications.filter(x => !x.read).length} max={999} color="secondary">
                         <Notifications/>
@@ -188,10 +189,11 @@ class MainScreenNavbar extends Component {
                     <Popover
                         style={styles.notificationList}
                         id="notifications">
-                        <Popover.Title><strong>Powiadomienia</strong></Popover.Title>
+                        <Popover.Title id="notificationsTitle"><strong>Powiadomienia</strong></Popover.Title>
                         <ListGroup>
                             {notifications.sort((a,b) => Date.parse(b.when)-Date.parse(a.when)).map(item => (
                                 <ListGroup.Item
+                                    className="singleNotification" //just for tests, id dont work
                                     onClick={() => this.openPostDialog(item, item.action)}
                                     style={styles.listItem}
                                     action
