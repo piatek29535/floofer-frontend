@@ -126,7 +126,7 @@ class DialogComponent extends Component {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => this.props.toggleOffDialog()}
+                    <Button id="closeAddPostDialogButton" onClick={() => this.props.toggleOffDialog()}
                             color="primary">
                         Zamknij
                     </Button>
