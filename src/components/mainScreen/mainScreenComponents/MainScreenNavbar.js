@@ -144,7 +144,7 @@ class MainScreenNavbar extends Component {
                 variant="dark"
                 style={styles.menuPanel}>
                 <Link to={`/main/profil/${this.props.user._id}`} style={{textDecoration:'none'}}>
-                    <IconButton style={{outline:'none'}}>
+                    <IconButton id="userAvatarButton" style={{outline:'none'}}>
                         <Avatar
                             alt=" "
                             src={
@@ -177,7 +177,7 @@ class MainScreenNavbar extends Component {
                         }
                     </Nav>
                     <Nav>
-                        <Button href="/" variant="outline-light">Wyloguj się</Button>
+                        <Button id="logoutButton" href="/" variant="outline-light">Wyloguj się</Button>
                     </Nav>
                 </Navbar.Collapse>
 

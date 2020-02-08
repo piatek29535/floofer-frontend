@@ -18,7 +18,7 @@ export function initializeRefs(){
             },
             {
                 current:React.createRef(),
-                name:"Wybróbuj już teraz"
+                name:"Skorzystaj"
             },
         ]
     }

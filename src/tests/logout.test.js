@@ -18,7 +18,13 @@ test('should log out current user', async () => {
         page.waitForSelector('div#errorSnackbar')
     ]);
 
-    expect(await page.$('div#errorSnackbar')).toBeTruthy();
+    expect(await page.$('div#errorSnackbar')).toBeFalsy();
+
+    await page.waitForSelector("#logoutButton");
+
+    page.click("#logoutButton");
+
+    await page.waitForNavigation();
 
     await browser.close();
 }, 30000);

@@ -78,7 +78,7 @@ class DialogComponent extends Component {
 
     render() {
         return (
-            <Dialog open={this.props.dialogOpened}>
+            <Dialog id="addPostDialog" open={this.props.dialogOpened}>
                 <DialogTitle >Dodaj post</DialogTitle>
                 <DialogContent>
                     <TextField

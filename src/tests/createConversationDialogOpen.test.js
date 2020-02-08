@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-test('should log out current user', async () => {
+test('should create conversation dialog pop up', async () => {
     const browser = await puppeteer.launch({
         headless:false,
     });
@@ -18,7 +18,16 @@ test('should log out current user', async () => {
         page.waitForSelector('div#errorSnackbar')
     ]);
 
-    expect(await page.$('div#errorSnackbar')).toBeTruthy();
+    expect(await page.$('div#errorSnackbar')).toBeFalsy();
+
+    await page.waitForSelector('a#Wiadomości');
+    await page.click('a#Wiadomości');
+
+    await page.waitForSelector('#createConversationButton',{timeout:4000});
+    await page.click('#createConversationButton');
+
+    await page.waitForSelector('#createConversationDialog',{timeout:4000});
+    await page.waitFor(4000);
 
     await browser.close();
 }, 30000);
