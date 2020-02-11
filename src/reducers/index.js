@@ -26,6 +26,7 @@ import {fetchSingleConversationReducers} from "./fetchSingleConversationReducers
 import {sendMessageReducers} from "./sendMessageReducers";
 import {fetchNotificationsReducers} from "./fetchNotificationsReducers";
 import {readNotificationReducers} from "./readNotificationReducers";
+import {editCurrentlyLoggedUserReducers} from "./editCurrentlyLoggedUserReducers";
 
 const reducers = combineReducers({
     fetchData,
@@ -57,6 +58,7 @@ const reducers = combineReducers({
     sendMessageReducers,
     fetchNotificationsReducers,
     readNotificationReducers,
+    editCurrentlyLoggedUserReducers,
 });
 
 export default reducers;

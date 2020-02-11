@@ -36,10 +36,6 @@ const styles = {
         display:'flex',
         alignItems:'center',
     },
-    headerButton:{
-        flex:1,
-        borderRadius:0
-    },
 
     // --------- Content ---------
 
@@ -115,9 +111,6 @@ class Conversation extends Component {
                                 : conversation.participants[0].first_name+", "+conversation.participants[1].first_name
                             }
                         </Typography>
-                        <Button color="primary" variant="contained" style={styles.headerButton}>
-                            Członkowie
-                        </Button>
                     </Grid>
 
                     <ScrollToBottom className="messages">

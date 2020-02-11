@@ -156,8 +156,8 @@ const CustomContentBox = (props) => {
             <Box id="benefits" style={styles.footerBox} my={2} ref={props.refs[3]}>
                 <Container style={styles.footerContent}>
                     <div style={{marginBottom:'100px'}}>
-                        <Typography variant={"h1"}>...a to tylko początek!</Typography>
-                        <Typography variant={"h2"}>Zarejestruj konto i przekonaj się sam</Typography>
+                        <Typography variant={"h2"}>...a to tylko początek!</Typography>
+                        <Typography variant={"h3"}>Zarejestruj konto i przekonaj się sam</Typography>
                     </div>
                     <Fab
                         style={{backgroundColor:'blue', border:'2px solid white', minWidth:'20%', color:'white', justifyContent:'space-around'}}

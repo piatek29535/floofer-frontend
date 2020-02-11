@@ -37,9 +37,6 @@ const styles={
         maxWidth:'97%',
         flexDirection:'column'
     },
-    avatar:{
-        backgroundColor:'#004E92'
-    }
 };
 
 class News extends Component {
@@ -52,6 +49,8 @@ class News extends Component {
     render() {
 
         const posts = this.props.posts;
+
+        console.log(posts.postsFetched)
 
         return (
             <div style={styles.mainContainer}>
@@ -71,7 +70,6 @@ class News extends Component {
                                     <ListItemAvatar>
                                         <Avatar
                                             alt=" "
-                                            style={styles.avatar}
                                             src={
                                                 item.author.profilePic === undefined
                                                     ? profilePic

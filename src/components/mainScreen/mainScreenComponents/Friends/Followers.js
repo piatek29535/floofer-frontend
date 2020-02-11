@@ -6,7 +6,6 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
-import Message from '@material-ui/icons/Comment';
 import Profile from '@material-ui/icons/Person';
 import Tooltip from "@material-ui/core/Tooltip";
 import {Link} from "react-router-dom";
@@ -42,11 +41,6 @@ class Followers extends Component {
                             </ListItemAvatar>
                             <ListItemText primary={item.first_name+" "+item.last_name} />
                             <ListItemSecondaryAction>
-                                <Tooltip title="Wyślij wiadomość" placement="top">
-                                    <IconButton style={{color:'white'}} edge="end">
-                                        <Message />
-                                    </IconButton>
-                                </Tooltip>
                                 <Tooltip title="Odwiedź profil" placement="top">
                                     <Link to={`/main/profil/${item._id}`}>
                                         <IconButton style={{color:'white'}} edge="end">

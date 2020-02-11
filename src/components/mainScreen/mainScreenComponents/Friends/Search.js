@@ -147,7 +147,7 @@ class Search extends Component {
                                                     startIcon={<Home />}
                                                     size="small"
                                                 >
-                                                    <Typography style={styles.individualFriendDesc}>TODO miasto</Typography>
+                                                    <Typography style={styles.individualFriendDesc}>{item.city}</Typography>
                                                 </Button>
                                                 <Button
                                                     style={styles.individualFriendDesc}
@@ -156,7 +156,7 @@ class Search extends Component {
                                                     startIcon={<Public />}
                                                     size="small"
                                                 >
-                                                    <Typography style={styles.individualFriendDesc}>TODO Kraj</Typography>
+                                                    <Typography style={styles.individualFriendDesc}>{item.country}</Typography>
                                                 </Button>
                                             </Container>
                                             <div style={{flex:1}}>
