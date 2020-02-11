@@ -13,7 +13,7 @@ test('should allow user to register account', async () => {
     await page.click('input#surname');
     await page.type('input#surname', 'testSurname');
     await page.click('input#email');
-    await page.type('input#email', 'emailForTests@gmail.com');
+    await page.type('input#email', 'emailForTests1@gmail.com');
     await page.click('input#password');
     await page.type('input#password', 'qweasdzxc');
     await page.click('input#country');
