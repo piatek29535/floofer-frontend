@@ -144,7 +144,7 @@ class MainScreenNavbar extends Component {
                 variant="dark"
                 style={styles.menuPanel}>
                 <Link to={`/main/profil/${this.props.user._id}`} style={{textDecoration:'none'}}>
-                    <IconButton style={{outline:'none'}}>
+                    <IconButton id="userAvatarButton" style={{outline:'none'}}>
                         <Avatar
                             alt=" "
                             src={
@@ -158,6 +158,7 @@ class MainScreenNavbar extends Component {
                 </Link>
                 <IconButton
                     onClick={(e) => this.notificationsToggle(e.target)}
+                    id="notificationButton"
                 >
                     <Badge badgeContent={notifications.filter(x => !x.read).length} max={999} color="secondary">
                         <Notifications/>
@@ -171,12 +172,12 @@ class MainScreenNavbar extends Component {
                                 {name:'Znajomi', link:'/main/znajomi'},
                                 {name:'Wiadomości', link:'/main/wiadomosci'},
                                 {name:'Ustawienia', link:'/main/ustawienia'}].map((item, key) => (
-                                <Link key={key} onClick={() => this.closeMenu()} style={styles.link} to={item.link}>{item.name}</Link>
+                                <Link id={item.name} key={key} onClick={() => this.closeMenu()} style={styles.link} to={item.link}>{item.name}</Link>
                             ))
                         }
                     </Nav>
                     <Nav>
-                        <Button href="/" variant="outline-light">Wyloguj się</Button>
+                        <Button id="logoutButton" href="/" variant="outline-light">Wyloguj się</Button>
                     </Nav>
                 </Navbar.Collapse>
 
@@ -192,6 +193,7 @@ class MainScreenNavbar extends Component {
                         <ListGroup>
                             {notifications.sort((a,b) => Date.parse(b.when)-Date.parse(a.when)).map(item => (
                                 <ListGroup.Item
+                                    className="singleNotification" //just for tests, id dont work
                                     onClick={() => this.openPostDialog(item, item.action)}
                                     style={styles.listItem}
                                     action

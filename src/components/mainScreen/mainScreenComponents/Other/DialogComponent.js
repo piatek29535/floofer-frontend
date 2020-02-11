@@ -78,7 +78,7 @@ class DialogComponent extends Component {
 
     render() {
         return (
-            <Dialog open={this.props.dialogOpened}>
+            <Dialog id="addPostDialog" open={this.props.dialogOpened}>
                 <DialogTitle >Dodaj post</DialogTitle>
                 <DialogContent>
                     <TextField
@@ -126,7 +126,7 @@ class DialogComponent extends Component {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => this.props.toggleOffDialog()}
+                    <Button id="closeAddPostDialogButton" onClick={() => this.props.toggleOffDialog()}
                             color="primary">
                         Zamknij
                     </Button>

@@ -66,7 +66,7 @@ class News extends Component {
                 <List style={styles.list}>
                     {
                         posts.postsFetched.map((item) => (
-                            <ListItem button onClick={() => this.props.dispatch(newsDialogPostOpen(item._id))} key={item._id} style={styles.listItem} alignItems="flex-start">
+                            <ListItem id="singlePost" button onClick={() => this.props.dispatch(newsDialogPostOpen(item._id))} key={item._id} style={styles.listItem} alignItems="flex-start">
                                 <div style={{display:'flex', flexDirection:'row'}}>
                                     <ListItemAvatar>
                                         <Avatar

@@ -28,6 +28,7 @@ const CustomNavbar = (props) => {
                     {
                         props.refs !== null ? props.refs.map((ref, key) => {
                             return (<NavLink key={key}
+                                             className={ref.name}
                                 onClick={() => props.scrollToRef(ref)}> {ref.name}
                             </NavLink>)
                         })
@@ -36,7 +37,7 @@ const CustomNavbar = (props) => {
                 </Nav>
                 <Nav>
                     {/*<Nav.Link href={"/signUp"}>Zaloguj się</Nav.Link>*/}
-                    <Button href="/signUp" variant="primary" style={{border:'1px solid white', fontWeight:'600', paddingRight:'7px'}}>
+                    <Button id="welcomeLoginPageButton" href="/signUp" variant="primary" style={{border:'1px solid white', fontWeight:'600', paddingRight:'7px'}}>
                        Zaloguj się <Forward/>
                     </Button>
                 </Nav>

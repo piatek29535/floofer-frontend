@@ -173,11 +173,13 @@ const CustomContentBox = (props) => {
                         <Typography style={{color:'grey', borderBottom:'1px white solid'}}>Autorzy</Typography>
                         <div style={{padding:'5px 0 0 0',display:'flex',justifyContent:'space-around'}}>
                             <Chip
+                                id="nz"
                                 label="Nikodem Zawirski"
                                 onClick={()=>window.open('https://github.com/nzawirski')}
                                 avatar={<Avatar alt="Natacha" src="https://avatars2.githubusercontent.com/u/43851876?s=460&v=4" />}
                             />
                             <Chip
+                                id="ap"
                                 label="Adam Piątek"
                                 onClick={()=>window.open('https://github.com/piatek29535')}
                                 avatar={<Avatar alt="Natacha" src="https://avatars3.githubusercontent.com/u/43843885?s=460&v=4" />}

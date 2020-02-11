@@ -89,9 +89,9 @@ class Friends extends Component {
                         textColor="primary"
                         onChange={(event, value) => this.handleChange(value)}
                     >
-                        <Tab label={`Obserwujący ${this.props.followers.followersAmount}`} />
-                        <Tab label={`Obserwowani ${this.props.followers.followeeAmount}`} />
-                        <Tab label="Wyszukaj znajomych" />
+                        <Tab id="followers" label={`Obserwujący ${this.props.followers.followersAmount}`} />
+                        <Tab id="followee" label={`Obserwowani ${this.props.followers.followeeAmount}`} />
+                        <Tab id="searchForFriends" label="Wyszukaj znajomych" />
                     </Tabs>
                 </div>
                 <Container style={styles.contentContainer}>

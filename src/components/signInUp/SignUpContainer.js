@@ -18,8 +18,6 @@ class SignUpContainer extends Component{
         password: "",
         country:'',
         town:'',
-        birthDate: "2019-10-10",
-        maleOrFemale:'female',
         errorMessage:'',
         emailError:false,
         passwordError:false,
@@ -44,12 +42,6 @@ class SignUpContainer extends Component{
                 break;
             case "town":
                 this.setState({...this.state, town:e.target.value, isError:false});
-                break;
-            case "date":
-                this.setState({...this.state, birthDate:e.target.value, isError:false});
-                break;
-            case 'maleOrFemale':
-                this.setState({...this.state, maleOrFemale:e.target.value, isError:false});
                 break;
             default:
                 return;
@@ -112,6 +104,7 @@ class SignUpContainer extends Component{
             <form style={this.props.style}>
                 <Grid>
                     <TextField
+                        id="name"
                         required
                         label="Imię"
                         margin="normal"
@@ -121,6 +114,7 @@ class SignUpContainer extends Component{
                         variant="outlined"
                     />
                     <TextField
+                        id="surname"
                         required
                         label="Nazwisko"
                         margin="normal"
@@ -130,6 +124,7 @@ class SignUpContainer extends Component{
                     />
                 </Grid>
                 <TextField
+                    id="email"
                     required
                     label={this.state.emailError ? "Niepoprawny E-mail" : "E-mail"}
                     type="email"
@@ -141,6 +136,7 @@ class SignUpContainer extends Component{
                     variant="outlined"
                 />
                 <TextField
+                    id="password"
                     required
                     label={this.state.passwordError ? "Błędne hasło" : "Hasło"}
                     type="password"
@@ -152,6 +148,7 @@ class SignUpContainer extends Component{
                     variant="outlined"
                 />
                 <TextField
+                    id="country"
                     required
                     label="Kraj pochodzenia"
                     margin="normal"
@@ -161,6 +158,7 @@ class SignUpContainer extends Component{
                     variant="outlined"
                 />
                 <TextField
+                    id="town"
                     required
                     label="Miasto"
                     margin="normal"
@@ -169,23 +167,8 @@ class SignUpContainer extends Component{
                     fullWidth
                     variant="outlined"
                 />
-                <TextField
-                    required
-                    id="date"
-                    label="Data urodzenia"
-                    type="date"
-                    value={this.state.birthDate}
-                    onChange={(e) => this.handleChange(e,"date")}
-                />
-                <RadioGroup
-                    required
-                    style={{flexDirection:'row'}}
-                    value={this.state.maleOrFemale}
-                    onChange={e => this.handleChange(e, 'maleOrFemale')}>
-                    <FormControlLabel value="female" control={<Radio />} label="Female" />
-                    <FormControlLabel value="male" control={<Radio />} label="Male" />
-                </RadioGroup>
                 <Button
+                    id="submitButton"
                     onClick={() => {
                         this.emailValidation(this.state.email)}
                     }

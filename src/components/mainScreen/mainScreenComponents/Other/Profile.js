@@ -203,6 +203,7 @@ class Profile extends Component {
                                     ?
                                     <Button
                                         component="label"
+                                        id="avatarChangeButton"
                                     >
                                         <img
                                             alt=""
@@ -242,6 +243,7 @@ class Profile extends Component {
                         <Box style={styles.followersAmount}>
                             <Tooltip placement="left" title={followersAmount}>
                                 <Box
+                                    id="followersAmount"
                                     style={styles.followersAmountBox}
                                     onClick={() => this.openFollowersDialog("Obserwujący", followers, followersAmount)}>
                                     <People/>
@@ -301,7 +303,7 @@ class Profile extends Component {
                         myProfileCondition
                             ?
                             <Tooltip onClick={() => this.toggleOnDialog()} style={styles.addPostIcon} title="Dodaj post" placement="top">
-                                <Fab color="primary">
+                                <Fab id="addPostButton" color="primary">
                                     <Add/>
                                 </Fab>
                             </Tooltip>

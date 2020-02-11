@@ -29,18 +29,19 @@ class FollowersFolloweeDialog extends Component {
 
         return (
             <Dialog
+                id="followersFolloweeDialog"
                 disableEscapeKeyDown
                 open={this.props.followersDialogOpened}
                 fullWidth
                 onClose={() => this.props.closeFollowersDialog()}
             >
-                <DialogTitle style={styles.dialogTitle}>
+                <DialogTitle id="followersFolloweeDialogTitle" style={styles.dialogTitle}>
                     <Typography>{this.props.followersDialogTitle+" "+this.props.followersAmount}</Typography>
                     <IconButton style={styles.closeIconButton} onClick={() => this.props.closeFollowersDialog()}>
                         <Close />
                     </IconButton>
                 </DialogTitle>
-                <DialogContent dividers>
+                <DialogContent id="listOfFollowers" dividers>
                     {followers.map(item => (
                         <Link key={item._id} onClick={() => this.props.closeFollowersDialog()} to={`/main/profil/${item._id}`}>
                             <ListItem button>

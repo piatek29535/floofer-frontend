@@ -15,7 +15,7 @@ export function searchUsersAction(search) {
             headers:headers
         });
 
-        instance.get('/api/users/search', {params:{search:search}})
+        return instance.get('/api/users/search', {params:{search:search}})
             .then(response => dispatch({type:'USERS_SUCCESS', payload:response.data}))
             .catch(err => dispatch({type:'USERS_ERROR', payload:err}))
     }

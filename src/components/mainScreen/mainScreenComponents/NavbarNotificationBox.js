@@ -36,7 +36,7 @@ class NavbarNotificationBox extends Component {
                 <span>
                         {message}
                     </span>
-                <Checkbox checked={isRead} disabled style={isRead ? styles.isReadCircleCheck : null}/>
+                <Checkbox id="isReadCheckbox" checked={isRead} disabled style={isRead ? styles.isReadCircleCheck : null}/>
             </Box>
         );
     }

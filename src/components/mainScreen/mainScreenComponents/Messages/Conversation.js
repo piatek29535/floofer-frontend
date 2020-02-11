@@ -107,7 +107,7 @@ class Conversation extends Component {
 
         if(Object.keys(conversation).length !== 0){
             return (
-                <Grid container style={styles.mainContainer}>
+                <Grid id="singleConversation" container style={styles.mainContainer}>
                     <Grid container style={styles.headerBox}>
                         <Typography style={styles.headerBoxParticipants}>
                             {conversation.participants.length > 2

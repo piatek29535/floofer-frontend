@@ -6,6 +6,7 @@ class CustomSnackbarRegister extends Component {
     render() {
         return (
             <Snackbar
+                id="registerSnackbar"
                 anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'left',

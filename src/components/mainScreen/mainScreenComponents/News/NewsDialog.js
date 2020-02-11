@@ -188,7 +188,7 @@ class NewsDialog extends Component {
             const likeCondition = post.likes.filter(e => e._id === this.props.myId).length > 0;
 
             return (
-                <Dialog fullWidth onClose={() => {
+                <Dialog id="singlePostDialog" fullWidth onClose={() => {
                     if(this.props.fetchNewsFeed !== undefined){
                         this.props.dispatch(this.props.fetchNewsFeed());
                     }
@@ -231,10 +231,10 @@ class NewsDialog extends Component {
                             </div>
                             <div>
                                 <IconButton color={likeCondition ? 'secondary' : 'primary'} onClick={() => this.buttonClicked('like', post._id)}><ThumbUp fontSize='small'/></IconButton>
-                                <IconButton color={this.state.isCommentFieldShown ? 'secondary' : 'primary'} onClick={() => this.buttonClicked('comment')}><Comment/></IconButton>
+                                <IconButton id="showCommentSectionButton" color={this.state.isCommentFieldShown ? 'secondary' : 'primary'} onClick={() => this.buttonClicked('comment')}><Comment/></IconButton>
                             </div>
                         </DialogActions>
-                        <Box style={ this.state.isCommentFieldShown ? styles.commentBox : {display:'none'}}>
+                        <Box id="commentSection" style={ this.state.isCommentFieldShown ? styles.commentBox : {display:'none'}}>
                             <TextField
                                 style={styles.commentBoxField}
                                 error={this.state.commentFieldError}

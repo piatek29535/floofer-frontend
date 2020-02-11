@@ -35,6 +35,7 @@ class CreateConversation extends Component {
 
         return (
             <Dialog
+                id="createConversationDialog"
                 open={this.props.open}
                 onClose={() => {
                     this.state.participants.clear();

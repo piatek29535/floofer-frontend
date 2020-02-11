@@ -99,7 +99,7 @@ class Conversations extends Component {
 
                     <Grid style={{marginTop:'1%'}} container spacing={2}>
                         {conversations.map((item, value) => (
-                            <Grid item xs={6} key={value}>
+                            <Grid id="singleConversation" item xs={6} key={value}>
                                 <ExpansionPanel
                                     style={styles.expansionPanel}
                                 >
@@ -118,6 +118,7 @@ class Conversations extends Component {
                                         <Grid item style={styles.openConversationGridItem}>
                                             <Link to={`/main/wiadomosci/${item._id}`} style={{flex:1, display:'flex'}}>
                                                 <Button
+                                                    id={`openConversationButton${value}`}
                                                     style={styles.openConversationButton}
                                                     color="primary"
                                                     variant='contained'
@@ -131,6 +132,7 @@ class Conversations extends Component {
                         ))}
                     </Grid>
                     <Fab
+                        id="createConversationButton"
                         onClick={() => this.openCreateConversation()}
                         color="primary"
                         style={styles.createConversationButton}

@@ -83,6 +83,7 @@ class Search extends Component {
 
     state = {
         inputBaseValue:'',
+        searchButtonClicked:false
     };
 
     handleChange = (e) => {
@@ -103,78 +104,90 @@ class Search extends Component {
             <div style={styles.mainContainer}>
                 <Paper elevation={4} style={styles.paper}>
                     <InputBase
+                        id="searchInputBase"
                         value={this.state.inputBaseValue}
                         onChange={(event) => this.handleChange(event)}
                         style={styles.inputBase}
                         placeholder="Wyszukaj znajomych"
                     />
-                    <IconButton onClick={() => this.props.dispatch(searchUsersAction(this.state.inputBaseValue))} style={styles.iconButton} aria-label="search">
+                    <IconButton id="searchFriendsButton" onClick={() => {
+                        this.props.dispatch(searchUsersAction(this.state.inputBaseValue)).then(() =>
+                            this.setState({
+                                searchButtonClicked:true
+                            })
+                        );
+                    }} style={styles.iconButton} aria-label="search">
                         <SearchIcon />
                     </IconButton>
                 </Paper>
                 <Container style={styles.friendsContainer}>
                     <Grid item xs={12}>
                         <Grid container justify="center" spacing={2}>
-                            {users.map(item => (
-                                <Grid key={item._id} item>
-                                    <Paper elevation={10} style={styles.individualFriend}>
-                                        <Container style={styles.individualFriendContent}>
-                                            <Avatar
-                                                style={styles.individualFriendAvatar}
-                                                alt=" "
-                                                src={
-                                                    item.profilePic === undefined
-                                                        ? profilePic
-                                                        : `${process.env.REACT_APP_API_URL+'/'+item.profilePic}`
-                                                }/>
-                                            <Typography style={styles.individualFriendDesc}>{item.first_name+" "+item.last_name}</Typography>
-                                            <Button
-                                                style={styles.individualFriendDesc}
-                                                disabled
-                                                color="default"
-                                                startIcon={<Home />}
-                                                size="small"
-                                            >
-                                                <Typography style={styles.individualFriendDesc}>TODO miasto</Typography>
-                                            </Button>
-                                            <Button
-                                                style={styles.individualFriendDesc}
-                                                disabled
-                                                color="default"
-                                                startIcon={<Public />}
-                                                size="small"
-                                            >
-                                                <Typography style={styles.individualFriendDesc}>TODO Kraj</Typography>
-                                            </Button>
-                                        </Container>
-                                        <div style={{flex:1}}>
-                                            <Divider/>
-                                            <div style={styles.individualFriendButtons}>
+                            {users.length === 0 && this.state.searchButtonClicked
+                                ? <Typography id="noUsersTypography">
+                                    Aby wyszukać znajomych, wpisz Imię lub Nazwisko osoby w pole powyżej.
+                                </Typography>
+                                : users.map(item => (
+                                    <Grid key={item._id} item>
+                                        <Paper id="singleUser" elevation={10} style={styles.individualFriend}>
+                                            <Container style={styles.individualFriendContent}>
+                                                <Avatar
+                                                    style={styles.individualFriendAvatar}
+                                                    alt=" "
+                                                    src={
+                                                        item.profilePic === undefined
+                                                            ? profilePic
+                                                            : `${process.env.REACT_APP_API_URL+'/'+item.profilePic}`
+                                                    }/>
+                                                <Typography style={styles.individualFriendDesc}>{item.first_name+" "+item.last_name}</Typography>
                                                 <Button
+                                                    style={styles.individualFriendDesc}
+                                                    disabled
+                                                    color="default"
+                                                    startIcon={<Home />}
                                                     size="small"
-                                                    style={{flex:1}}
-                                                    onClick={() => this.handleIsObserved(item._id)}
-                                                    variant={item.isFollowed === "true" ? "contained" : "outlined"}
-                                                    color="primary"
-                                                    startIcon={item.isFollowed === "true" ? <Observing/> :<Observe />}
                                                 >
-                                                    {item.isFollowed === "true" ? "Obserwujesz": "Obserwuj"}
+                                                    <Typography style={styles.individualFriendDesc}>TODO miasto</Typography>
                                                 </Button>
-                                                <Link to={`/main/profil/${item._id}`}>
+                                                <Button
+                                                    style={styles.individualFriendDesc}
+                                                    disabled
+                                                    color="default"
+                                                    startIcon={<Public />}
+                                                    size="small"
+                                                >
+                                                    <Typography style={styles.individualFriendDesc}>TODO Kraj</Typography>
+                                                </Button>
+                                            </Container>
+                                            <div style={{flex:1}}>
+                                                <Divider/>
+                                                <div style={styles.individualFriendButtons}>
                                                     <Button
+                                                        id="followButton"
                                                         size="small"
+                                                        style={{flex:1}}
+                                                        onClick={() => this.handleIsObserved(item._id)}
+                                                        variant={item.isFollowed === "true" ? "contained" : "outlined"}
                                                         color="primary"
-                                                        variant="outlined"
-                                                        startIcon={<Person />}
+                                                        startIcon={item.isFollowed === "true" ? <Observing/> :<Observe />}
                                                     >
-                                                        profil
+                                                        {item.isFollowed === "true" ? "Obserwujesz": "Obserwuj"}
                                                     </Button>
-                                                </Link>
+                                                    <Link to={`/main/profil/${item._id}`}>
+                                                        <Button
+                                                            size="small"
+                                                            color="primary"
+                                                            variant="outlined"
+                                                            startIcon={<Person />}
+                                                        >
+                                                            profil
+                                                        </Button>
+                                                    </Link>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Paper>
-                                </Grid>
-                            ))}
+                                        </Paper>
+                                    </Grid>
+                                ))}
                         </Grid>
                     </Grid>
                 </Container>
