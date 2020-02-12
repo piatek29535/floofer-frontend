@@ -109,11 +109,6 @@ class Conversations extends Component {
                                             : item.participants[0].first_name+", "+item.participants[1].first_name
                                         }</Typography>
                                     </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails>
-                                        <Typography style={styles.detailsDescription}>
-                                            Uzytkownik: ostatnia wiadomość
-                                        </Typography>
-                                    </ExpansionPanelDetails>
                                     <Grid container alignItems="stretch" justify='center'>
                                         <Grid item style={styles.openConversationGridItem}>
                                             <Link to={`/main/wiadomosci/${item._id}`} style={{flex:1, display:'flex'}}>
