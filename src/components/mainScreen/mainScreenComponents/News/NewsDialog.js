@@ -52,9 +52,6 @@ const styles={
     commentBoxField:{
         width:'70%'
     },
-    avatar:{
-        backgroundColor:'#004E92'
-    },
     commentLikeAction:{
         display:'flex',
         alignItems:'center',
@@ -199,8 +196,7 @@ class NewsDialog extends Component {
                             <Link to={`/main/profil/${post.author._id}`}>
                                 <IconButton onClick={() => this.props.dispatch(newsDialogPostClose())}>
                                     <Avatar
-                                        style={styles.avatar}
-                                        alt=" "
+                                        alt=""
                                         src={
                                             post.author.profilePic === undefined
                                                 ? profilePic
@@ -269,7 +265,7 @@ class NewsDialog extends Component {
                                                     src={
                                                         item.author.profilePic === undefined
                                                             ? profilePic
-                                                            : `${process.env.REACT_APP_API_URL+'/'+post.author.profilePic}`
+                                                            : `${process.env.REACT_APP_API_URL+'/'+item.author.profilePic}`
                                                     }
                                                 >
                                                 </Avatar>

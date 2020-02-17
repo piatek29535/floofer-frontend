@@ -5,9 +5,6 @@ import Button from "react-bootstrap/Button";
 import {signUpButtonClicked} from "../../actions/signInUpActions";
 import {CircularProgress} from "@material-ui/core";
 import CustomSnackbarRegister from "./CustomSnackbarRegister";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from "@material-ui/core/Radio";
 
 class SignUpContainer extends Component{
 

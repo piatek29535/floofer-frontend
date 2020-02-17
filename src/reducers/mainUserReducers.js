@@ -1,13 +1,13 @@
 export const mainUser = (state = {
     isUserFetching:false,
-    userData:[],
+    userData:{},
     userError:null
 }, action) => {
     switch(action.type){
         case 'CURRENTLY_LOGGED_USER_FETCHING':
             return {
                 isUserFetching: action.payload,
-                userData: [],
+                userData: {},
                 userError: null
             };
         case 'CURRENTLY_LOGGED_USER_FETCHED':
@@ -19,7 +19,7 @@ export const mainUser = (state = {
         case 'CURRENTLY_LOGGED_USER_ERROR':
             return {
                 isUserFetching: false,
-                userData: [],
+                userData: {},
                 userError: action.payload
             };
         default:

@@ -7,7 +7,6 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import Profile from '@material-ui/icons/Person';
-import Message from '@material-ui/icons/Comment';
 import RemoveFriend from '@material-ui/icons/Clear';
 import Tooltip from "@material-ui/core/Tooltip";
 import StopFollowingDialog from "./StopFollowingDialog";
@@ -73,11 +72,6 @@ class Following extends Component {
                             </ListItemAvatar>
                             <ListItemText primary={item.first_name+" "+item.last_name} />
                             <ListItemSecondaryAction>
-                                <Tooltip title="Wyślij wiadomość" placement="top">
-                                    <IconButton style={{color:'white'}} edge="end">
-                                        <Message />
-                                    </IconButton>
-                                </Tooltip>
                                 <Tooltip title="Odwiedź profil" placement="top">
                                     <Link to={`/main/profil/${item._id}`}>
                                         <IconButton style={{color:'white'}} edge="end">

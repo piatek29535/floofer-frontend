@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
 import Fab from "@material-ui/core/Fab";
 import ThumbUpAlt from "@material-ui/icons/ThumbUpAlt";
+import CustomCarousel from "./CustomCarousel";
 
 const CustomContentBox = (props) => {
 
@@ -104,9 +105,7 @@ const CustomContentBox = (props) => {
                 <Typography variant={"h5"}>Twój wygodny i przejżysty komunikator na wyciągnięcie ręki</Typography>
             </Box>
             <Box style={styles.contentBox} my={2} ref={props.refs[1]}>
-                <Typography>
-                    Add something here: Carousel or sth else
-                </Typography>
+                <CustomCarousel/>
             </Box>
             <Box style={styles.contentBox} ref={props.refs[2]}>
                 <Typography style={{paddingBottom:'100px', textShadow:'2px 2px 4px #000000'}} variant="h2">A oto co mówią o nas użytkownicy!</Typography>
@@ -156,8 +155,8 @@ const CustomContentBox = (props) => {
             <Box id="benefits" style={styles.footerBox} my={2} ref={props.refs[3]}>
                 <Container style={styles.footerContent}>
                     <div style={{marginBottom:'100px'}}>
-                        <Typography variant={"h1"}>...a to tylko początek!</Typography>
-                        <Typography variant={"h2"}>Zarejestruj konto i przekonaj się sam</Typography>
+                        <Typography variant={"h2"}>...a to tylko początek!</Typography>
+                        <Typography variant={"h3"}>Zarejestruj konto i przekonaj się sam</Typography>
                     </div>
                     <Fab
                         style={{backgroundColor:'blue', border:'2px solid white', minWidth:'20%', color:'white', justifyContent:'space-around'}}
