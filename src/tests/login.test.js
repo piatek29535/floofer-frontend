@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-test('should log out current user', async () => {
+test('should not allow current user to log in', async () => {
     const browser = await puppeteer.launch({
         headless:false,
     });
