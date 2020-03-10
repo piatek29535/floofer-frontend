@@ -38,6 +38,12 @@ const styles={
         maxWidth:'97%',
         flexDirection:'column'
     },
+    image:{
+        alignSelf:'center',
+        width:"50%",
+        height:'300px',
+        objectFit:'cover'
+    }
 };
 
 class News extends Component {
@@ -95,17 +101,18 @@ class News extends Component {
                                         startIcon={<Comment/>}>
                                         {item.commentsAmount}
                                     </Button>
-                                    {
-                                        item.photo !== null
-                                        ?
-                                            <Button
-                                                style={{color:'lightblue'}}
-                                                disabled
-                                                startIcon={<Photo/>}>
-                                            </Button>
-                                        : null
-                                    }
+
                                 </div>
+                                {
+                                    item.photo !== null
+                                        ?
+                                        <img
+                                            alt=" "
+                                            style={styles.image}
+                                            src={process.env.REACT_APP_API_URL+'/'+item.photo.url}>
+                                        </img>
+                                        : null
+                                }
                             </ListItem>
                         ))
                     }
