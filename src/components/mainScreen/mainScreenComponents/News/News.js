@@ -15,6 +15,7 @@ import {newsDialogPostOpen} from "../../../../actions/newsDialogActions";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import profilePic from "../../../../images/mainScreen/profilePic.png";
+import Photo from "@material-ui/icons/Image";
 
 const styles={
     mainContainer:{
@@ -94,6 +95,16 @@ class News extends Component {
                                         startIcon={<Comment/>}>
                                         {item.commentsAmount}
                                     </Button>
+                                    {
+                                        item.photo !== null
+                                        ?
+                                            <Button
+                                                style={{color:'lightblue'}}
+                                                disabled
+                                                startIcon={<Photo/>}>
+                                            </Button>
+                                        : null
+                                    }
                                 </div>
                             </ListItem>
                         ))

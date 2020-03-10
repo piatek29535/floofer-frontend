@@ -82,7 +82,7 @@ class Conversations extends Component {
 
     render() {
 
-        const {followers} = this.props.followersAndFollowee;
+        const {followee} = this.props.followersAndFollowee;
         const {fetchingConversations:fetching,fetchingConversationsSuccess:conversations} = this.props.conversations;
 
         if(conversations !== undefined){
@@ -137,7 +137,7 @@ class Conversations extends Component {
 
                     <CreateConversation
                         open={this.state.createConversationOpened}
-                        followersAndFollowee={followers}
+                        followersAndFollowee={followee}
                         closeDialog={this.closeCreateConversation}
                     />
                 </Box>
