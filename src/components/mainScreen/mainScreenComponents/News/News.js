@@ -38,12 +38,6 @@ const styles={
         maxWidth:'97%',
         flexDirection:'column'
     },
-    image:{
-        alignSelf:'center',
-        width:"50%",
-        height:'300px',
-        objectFit:'cover'
-    }
 };
 
 class News extends Component {
@@ -103,16 +97,6 @@ class News extends Component {
                                     </Button>
 
                                 </div>
-                                {
-                                    item.photo !== null
-                                        ?
-                                        <img
-                                            alt=" "
-                                            style={styles.image}
-                                            src={process.env.REACT_APP_API_URL+'/'+item.photo.url}>
-                                        </img>
-                                        : null
-                                }
                             </ListItem>
                         ))
                     }
